@@ -1,0 +1,310 @@
+	/**
+	 * VF.VN CSS
+	 * @author Tom
+	 *
+	 */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, hr, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+    border: 0 none;
+    margin: 0;
+    outline: 0 none;
+    padding: 0;
+    vertical-align: baseline;
+}
+ul, ul li {
+    list-style: none outside none;
+}
+img {
+    border: medium none;
+}
+body {
+    background:#ffffff url(../images/bg_main.png) left repeat-y;
+    font-family: Tahoma, Verdana, Arial, sans-serif;
+    font-size: 13px;
+    margin: 0;
+    padding: 0;
+}
+.clearfix:after {
+    clear: both;
+    content: ".";
+    display: block;
+    height: 0;
+    line-height: 0;
+    visibility: hidden;
+}
+.clearfix {
+    display: inline-block;
+}
+html[xmlns] .clearfix {
+    display: block;
+}
+* html .clearfix {
+    height: 1%;
+}
+/* CSS 3 setup */
+
+@font-face {
+	font-family:"HelveticaIDesign";
+	src: url('../fonts/HelveticaiDesignVn-Th.ttf');
+}
+/* ----------- */
+#container {
+    float: left;
+	margin-left:245px;
+    width: 950px;
+}
+#coleft{
+	float: left;
+	width:235px;
+}
+#coleft #toolsleft{
+	margin-top:189px;
+
+}
+#toolsleft .toolsbar{
+	height:36px;
+}
+.toolsbar a{
+	float:right;
+	background:url(../images/arrow_left.png)left no-repeat;
+	padding:18px 8px;
+}
+#toolsleft ul.tipsmenu{
+
+}
+ul.tipsmenu li{
+	padding:7px 0px 3.5px 0px;
+}
+ul.tipsmenu li a{
+	color:#333333;
+	text-decoration:none;
+	font: bold 25px Arial, Helvetica, sans-serif;
+}
+ul.tipsmenu li a:hover{
+	color:#358887!important;
+	text-decoration:none;
+
+}
+ul.tipsmenu .active{
+	color:#358887!important;
+	background:url(../images/tipsmenu-active.png)right no-repeat;
+	padding:0px 55px 0px 0px;
+}
+#coleft #contactbox{
+	margin-top:34px;
+	position:relative;
+}
+#contactbox h3{
+	padding:8px 0px;
+	font: bold 25px Arial, Helvetica, sans-serif;
+	color:#333333;
+}
+#contactbox input, #contactbox textarea, #contactbox select,#contactbox input:hover,#contactbox select:hover{
+	border:1px solid #fff!important;
+ 	color:#a7a7a7;
+	height:27px;
+	margin:7px 0 7px 0;
+	font-size:15px;
+	padding:0px 0px 0px 10px;
+	width:200px;
+}
+#contactbox textarea{
+	height:191px;
+}
+#contactbox a.button{
+		background-image: url(../images/icon-sent.png);
+		text-decoration:none;
+		float:right;
+		padding:8.5px 14.5px;
+		position:absolute;
+		top:280px;
+		right:28px
+}
+#coright{
+	float: left;
+	margin-left:19px;
+	width:696px;
+}
+div#topbar{
+	margin-top:18px;
+	height:24px;
+}
+#topbar .boxlogin{
+	background:#ffffff url(../images/box_login.png) left no-repeat;
+	float:right;
+	margin-left:22px;
+	height:24px;
+	width:145px;
+}
+.boxlogin a,.boxlogin a:hover{
+	text-decoration:none;
+	padding: 4px 3px;
+	color:#fff;
+	display:block;
+	width: auto;
+	float:left;
+	font-size:12px;
+	font-weight:bold;
+}
+.boxlogin span{
+	padding: 4px 3px;
+	float:left;
+	color:#fff;
+	font-size:11px;
+}
+#topbar .boxsearch{
+	background:#ffffff url(../images/box_search.png) left no-repeat;
+	float:right;
+	height:24px;
+	width:145px;
+}
+#topbar .boxsearch input{
+	background:#ebebeb;
+	color:#9e9e9e;
+    border: 0 none;
+	font-size:12px;
+	margin:1px 0px 0px 25px;
+    width: 112px;
+	height:19px;
+}
+div#toplogo{
+  	height: 110px;
+    position: relative;
+    z-index: 6000;
+}
+div#logo{
+	left: 0px;
+    position: absolute;
+    top: 0px;
+
+}
+#logo a {
+    display: block;
+}
+
+div#main{
+
+}
+#main #title{
+	border-bottom:4px solid #575757;
+}
+#title h3{
+	float:right;
+	font-size:48px;
+	display:block;
+	color:#a7a7a7;
+	font-family:"HelveticaIDesign",Tahoma, Verdana, Arial, sans-serif;
+	font-weight:inherit;
+}
+#main div#defautwfont
+{
+	margin-top:21px;
+}
+div#defautwfont .searchbox{
+	height:61px;
+	/*CSS 3 setup */
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	/*=================*/
+	background:#ececec;
+}
+.searchbox p{
+	display:block;
+	float:left;
+	margin:13px 0px;
+}
+.searchbox input, .searchbox textarea, .searchbox select,.searchbox input:hover,.searchbox select:hover{
+	/*CSS 3 setup */
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	/*=================*/
+	border:1px solid #fff!important;
+ 	color:#a7a7a7;
+	height:32px;
+	margin:0 17px 0 17px;
+	font-size:15px;
+	font-weight:bold;
+	padding:0px 0px 0px 10px;
+}
+.searchbox .nms{
+	width:85px;
+	}
+.searchbox .sms{
+	width:105px;
+	}
+.searchbox .ls{
+	width:268px;
+	}
+.searchbox label{
+	color:#a7a7a7;
+	}
+div#defautwfont .blockfont{
+	margin-top:22px;
+}
+.blockfont p{
+	padding:16px 0px 16px 16px;
+	position:relative;
+}
+.blockfont p a{
+	font:15px Arial, Helvetica, sans-serif;
+	color:#a7a7a7;
+}
+.blockfont p a.bold{color:#358887;font-weight:bold;}
+.blockfont p span{padding:0px 9px;color:#a7a7a7;}
+.blockfont p a.ico{
+	padding:3px 10px;
+	background-image: url(../images/icon-font.png);
+	text-decoration:none;
+	}
+.blockfont p .vn{background-position: 0 -1px;}
+.blockfont p .apple{background-position:-27px -1px;}
+.blockfont p .window{background-position:24px -1px;}
+.blockfont p span.total{
+ 		position:absolute;
+		top:18px;
+		right:60px
+}
+.blockfont p a.button{
+		background-image: url(../images/icon-buy.png);
+		text-decoration:none;
+		float:right;
+		padding:3px 28px;
+		position:absolute;
+		top:13px;
+		right:0px
+}
+.blockfont p .buy{background-position: 0px -23px;}
+.blockfont p .buy:active ,.blockfont p .buy:hover,.blockfont p .buyactive{
+		background-position: 0 0;
+}
+
+.blockfont .boximg{
+	border:1px solid #ececec;
+	padding:24px;
+}
+.boximg img{height:63px;cursor:pointer;}
+.blockfont div#pagination{
+	display:block;
+    padding: 18px 0px;
+}
+div#pagination a {
+	color:#a7a7a7!important;
+    padding: 2px 2px;
+	margin-left:3px;
+	text-decoration:none;
+	font:48px "HelveticaIDesign",Tahoma, Verdana, Arial, sans-serif;
+}
+div#pagination a:hover ,div#pagination a:active{
+    color:#067776;!important;
+	text-decoration:none;
+}
+div#pagination span.current,div#pagination span.disabled {
+    padding: 2px 2px;
+	margin-left:3px;
+	color:#067776;!important;
+	text-decoration:none;
+	font:48px "HelveticaIDesign",Tahoma, Verdana, Arial, sans-serif;
+}
+#footer{
+	height:55px;
+}
+#footer p{padding:22px 0px;font:bold 14px Tahoma, Verdana, Arial, sans-serif;}
