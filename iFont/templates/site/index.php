@@ -38,7 +38,7 @@ $templateparams	= $app->getTemplate(true)->params;
 	dir="<?php echo $this->direction; ?>">
 <head>
 	<jdoc:include type="head" />
-	<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/system/css/system.css" type="text/css" />
+	<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/site/css/style.css" type="text/css" />
 	<?php if($templateparams->get('html5', 0)) { ?>
 	<!--[if lt IE 9]>
 	<![endif]-->
@@ -47,70 +47,20 @@ $templateparams	= $app->getTemplate(true)->params;
 <body>
 	<div id="container" class="clearfix">
 		<div id="coleft">
-			<div id="toolsleft">
-				<div class="toolsbar">
-					<a href="#"></a>
-				</div>
-				<jdoc:include type="modules" name="position-7" />
-			</div>
-			<div id="contactbox">
-				<h3>LIÊN HỆ</h3>
-				<input type="text" name="name" value="Tên" /> <input type="text"
-					name="email" value="Địa chỉ thư" />
-				<textarea>Nội dung</textarea>
-				<a class="button" href="#">&nbsp</a>
-			</div>
+			<jdoc:include type="modules" name="position-7" />
 		</div>
 		<div id="coright">
 			<div id="topbar">
-				<div class="boxlogin">
-					<a href="#">Đăng nhập</a><span>|</span><a href="#">Đăng ký</a>
-				</div>
-				<div class="boxsearch">
-					<input type="text" name="serch" value="tìm phông" />
-				</div>
+				<jdoc:include type="modules" name="position-6" />
 			</div>
 			<div id="toplogo">
-				<div id="logo">
-					<a rel="home" title="iFont" href="#"><img src="<?php echo $this->baseurl ?>/templates/site/images/logo.png"></a>
-				</div>
+				<jdoc:include type="modules" name="position-8" />
 			</div>
 			<div id="main">
-				<div id="title" class="clearfix">
-					<h3>CHỌN PHÔNG</h3>
-				</div>
-				<div id="defautwfont" class="clearfix">
-					<div class="searchbox clearfix">
-						<p>
-							<input type="text" class="ls" name="txexample"
-								value="Nhập chữ để xem ví dụ" /> <label>Sắp xếp</label>
-							<input type="text" class="nms" name="txsortby"
-								value="Mới Nhất" /> <label>Kiểu</label> <input type="text"
-								class="sms" name="txfont" value="Sans - Serif " />
-						</p>
-					</div>
-					<div class="blockfont">
-						<p>
-							<a class="bold">Helvetica</a><span>|</span><a>đăng bởi Bachi</a><span></span>
-							<a class="ico vn" href="#">&nbsp</a> <a class="ico apple"
-								href="#">&nbsp</a> <a class="ico window" href="#">&nbsp</a> <span
-								class="total">39 kiểu</span> <a class="button buyactive"
-								href="#">&nbsp</a>
-						</p>
-						<div class="boximg">
-							<img src="<?php echo $this->baseurl ?>/templates/site/images/font-example.png">
-
-						</div>
-					</div>
-					<div id="pagination">
-						<a href="#"><</a> <a href="#">01</a> <span class="current">02</span>
-						<a href="#">03</a> <a href="#">04</a> <a href="#">05</a> <a
-							href="#">></a>
-					</div>
-					<div id="footer">
-						<p>Copyright � 2011 vf.vn - All Rights Reserved.</p>
-					</div>
-				</div>
+				<jdoc:include type="component" />
+			</div>
+			<div id="footer">
+				<p>Copyright &copy; 2011 vf.vn - All Rights Reserved.</p>
 			</div>
 		</div>
 	</div>

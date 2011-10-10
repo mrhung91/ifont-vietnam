@@ -68,23 +68,23 @@ html[xmlns] .clearfix {
 	background:url(../images/arrow_left.png)left no-repeat;
 	padding:18px 8px;
 }
-#toolsleft ul.tipsmenu{
+#toolsleft ul.menu_mm{
 
 }
-ul.tipsmenu li{
+ul.menu_mm li{
 	padding:7px 0px 3.5px 0px;
 }
-ul.tipsmenu li a{
+ul.menu_mm li a{
 	color:#333333;
 	text-decoration:none;
 	font: bold 25px Arial, Helvetica, sans-serif;
 }
-ul.tipsmenu li a:hover{
+ul.menu_mm li a:hover{
 	color:#358887!important;
 	text-decoration:none;
 
 }
-ul.tipsmenu .active{
+ul.menu_mm .active{
 	color:#358887!important;
 	background:url(../images/tipsmenu-active.png)right no-repeat;
 	padding:0px 55px 0px 0px;
