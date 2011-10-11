@@ -47,7 +47,12 @@ $templateparams	= $app->getTemplate(true)->params;
 <body>
 	<div id="container" class="clearfix">
 		<div id="coleft">
-			<jdoc:include type="modules" name="position-7" />
+			<div id="toolsleft">
+				<jdoc:include type="modules" name="position-7" />
+			</div>
+			<div id="contactbox">
+				<jdoc:include type="modules" name="position-4" />
+			</div>
 		</div>
 		<div id="coright">
 			<div id="topbar">
