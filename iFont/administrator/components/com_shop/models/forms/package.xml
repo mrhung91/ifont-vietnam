@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<field name="package_id" type="hidden"
+		default="0"
+		required="true"
+		readonly="true"
+	/>
+
+	<field name="name" type="text"
+		class="inputbox" required="true"
+		description="COM_SHOP_PACKAGE_FIELD_NAME_DESC"
+		label="COM_SHOP_PACKAGE_FIELD_NAME_LABEL"
+		size="40"
+	/>
+
+	<field name="alias" type="text"
+		class="inputbox"
+		description="COM_SHOP_PACKAGE_FIELD_ALIAS_DESC"
+		label="JFIELD_ALIAS_LABEL"
+		size="40"
+	/>
+
+	<field
+		name="status"
+		type="list"
+		class="inputbox"
+		default="1"
+		size="1"
+		label="JSTATUS"
+		description="JFIELD_PUBLISHED_DESC">
+		<option
+			value="1">
+			JPUBLISHED</option>
+		<option
+			value="0">
+			JUNPUBLISHED</option>
+	</field>
+
+	<field name="price" type="text"
+		class="inputbox" required="false"
+		description="COM_SHOP_PACKAGE_FIELD_PRICE_DESC"
+		label="COM_SHOP_PACKAGE_FIELD_PRICE_LABEL"
+		size="40"
+	/>
+
+	<field
+		name="is_vietnamese"
+		type="radio"
+		default="0"
+		label="COM_SHOP_PACKAGE_FIELD_IS_VIETNAMESE_LABEL"
+		description="COM_SHOP_PACKAGE_FIELD_IS_VIETNAMESE_DESC">
+		<option
+			value="0">JNO</option>
+		<option
+			value="1">JYES</option>
+	</field>
+
+	<field
+		name="is_mac"
+		type="radio"
+		default="0"
+		label="COM_SHOP_PACKAGE_FIELD_IS_MAC_LABEL"
+		description="COM_SHOP_PACKAGE_FIELD_IS_MAC_DESC">
+		<option
+			value="0">JNO</option>
+		<option
+			value="1">JYES</option>
+	</field>
+
+	<field
+		name="is_windows"
+		type="radio"
+		default="0"
+		label="COM_SHOP_PACKAGE_FIELD_IS_WINDOWS_LABEL"
+		description="COM_SHOP_PACKAGE_FIELD_IS_WINDOWS_DESC">
+		<option
+			value="0">JNO</option>
+		<option
+			value="1">JYES</option>
+	</field>
+
+	<field
+		name="description"
+		type="editor"
+		label="JGLOBAL_DESCRIPTION"
+		description="COM_SHOP_PAKACGE_DESCRIPTION_DESC"
+		class="inputbox"
+		filter="safehtml"
+		buttons="true"
+		hide="readmore,pagebreak"/>
+
+	<field
+		name="id"
+		type="text"
+		class="readonly"
+		label="JGLOBAL_FIELD_ID_LABEL"
+		description ="JGLOBAL_FIELD_ID_DESC"
+		default="0"
+		readonly="true"
+		/>
+
+	<field name="actions" type="hidden"
+		multiple="true"
+	/>
+
+	<field name="lft" type="hidden"
+		filter="unset"
+	/>
+	<field name="rgt" type="hidden"
+		filter="unset"
+	/>
+</form>
