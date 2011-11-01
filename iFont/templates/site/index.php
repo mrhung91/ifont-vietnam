@@ -38,11 +38,16 @@ $templateparams	= $app->getTemplate(true)->params;
 	dir="<?php echo $this->direction; ?>">
 <head>
 	<jdoc:include type="head" />
-	<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/site/css/style.css" type="text/css" />
+	<link rel="stylesheet" href="<?php echo $this->baseurl; ?>/templates/site/css/style.css" type="text/css" />
 	<?php if($templateparams->get('html5', 0)) { ?>
 	<!--[if lt IE 9]>
 	<![endif]-->
 	<?php } ?>
+	<script type="text/javascript" src="<?php echo $this->baseurl; ?>/templates/site/javascript/jquery-1.6.2.min.js"></script>
+	<script type="text/javascript" src="<?php echo $this->baseurl; ?>/templates/site/javascript/main.js"></script>
+	<script type="text/javascript">
+	jQuery.noConflict();
+	</script>
 </head>
 <body>
 	<div id="container" class="clearfix">
@@ -69,5 +74,6 @@ $templateparams	= $app->getTemplate(true)->params;
 			</div>
 		</div>
 	</div>
+	 <div id="overlay" style="display: none;"></div>
 </body>
 </html>
