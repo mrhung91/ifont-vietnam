@@ -308,3 +308,12 @@ div#pagination span.current,div#pagination span.disabled {
 	height:55px;
 }
 #footer p{padding:22px 0px;font:bold 14px Tahoma, Verdana, Arial, sans-serif;}
+
+#overlay {
+    position: absolute;
+    z-index: 1000;
+	background-color: #000000;
+	top: 0;
+	left: 0;
+	opacity: 0.8;
+}
