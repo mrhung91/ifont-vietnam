@@ -67,6 +67,7 @@ function submitContact(btSubmit) {
 		},
 		success: function() {
 			btSubmit.disabled = false;
+			jQuery("#contact-form").find("input.text,textarea").val("");
 		}
 	});
 }
