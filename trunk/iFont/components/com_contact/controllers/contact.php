@@ -121,6 +121,103 @@ class ContactControllerContact extends JControllerForm
 		return true;
 	}
 
+	public function ajaxSubmit()
+	{
+		// Check for request forgeries.
+		JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+
+		// Initialise variables.
+		$app	= JFactory::getApplication();
+		$model	= $this->getModel('contact');
+		$params = JComponentHelper::getParams('com_contact');
+		$stub	= JRequest::getString('id');
+		$id		= (int)$stub;
+
+		// Get the data from POST
+		$data = JRequest::getVar('jform', array(), 'post', 'array');
+
+		$contact = $model->getItem($id);
+
+
+		$params->merge($contact->params);
+
+		// Check for a valid session cookie
+		if($params->get('validate_session', 0)) {
+			if(JFactory::getSession()->getState() != 'active'){
+				JError::raiseWarning(403, JText::_('COM_CONTACT_SESSION_INVALID'));
+
+				// Save the data in the session.
+				$app->setUserState('com_contact.contact.data', $data);
+
+				// Redirect back to the contact form.
+				$this->setRedirect(JRoute::_('index.php?option=com_contact&view=contact&id='.$stub, false));
+				return false;
+			}
+		}
+
+		// Contact plugins
+		JPluginHelper::importPlugin('contact');
+		$dispatcher	= JDispatcher::getInstance();
+
+		// Validate the posted data.
+		$form = $model->getForm();
+		if (!$form) {
+			JError::raiseError(500, $model->getError());
+			return false;
+		}
+
+		$validate = $model->validate($form,$data);
+
+		if ($validate === false) {
+			// Get the validation messages.
+			$errors	= $model->getErrors();
+			// Push up to three validation messages out to the user.
+			for ($i = 0, $n = count($errors); $i < $n && $i < 3; $i++) {
+				if (JError::isError($errors[$i])) {
+					$app->enqueueMessage($errors[$i]->getMessage(), 'warning');
+				} else {
+					$app->enqueueMessage($errors[$i], 'warning');
+				}
+			}
+
+			// Save the data in the session.
+			$app->setUserState('com_contact.contact.data', $data);
+
+			// Redirect back to the contact form.
+			$this->setRedirect(JRoute::_('index.php?option=com_contact&view=contact&id='.$stub, false));
+			return false;
+		}
+
+		// Validation succeeded, continue with custom handlers
+		$results	= $dispatcher->trigger('onValidateContact', array(&$contact, &$data));
+
+		foreach ($results as $result) {
+			if (JError::isError($result)) {
+				return false;
+			}
+		}
+
+		// Passed Validation: Process the contact plugins to integrate with other applications
+		$results = $dispatcher->trigger('onSubmitContact', array(&$contact, &$data));
+
+		// Send the email
+		$sent = false;
+		if (!$params->get('custom_reply')) {
+			$sent = $this->_sendEmail($data, $contact);
+		}
+
+		// Set the success message if it was a success
+		if (!JError::isError($sent)) {
+			$msg = JText::_('COM_CONTACT_EMAIL_THANKS');
+		}
+
+		// Flush the data from the session
+		$app->setUserState('com_contact.contact.data', null);
+
+		echo "1";
+		JSite::close();
+	}
+
 	private function _sendEmail($data, $contact)
 	{
 			$app		= JFactory::getApplication();
