@@ -2,7 +2,7 @@
 	<!-- $Id: contact.xml 21755 2011-07-07 10:43:56Z infograf768 $ -->
 <extension type="component" version="1.7" method="upgrade">
 	<name>Shop</name>
-	<author>Joomla! Project</author>
+	<author>Duong Thien Duc</author>
 	<creationDate>April 2006</creationDate>
 	<copyright>(C) 2005 - 2011 Open Source Matters. All rights reserved.
 	</copyright>
@@ -11,57 +11,29 @@
 	<authorEmail>admin@joomla.org</authorEmail>
 	<authorUrl>www.joomla.org</authorUrl>
 	<version>1.7.0</version>
-	<description>COM_CONTACT_XML_DESCRIPTION</description>
+	<description>Shop Component</description>
+	<scriptfile>install.shop.php</scriptfile>
 
-	<install> <!-- Runs on install -->
-		<sql>
-			<file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
-		</sql>
-	</install>
-	<uninstall> <!-- Runs on uninstall -->
-		<sql>
-			<file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
-		</sql>
-	</uninstall>
-
-	<files folder="site">
-		<filename>contact.php</filename>
-		<filename>controller.php</filename>
-		<filename>index.html</filename>
-		<filename>metadata.xml</filename>
-		<filename>router.php</filename>
-		<folder>helpers</folder>
-		<folder>models</folder>
-		<folder>views</folder>
-	</files>
 	<languages folder="site">
-		<language tag="en-GB">language/en-GB.com_contact.ini</language>
+		<language tag="en-GB">language/en-GB.com_shop.ini</language>
 	</languages>
 
 	<administration>
-		<menu img="class:contact">com_shop</menu>
+		<menu img="class:contact">Shop</menu>
 		<submenu>
 			<!--
 				Note that all & must be escaped to &amp; for the file to be valid
 				XML and be parsed by the installer
 			-->
-			<menu link="option=com_shop" img="class:contact"
-				view="fonts" alt="Contact/Contacts">com_shop_fonts</menu>
-			<menu link="option=com_shop"
-				view="packages" img="class:contact" alt="Contacts/Packages">com_shop_packages</menu>
+			<menu link="option=com_shop&amp;view=package"
+				view="packages" img="class:contact" alt="Shop/Packages">Package</menu>
+			<menu link="option=com_shop&amp;view=font" img="class:contact"
+				view="fonts" alt="Shop/Fonts">Font</menu>
 		</submenu>
-		<files folder="admin">
-			<filename>access.xml</filename>
-			<filename>config.xml</filename>
-			<filename>contact.php</filename>
-			<filename>controller.php</filename>
+		<files>
+			<filename>backend.zip</filename>
+			<filename>frontend.zip</filename>
 			<filename>index.html</filename>
-			<folder>controllers</folder>
-			<folder>elements</folder>
-			<folder>helpers</folder>
-			<folder>models</folder>
-			<folder>tables</folder>
-			<folder>views</folder>
 		</files>
 		<languages folder="admin">
 			<language tag="en-GB">language/en-GB.com_shop.ini</language>

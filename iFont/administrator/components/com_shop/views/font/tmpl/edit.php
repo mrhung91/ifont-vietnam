@@ -30,9 +30,10 @@ $fieldsets = $this->form->getFieldsets();
 	}
 </script>
 
-<form action="<?php echo JRoute::_('index.php?option=com_shop&layout=edit&package_id='.(int) $this->item->package_id); ?>" method="post" name="adminForm" id="user-form" class="form-validate">
+<form action="<?php echo JRoute::_('index.php?option=com_shop&layout=edit&font_id='.(int) $this->item->font_id); ?>"
+		method="post" name="adminForm" id="user-form" class="form-validate">
 	<fieldset class="adminform">
-		<legend><?php echo JText::_('COM_SHOP_PACKAGE_DETAIL'); ?></legend>
+		<legend><?php echo JText::_('COM_SHOP_FONT_DETAIL'); ?></legend>
 		<ul class="adminformlist">
 			<li><?php echo $this->form->getLabel('name'); ?>
 			<?php echo $this->form->getInput('name'); ?></li>
@@ -40,23 +41,17 @@ $fieldsets = $this->form->getFieldsets();
 			<li><?php echo $this->form->getLabel('alias'); ?>
 			<?php echo $this->form->getInput('alias'); ?></li>
 
+			<li><?php echo $this->form->getLabel('package_id'); ?>
+			<?php echo $this->form->getInput('package_id'); ?></li>
+
 			<li><?php echo $this->form->getLabel('price'); ?>
 			<?php echo $this->form->getInput('price'); ?></li>
-
-			<li><?php echo $this->form->getLabel('is_vietnamese'); ?>
-			<?php echo $this->form->getInput('is_vietnamese'); ?></li>
-
-			<li><?php echo $this->form->getLabel('is_mac'); ?>
-			<?php echo $this->form->getInput('is_mac'); ?></li>
-
-			<li><?php echo $this->form->getLabel('is_windows'); ?>
-			<?php echo $this->form->getInput('is_windows'); ?></li>
 
 			<li><?php echo $this->form->getLabel('thumb'); ?>
 			<?php echo $this->form->getInput('thumb'); ?></li>
 
-			<li><?php echo $this->form->getLabel('package_id'); ?>
-			<?php echo $this->form->getInput('package_id'); ?></li>
+			<li><?php echo $this->form->getLabel('font_id'); ?>
+			<?php echo $this->form->getInput('font_id'); ?></li>
 		</ul>
 		<div class="clr"></div>
 		<?php echo $this->form->getLabel('description'); ?>

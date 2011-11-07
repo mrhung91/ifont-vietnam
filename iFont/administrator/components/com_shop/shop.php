@@ -14,12 +14,12 @@ if (!JFactory::getUser()->authorise('core.manage', 'com_shop')) {
 	return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
 }
 
-JTable::addIncludePath(JPATH_COMPONENT_SITE.'/tables');
+JTable::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR.'/tables');
 
 // Include dependancies
 jimport('joomla.application.component.controller');
 
 // Execute the task.
-$controller	= JController::getInstance('Shop');
+$controller	= JController::getInstance('Shop', array('default_view' => 'packages'));
 $controller->execute(JRequest::getCmd('task'));
 $controller->redirect();

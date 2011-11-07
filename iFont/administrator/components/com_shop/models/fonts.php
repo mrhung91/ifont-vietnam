@@ -33,7 +33,7 @@ class ShopModelFonts extends JModelList
 				'name', 'a.name',
 				'description', 'a.description',
 				'price', 'a.price',
-				'package_id', 'a.packageId',
+				'package_id', 'a.package_id',
 			);
 		}
 
@@ -141,12 +141,12 @@ class ShopModelFonts extends JModelList
 				$fontIds[] = (int) $item->font_id;
 			}
 
-			// Get the counts from the database only for the users in the list.
+			// Get the counts from the database only for the fonts in the list.
 			$db		= $this->getDbo();
 			$query	= $db->getQuery(true);
 
-			// Join over the group mapping table.
-			$query->select('sf.font_id, sp.name as group_name')
+			// Join over the package mapping table.
+			$query->select('sf.font_id as font_id, sp.name as package_name')
 				->from('#__shop_font AS sf')
 				->join('INNER', '#__shop_package AS sp ON sp.package_id = sf.package_id')
 				->where('sf.font_id IN ('.implode(',', $fontIds).')');
@@ -154,7 +154,7 @@ class ShopModelFonts extends JModelList
 			$db->setQuery($query);
 
 			// Load the counts into an array indexed on the user id field.
-			$fontPackage = $db->loadRow('font_id');
+			$fontPackage = $db->loadObjectList('font_id');
 
 			$error = $db->getErrorMsg();
 			if ($error) {
@@ -162,11 +162,10 @@ class ShopModelFonts extends JModelList
 				return false;
 			}
 
-			// Second pass: collect the group counts into the master items array.
-			foreach ($items as &$item)
-			{
-				if (isset($fontPackage[$item->id])) {
-					$item->package_name = $fontPackage[$item->id]->group_name;
+			// Second pass: collect the package counts into the master items array.
+			foreach ($items as &$item) {
+				if (isset($fontPackage[$item->font_id])) {
+					$item->package_name = $fontPackage[$item->font_id]->package_name;
 				}
 			}
 

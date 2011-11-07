@@ -34,8 +34,6 @@ class ShopViewPackage extends JView
 			return false;
 		}
 
-		//$this->form->setValue('password',	null);
-
 		parent::display($tpl);
 		$this->addToolbar();
 	}
@@ -52,7 +50,6 @@ class ShopViewPackage extends JView
 		$user		= JFactory::getUser();
 		$isNew		= ($this->item->package_id == 0);
 		$canDo		= ShopHelper::getActions();
-
 
 		$isNew	= ($this->item->package_id == 0);
 		JToolBarHelper::title(JText::_($isNew ? 'COM_SHOP_VIEW_NEW_PACKAGE_TITLE' : 'COM_SHOP_VIEW_EDIT_PACKAGE_TITLE'));

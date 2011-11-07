@@ -29,7 +29,7 @@ class ShopModelPackage extends JModelAdmin
 	 * @return	JTable	A database object
 	 * @since	1.6
 	*/
-	public function getTable($type = 'Package', $prefix = 'JTable', $config = array())
+	public function getTable($type = 'Package', $prefix = 'ShopTable', $config = array())
 	{
 		$table = JTable::getInstance($type, $prefix, $config);
 
