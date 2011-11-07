@@ -89,6 +89,11 @@
 		buttons="true"
 		hide="readmore,pagebreak"/>
 
+	<field name="thumb" type="media" directory="fonts"
+		hide_none="1" label="Thumbnail Image"
+		size="60"
+		description="Thumbnail Image" />
+
 	<field
 		name="id"
 		type="text"

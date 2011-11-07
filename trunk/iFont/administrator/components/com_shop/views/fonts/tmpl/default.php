@@ -38,7 +38,7 @@ $loggeduser = JFactory::getUser();
 
 			<select name="filter_group_id" class="inputbox" onchange="this.form.submit()">
 				<option value=""><?php echo JText::_('COM_SHOP_FILTER_PACKAGE');?></option>
-				<?php echo JHtml::_('select.options', FontsHelper::getPackages(), 'value', 'text', $this->state->get('filter.package_id'));?>
+				<?php echo JHtml::_('select.options', ShopHelper::getPackages(), 'value', 'text', $this->state->get('filter.package_id'));?>
 			</select>
 		</div>
 	</fieldset>
@@ -79,12 +79,12 @@ $loggeduser = JFactory::getUser();
 			<tr class="row<?php echo $i % 2; ?>">
 				<td class="center">
 					<?php if ($canEdit) : ?>
-						<?php echo JHtml::_('grid.id', $i, $item->id); ?>
+						<?php echo JHtml::_('grid.id', $i, $item->font_id); ?>
 					<?php endif; ?>
 				</td>
 				<td>
 					<?php if ($canEdit) : ?>
-					<a href="<?php echo JRoute::_('index.php?option=com_shop&task=font.edit&id='.(int) $item->id); ?>" title="<?php echo JText::sprintf('COM_SHOP_EDIT_USER', $this->escape($item->name)); ?>">
+					<a href="<?php echo JRoute::_('index.php?option=com_shop&task=font.edit&font_id='.(int) $item->font_id); ?>" title="<?php echo JText::sprintf('COM_SHOP_EDIT_FONT', $this->escape($item->name)); ?>">
 						<?php echo $this->escape($item->name); ?></a>
 					<?php else : ?>
 						<?php echo $this->escape($item->name); ?>
@@ -98,27 +98,10 @@ $loggeduser = JFactory::getUser();
 					<?php endif; ?>
 				</td>
 				<td class="center">
-					<?php if (substr_count($item->package_names,"\n") > 1) : ?>
-						<span class="hasTip" title="<?php echo JText::_('COM_SHOP_HEADING_GROUPS').'::'.nl2br($item->group_names); ?>"><?php echo JText::_('COM_SHOP_USERS_MULTIPLE_GROUPS'); ?></span>
-					<?php else : ?>
-						<?php echo nl2br($item->group_names); ?>
-					<?php endif; ?>
+					<?php echo nl2br($item->package_name); ?>
 				</td>
 				<td class="center">
-					<?php echo $this->escape($item->email); ?>
-				</td>
-				<td class="center">
-					<?php if ($item->lastvisitDate!='0000-00-00 00:00:00'):?>
-						<?php echo JHtml::_('date',$item->lastvisitDate, 'Y-m-d H:i:s'); ?>
-					<?php else:?>
-						<?php echo JText::_('JNEVER'); ?>
-					<?php endif;?>
-				</td>
-				<td class="center">
-					<?php echo JHtml::_('date',$item->registerDate, 'Y-m-d H:i:s'); ?>
-				</td>
-				<td class="center">
-					<?php echo (int) $item->id; ?>
+					<?php echo (int) $item->font_id; ?>
 				</td>
 			</tr>
 			<?php endforeach; ?>

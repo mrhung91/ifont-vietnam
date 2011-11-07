@@ -1,26 +1,22 @@
 <?php
 /**
- * @version		$Id: view.html.php 21705 2011-06-28 21:19:50Z dextercowley $
+ * @version		$Id: view.html.php 21655 2011-06-23 05:43:24Z chdemko $
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-// No direct access
 defined('_JEXEC') or die;
 
 jimport('joomla.application.component.view');
 
 /**
- * View class for a list of users.
- *
  * @package		Joomla.Administrator
  * @subpackage	com_users
- * @since		1.6
  */
-class ShopViewShop extends JView
+class ShopViewFont extends JView
 {
-	protected $items;
-	protected $pagination;
+	protected $form;
+	protected $item;
 	protected $state;
 
 	/**
@@ -28,8 +24,8 @@ class ShopViewShop extends JView
 	 */
 	public function display($tpl = null)
 	{
-		$this->items		= $this->get('Items');
-		$this->pagination	= $this->get('Pagination');
+		$this->form			= $this->get('Form');
+		$this->item			= $this->get('Item');
 		$this->state		= $this->get('State');
 
 		// Check for errors.
@@ -38,8 +34,8 @@ class ShopViewShop extends JView
 			return false;
 		}
 
-		$this->addToolbar();
 		parent::display($tpl);
+		$this->addToolbar();
 	}
 
 	/**
@@ -49,26 +45,24 @@ class ShopViewShop extends JView
 	 */
 	protected function addToolbar()
 	{
-		$canDo	= ShopHelper::getActions();
+		JRequest::setVar('hidemainmenu', 1);
 
-		JToolBarHelper::title(JText::_('COM_SHOP_VIEW_PACKAGES_TITLE'));
+		$isNew		= ($this->item->font_id == 0);
+		$canDo		= ShopHelper::getActions();
 
-		if ($canDo->get('core.create')) {
-			JToolBarHelper::addNew('package.add');
+		$isNew	= ($this->item->font_id == 0);
+		JToolBarHelper::title(JText::_($isNew ? 'COM_SHOP_VIEW_NEW_FONT_TITLE' : 'COM_SHOP_VIEW_EDIT_FONT_TITLE'));
+		if ($canDo->get('core.edit')||$canDo->get('core.edit.own')||$canDo->get('core.create')) {
+			JToolBarHelper::apply('font.apply');
+			JToolBarHelper::save('font.save');
 		}
-		if ($canDo->get('core.edit')) {
-			JToolBarHelper::editList('package.edit');
+		if ($canDo->get('core.create')&&$canDo->get('core.manage')) {
+			JToolBarHelper::save2new('font.save2new');
 		}
-
-		if ($canDo->get('core.delete')) {
-			JToolBarHelper::deleteList('', 'packages.delete');
-			JToolBarHelper::divider();
+		if (empty($this->item->font_id))  {
+			JToolBarHelper::cancel('font.cancel');
+		} else {
+			JToolBarHelper::cancel('font.cancel', 'JTOOLBAR_CLOSE');
 		}
-
-		/* Uncommented to show preference button
-		if ($canDo->get('core.admin')) {
-			JToolBarHelper::preferences('com_shop');
-			JToolBarHelper::divider();
-		}*/
 	}
 }

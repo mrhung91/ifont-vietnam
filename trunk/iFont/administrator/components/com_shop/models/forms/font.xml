@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<field name="font_id" type="hidden"
+		default="0"
+		required="true"
+		readonly="true"
+	/>
+
+	<field name="name" type="text"
+		class="inputbox" required="true"
+		description="Font Name"
+		label="Font Name"
+		size="40"
+	/>
+
+	<field name="alias" type="text"
+		class="inputbox"
+		description="Alias"
+		label="JFIELD_ALIAS_LABEL"
+		size="40"
+	/>
+
+	<field
+		name="status"
+		type="list"
+		class="inputbox"
+		default="1"
+		size="1"
+		label="JSTATUS"
+		description="JFIELD_PUBLISHED_DESC">
+		<option
+			value="1">
+			JPUBLISHED</option>
+		<option
+			value="0">
+			JUNPUBLISHED</option>
+	</field>
+
+	<field name="package_id" type="package" extension="com_shop"
+		label="Package" description="Package"
+		class="inputbox" required="true"
+	>
+	</field>
+
+	<field name="price" type="text"
+		class="inputbox" required="false"
+		description="Price"
+		label="Price"
+		size="40"
+	/>
+
+	<field
+		name="description"
+		type="editor"
+		label="JGLOBAL_DESCRIPTION"
+		description="Enter font description"
+		class="inputbox"
+		filter="safehtml"
+		buttons="true"
+		hide="readmore,pagebreak"/>
+
+	<field name="thumb" type="media" directory="fonts"
+		hide_none="1" label="Thumbnail Image"
+		size="60"
+		description="Thumbnail Image" />
+
+	<field name="actions" type="hidden"
+		multiple="true"
+	/>
+
+	<field name="lft" type="hidden"
+		filter="unset"
+	/>
+	<field name="rgt" type="hidden"
+		filter="unset"
+	/>
+</form>
