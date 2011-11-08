@@ -29,94 +29,29 @@ class ShopController extends JController
 	 * @return	JController		This object to support chaining.
 	 * @since	1.5
 	 */
-	public function display($cachable = false, $urlparams = false)
-	{
-		// Get the document object.
-		$document	= JFactory::getDocument();
+	public function display($cachable = false, $urlparams = false) {
+		$cachable = true;
+
+		JHtml::_('behavior.caption');
 
 		// Set the default view name and format from the Request.
-		$vName	 = JRequest::getCmd('view', 'login');
-		$vFormat = $document->getType();
-		$lName	 = JRequest::getCmd('layout', 'default');
+		// Note we are using a_id to avoid collisions with the router and the return page.
+		// Frontend is a bit messier than the backend.
+		$id		= JRequest::getInt('a_id');
+		$vName	= JRequest::getCmd('view', 'packages');
+		JRequest::setVar('view', $vName);
 
-		if ($view = $this->getView($vName, $vFormat)) {
-			// Do any specific processing by view.
-			switch ($vName) {
-				case 'registration':
-					// If the user is already logged in, redirect to the profile page.
-					$user = JFactory::getUser();
-					if ($user->get('guest') != 1) {
-						// Redirect to profile page.
-						$this->setRedirect(JRoute::_('index.php?option=com_users&view=profile', false));
-						return;
-					}
+		$safeurlparams = array('packageid'=>'INT','id'=>'INT','pid'=>'ARRAY','limit'=>'INT','limitstart'=>'INT',
+			'showall'=>'INT','return'=>'BASE64','filter'=>'STRING','filter_order'=>'CMD','filter_order_Dir'=>'CMD','filter-search'=>'STRING','print'=>'BOOLEAN','lang'=>'CMD');
 
-					// Check if user registration is enabled
-            		if(JComponentHelper::getParams('com_users')->get('allowUserRegistration') == 0) {
-            			// Registration is disabled - Redirect to login page.
-						$this->setRedirect(JRoute::_('index.php?option=com_users&view=login', false));
-						return;
-            		}
-
-					// The user is a guest, load the registration model and show the registration page.
-					$model = $this->getModel('Registration');
-					break;
-
-				// Handle view specific models.
-				case 'profile':
-
-					// If the user is a guest, redirect to the login page.
-					$user = JFactory::getUser();
-					if ($user->get('guest') == 1) {
-						// Redirect to login page.
-						$this->setRedirect(JRoute::_('index.php?option=com_users&view=login', false));
-						return;
-					}
-					$model = $this->getModel($vName);
-					break;
-
-				// Handle the default views.
-				case 'login':
-					$model = $this->getModel($vName);
-					break;
-
-				case 'reset':
-					// If the user is already logged in, redirect to the profile page.
-					$user = JFactory::getUser();
-					if ($user->get('guest') != 1) {
-						// Redirect to profile page.
-						$this->setRedirect(JRoute::_('index.php?option=com_users&view=profile', false));
-						return;
-					}
-
-					$model = $this->getModel($vName);
-					break;
-
-				case 'remind':
-					// If the user is already logged in, redirect to the profile page.
-					$user = JFactory::getUser();
-					if ($user->get('guest') != 1) {
-						// Redirect to profile page.
-						$this->setRedirect(JRoute::_('index.php?option=com_users&view=profile', false));
-						return;
-					}
-
-					$model = $this->getModel($vName);
-					break;
-
-				default:
-					$model = $this->getModel('Login');
-					break;
-			}
-
-			// Push the model into the view (as default).
-			$view->setModel($model, true);
-			$view->setLayout($lName);
-
-			// Push document object into the view.
-			$view->assignRef('document', $document);
-
-			$view->display();
+		// Check for edit form.
+		if ($vName == 'form' && !$this->checkEditId('com_shop.edit.font', $id)) {
+			// Somehow the person just went to the form - we don't allow that.
+			return JError::raiseError(403, JText::sprintf('JLIB_APPLICATION_ERROR_UNHELD_ID', $id));
 		}
+
+		parent::display($cachable, $safeurlparams);
+
+		return $this;
 	}
 }
