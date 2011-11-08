@@ -16,8 +16,7 @@ defined('_JEXEC') or die;
  * @return	array	The URL route with segments represented as an array.
  * @since	1.5
  */
-function UsersBuildRoute(&$query)
-{
+function ShopBuildRoute(&$query) {
 	// Declare static variables.
 	static $items;
 	static $default;
@@ -67,7 +66,7 @@ function UsersBuildRoute(&$query)
 
 			// Check to see if we have found the profile menu item.
 			if (empty($profile) && !empty($items[$i]->query['view']) && ($items[$i]->query['view'] == 'profile')) {
-			$profile = $items[$i]->id;
+				$profile = $items[$i]->id;
 			}
 		}
 
@@ -126,23 +125,23 @@ function UsersBuildRoute(&$query)
 			default:
 			case 'profile':
 				if (!empty($query['view'])) {
-					$segments[] = $query['view'];
-				}
+				$segments[] = $query['view'];
+			}
+			unset ($query['view']);
+			if ($query['Itemid'] = $profile) {
 				unset ($query['view']);
-				if ($query['Itemid'] = $profile) {
-					unset ($query['view']);
-				} else {
-					$query['Itemid'] = $default;
-				}
+			} else {
+				$query['Itemid'] = $default;
+			}
 
-				// Only append the user id if not "me".
-				$user = JFactory::getUser();
-				if (!empty($query['user_id']) && ($query['user_id'] != $user->id)) {
-					$segments[] = $query['user_id'];
-				}
-				unset ($query['user_id']);
+			// Only append the user id if not "me".
+			$user = JFactory::getUser();
+			if (!empty($query['user_id']) && ($query['user_id'] != $user->id)) {
+				$segments[] = $query['user_id'];
+			}
+			unset ($query['user_id']);
 
-				break;
+			break;
 		}
 	}
 
@@ -156,7 +155,7 @@ function UsersBuildRoute(&$query)
  * @return	array	The array of variables to set in the request.
  * @since	1.5
  */
-function UsersParseRoute($segments)
+function ShopParseRoute($segments)
 {
 	// Initialise variables.
 	$vars = array();

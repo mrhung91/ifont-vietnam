@@ -10,10 +10,10 @@
 // no direct access
 defined('_JEXEC') or die;
 ?>
-<form action="<?php echo JRoute::_('index.php');?>" method="post">
-	<div class="search<?php echo $moduleclass_sfx ?>">
+<div class="boxsearch<?php echo $moduleclass_sfx ?>">
+	<form action="<?php echo JRoute::_('index.php');?>" method="post">
 		<?php
-			$output = '<label for="mod-search-searchword">'.$label.'</label><input name="searchword" id="mod-search-searchword" maxlength="'.$maxlength.'"  class="inputbox'.$moduleclass_sfx.'" type="text" size="'.$width.'" value="'.$text.'"  onblur="if (this.value==\'\') this.value=\''.$text.'\';" onfocus="if (this.value==\''.$text.'\') this.value=\'\';" />';
+			$output = '<input name="searchword" id="mod-search-searchword" maxlength="'.$maxlength.'"  class="inputbox'.$moduleclass_sfx.'" type="text" value="'.$text.'"  onblur="if (this.value==\'\') this.value=\''.$text.'\';" onfocus="if (this.value==\''.$text.'\') this.value=\'\';" />';
 
 			if ($button) :
 				if ($imagebutton) :
@@ -49,5 +49,5 @@ defined('_JEXEC') or die;
 	<input type="hidden" name="task" value="search" />
 	<input type="hidden" name="option" value="com_search" />
 	<input type="hidden" name="Itemid" value="<?php echo $mitemid; ?>" />
-	</div>
-</form>
+	</form>
+</div>

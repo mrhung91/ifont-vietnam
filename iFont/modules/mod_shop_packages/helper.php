@@ -19,12 +19,35 @@ class modShopPackagesHelper {
 
 	public static function getList($params) {
 		$db = JFactory::getDbo();
-		$query = "SELECT * FROM #_shop_package a ORDER BY a.created DESC";
+		$query = "SELECT * FROM #__shop_package a ORDER BY a.created DESC";
 
 		$limit = $params->get('limit, 10');
 		$db->setQuery($query, 0, $limit);
 
-		return $db->loadObjectList();
+		$items = $db->loadObjectList();
+
+		foreach ($items as $item) {
+			$item->num_fonts = modShopPackagesHelper::_getNumFonts($item->package_id);
+			$item->user = modShopPackagesHelper::_getUser($item->created_by);
+		}
+
+		return $items;
+	}
+
+	private static function _getNumFonts($package_id) {
+		$db = JFactory::getDbo();
+		$query = "SELECT COUNT(*) FROM #__shop_font a";
+		$db->setQuery($query);
+		$num_fonts = $db->loadResult();
+		return $num_fonts;
+	}
+
+	private static function _getUser($user_id) {
+		$db = JFactory::getDbo();
+		$query = "SELECT a.name FROM #__users a WHERE a.id = " . $user_id;
+		$db->setQuery($query);
+		$user_name = $db->loadResult();
+		return $user_name;
 	}
 
 }

@@ -10,6 +10,8 @@
 
 defined('_JEXEC') or die;
 
+JTable::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR.'/tables');
+
 jimport('joomla.application.component.controller');
 require_once JPATH_COMPONENT.'/helpers/route.php';
 

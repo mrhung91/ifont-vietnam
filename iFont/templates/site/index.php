@@ -68,6 +68,7 @@ $templateparams	= $app->getTemplate(true)->params;
 			</div>
 			<div id="main">
 				<jdoc:include type="component" />
+				<jdoc:include type="modules" name="position-5" />
 			</div>
 			<div id="footer">
 				<p>Copyright &copy; 2011 vf.vn - All Rights Reserved.</p>

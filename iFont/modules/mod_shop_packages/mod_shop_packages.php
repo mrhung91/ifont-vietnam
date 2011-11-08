@@ -14,4 +14,4 @@ defined('_JEXEC') or die;
 require_once dirname(__FILE__).'/helper.php';
 
 $items = modShopPackagesHelper::getList($params);
-require JModuleHelper::getLayoutPath('mod_search', $params->get('layout', 'default'));
+require JModuleHelper::getLayoutPath('mod_shop_packages', $params->get('layout', 'default'));
