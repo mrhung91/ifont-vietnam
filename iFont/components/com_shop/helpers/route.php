@@ -28,21 +28,18 @@ abstract class ShopHelperRoute
 	/**
 	 * @param	int	The route of the content item
 	 */
-	public static function getFontRoute($font_id, $package_id = 0)
-	{
+	public static function getFontRoute($font_id, $package_id = 0) {
 		$needles = array(
-			'font_id'  => array((int) $id)
+			'font_id'  => array((int) $font_id)
 		);
 		//Create the link
 		$link = 'index.php?option=com_shop&view=font&id='. $font_id;
-		if ((int) $package_id > 1) {
-			$categories = JCategories::getInstance('Content');
-			$category = $categories->get((int)$catid);
-			if($category)
-			{
-				$needles['category'] = array_reverse($category->getPath());
-				$needles['categories'] = $needles['category'];
-				$link .= '&catid='.$catid;
+		if ((int) $package_id > 0) {
+			$package = JTable::getInstance("Package", "ShopTable");
+			if($package->load($package_id)) {
+				$needles['package'] = array_reverse($package->getPath());
+				$needles['packages'] = $needles['package'];
+				$link .= '&package='.$package_id;
 			}
 		}
 
@@ -56,27 +53,16 @@ abstract class ShopHelperRoute
 		return $link;
 	}
 
-	public static function getCategoryRoute($catid)
-	{
-		if ($catid instanceof JCategoryNode)
-		{
-			$id = $catid->id;
-			$category = $catid;
-		}
-		else
-		{
-			$id = (int) $catid;
-			$category = JCategories::getInstance('Content')->get($id);
-		}
+	public static function getPackageRoute($packageid) {
+		$id = (int) $packageid;
+		$model = JModel::getInstance("Package", "Shop");
+		$package = $model->get($id);
 
-		if($id < 1)
-		{
+		if($id < 1) {
 			$link = '';
-		}
-		else
-		{
+		} else {
 			$needles = array(
-				'category' => array($id)
+				'package' => array($id)
 			);
 
 			if ($item = self::_findItem($needles))
@@ -86,13 +72,12 @@ abstract class ShopHelperRoute
 			else
 			{
 				//Create the link
-				$link = 'index.php?option=com_content&view=category&id='.$id;
-				if($category)
-				{
-					$catids = array_reverse($category->getPath());
+				$link = 'index.php?option=com_shop&view=package&id='.$id;
+				if($package) {
+					$packageids = array_reverse($package->getPath());
 					$needles = array(
-						'category' => $catids,
-						'categories' => $catids
+						'package' => $packageids,
+						'packages' => $packageids
 					);
 					if ($item = self::_findItem($needles)) {
 						$link .= '&Itemid='.$item;
