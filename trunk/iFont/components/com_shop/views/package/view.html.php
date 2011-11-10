@@ -48,13 +48,6 @@ class ShopViewPackage extends JView
 			return JError::raiseError(404, 'Package not found');
 		}
 
-		// Check whether category access level allows access.
-		$user	= JFactory::getUser();
-		$groups	= $user->getAuthorisedViewLevels();
-		if (!in_array($package->access, $groups)) {
-			return JError::raiseError(403, JText::_("JERROR_ALERTNOAUTHOR"));
-		}
-
 		// Compute the article slugs and prepare introtext (runs content plugins).
 		foreach ($items as $item) {
 			$item->slug = $item->alias ? ($item->id . ':' . $item->alias) : $item->id;
@@ -93,25 +86,17 @@ class ShopViewPackage extends JView
 			$this->params->def('page_heading', $this->params->get('page_title', $menu->title));
 		}
 		else {
-			$this->params->def('page_heading', JText::_('JGLOBAL_ARTICLES'));
+			$this->params->def('page_heading', JText::_('JGLOBAL_FONTS'));
 		}
 
 		$id = (int) @$menu->query['id'];
 
-		if ($menu && ($menu->query['option'] != 'com_content' || $menu->query['view'] == 'article' || $id != $this->category->id)) {
-			$path = array(array('title' => $this->category->title, 'link' => ''));
-			$category = $this->category->getParent();
-
-			while (($menu->query['option'] != 'com_content' || $menu->query['view'] == 'article' || $id != $category->id) && $category->id > 1)
-			{
-				$path[] = array('title' => $category->title, 'link' => ContentHelperRoute::getCategoryRoute($category->id));
-				$category = $category->getParent();
-			}
+		if ($menu && ($menu->query['option'] != 'com_shop' || $menu->query['view'] == 'font' || $id != $this->package->id)) {
+			$path = array(array('title' => $this->package->name, 'link' => ''));
 
 			$path = array_reverse($path);
 
-			foreach ($path as $item)
-			{
+			foreach ($path as $item) {
 				$pathway->addItem($item['title'], $item['link']);
 			}
 		}
@@ -129,50 +114,5 @@ class ShopViewPackage extends JView
 		}
 
 		$this->document->setTitle($title);
-
-		if ($this->category->metadesc)
-		{
-			$this->document->setDescription($this->category->metadesc);
-		}
-		elseif (!$this->category->metadesc && $this->params->get('menu-meta_description'))
-		{
-			$this->document->setDescription($this->params->get('menu-meta_description'));
-		}
-
-		if ($this->category->metakey)
-		{
-			$this->document->setMetadata('keywords', $this->category->metakey);
-		}
-		elseif (!$this->category->metakey && $this->params->get('menu-meta_keywords'))
-		{
-			$this->document->setMetadata('keywords', $this->params->get('menu-meta_keywords'));
-		}
-
-		if ($this->params->get('robots'))
-		{
-			$this->document->setMetadata('robots', $this->params->get('robots'));
-		}
-
-		if ($app->getCfg('MetaAuthor') == '1') {
-			$this->document->setMetaData('author', $this->category->getMetadata()->get('author'));
-		}
-
-		$mdata = $this->category->getMetadata()->toArray();
-
-		foreach ($mdata as $k => $v)
-		{
-			if ($v) {
-				$this->document->setMetadata($k, $v);
-			}
-		}
-
-		// Add feed links
-		if ($this->params->get('show_feed_link', 1)) {
-			$link = '&format=feed&limitstart=';
-			$attribs = array('type' => 'application/rss+xml', 'title' => 'RSS 2.0');
-			$this->document->addHeadLink(JRoute::_($link . '&type=rss'), 'alternate', 'rel', $attribs);
-			$attribs = array('type' => 'application/atom+xml', 'title' => 'Atom 1.0');
-			$this->document->addHeadLink(JRoute::_($link . '&type=atom'), 'alternate', 'rel', $attribs);
-		}
 	}
 }
