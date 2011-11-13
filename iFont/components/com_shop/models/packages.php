@@ -134,11 +134,8 @@ class ShopModelPackages extends JModelList
 	}
 
 	private function _getNumFonts($package_id) {
-		$db = JFactory::getDbo();
-		$query = "SELECT COUNT(*) FROM #__shop_font a WHERE package_id = " . $package_id;
-		$db->setQuery($query);
-		$num_fonts = $db->loadResult();
-		return $num_fonts;
+		require_once JPATH_COMPONENT .'/helpers/package.php';
+		return ShopHelperPackage::getNumFonts($package_id);
 	}
 
 }

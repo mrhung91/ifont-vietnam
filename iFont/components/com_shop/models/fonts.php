@@ -55,49 +55,29 @@ class ShopModelFonts extends JModelList
 	 */
 	protected function populateState($ordering = 'ordering', $direction = 'ASC')
 	{
+		// Initialise variables.
 		$app = JFactory::getApplication();
+		$session = JFactory::getSession();
 
-		// List state information
-		//$value = $app->getUserStateFromRequest('global.list.limit', 'limit', $app->getCfg('list_limit'));
-		$value = JRequest::getUInt('limit', $app->getCfg('list_limit', 0));
-		$this->setState('list.limit', $value);
-
-		//$value = $app->getUserStateFromRequest($this->context.'.limitstart', 'limitstart', 0);
-		$value = JRequest::getUInt('limitstart', 0);
-		$this->setState('list.start', $value);
-
-		$orderCol	= JRequest::getCmd('filter_order', 'a.ordering');
-		if (!in_array($orderCol, $this->filter_fields)) {
-			$orderCol = 'a.ordering';
-		}
-		$this->setState('list.ordering', $orderCol);
-
-		$listOrder	=  JRequest::getCmd('filter_order_Dir', 'ASC');
-		if (!in_array(strtoupper($listOrder), array('ASC', 'DESC', ''))) {
-			$listOrder = 'ASC';
-		}
-		$this->setState('list.direction', $listOrder);
-
-		$params = $app->getParams();
-		$this->setState('params', $params);
-		$user		= JFactory::getUser();
-
-		if ((!$user->authorise('core.edit.state', 'com_content')) &&  (!$user->authorise('core.edit', 'com_content'))){
-			// filter on published for those who do not have edit or edit.state rights.
-			$this->setState('filter.published', 1);
+		// Adjust the context to support modal layouts.
+		if ($layout = JRequest::getVar('layout')) {
+			$this->context .= '.'.$layout;
 		}
 
-		$this->setState('filter.language',$app->getLanguageFilter());
+		$search = $this->getUserStateFromRequest($this->context.'.filter.search', 'filter_search');
+		$this->setState('filter.search', $search);
 
-		// process show_noauth parameter
-		if (!$params->get('show_noauth')) {
-			$this->setState('filter.access', true);
-		}
-		else {
-			$this->setState('filter.access', false);
-		}
+		$access = $this->getUserStateFromRequest($this->context.'.filter.access', 'filter_access', 0, 'int');
+		$this->setState('filter.access', $access);
 
-		$this->setState('layout', JRequest::getCmd('layout'));
+		$published = $this->getUserStateFromRequest($this->context.'.filter.published', 'filter_published', '');
+		$this->setState('filter.published', $published);
+
+		$packageId = $this->getUserStateFromRequest($this->context.'.filter.package_id', 'filter_package_id');
+		$this->setState('filter.package_id', $packageId);
+
+		// List state information.
+		parent::populateState('a.name', 'asc');
 	}
 
 	/**

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="Package View" option="Package View Option">
+		<message>
+			View a Package and it's fonts
+		</message>
+	</layout>
+
+	<!-- Add fields to the request variables for the layout. -->
+	<fields name="request">
+		<fieldset name="request"
+		>
+
+			<field name="id" type="category"
+				description="Package"
+				extension="com_content"
+				label="Choose Package"
+				required="true"
+			/>
+		</fieldset>
+	</fields>
+
+	<!-- Add fields to the parameters object for the layout. -->
+	<fields name="params">
+		<fieldset name="basic" label="JGLOBAL_CATEGORY_OPTIONS">
+
+			<field name="show_package_title" type="list"
+				label="Show Package Title"
+				description="Show Package Title"
+			>
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+
+			<field name="show_description" type="list"
+				description="Show Category Description"
+				label="Show Category Description"
+			>
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+
+			<field name="show_no_fonts" type="list"
+				label="Show No Fonts"
+				description="Show No Fonts"
+				>
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+
+			<field name="page_subheading" type="text"
+				description="JGLOBAL_SUBHEADING_DESC"
+				label="JGLOBAL_SUBHEADING_LABEL"
+				size="20"
+			/>
+
+		</fieldset>
+
+		<fieldset name="advanced" label="JGLOBAL_LIST_LAYOUT_OPTIONS">
+
+			<field name="show_pagination_limit" type="list"
+				description="JGLOBAL_DISPLAY_SELECT_DESC"
+				label="JGLOBAL_DISPLAY_SELECT_LABEL"
+			>
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+
+			<field name="filter_field" type="list"
+				description="JGLOBAL_FILTER_FIELD_DESC"
+				label="JGLOBAL_FILTER_FIELD_LABEL"
+			>
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="hide">JHIDE</option>
+				<option value="title">JGLOBAL_TITLE</option>
+				<option value="author">JAUTHOR</option>
+				<option value="hits">JGLOBAL_HITS</option>
+			</field>
+
+			<field name="show_headings" type="list"
+				description="JGLOBAL_SHOW_HEADINGS_DESC"
+				label="JGLOBAL_SHOW_HEADINGS_LABEL"
+			>
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+
+			<field
+			name="spacer1"
+			type="spacer"
+			hr="true"
+			/>
+
+			<field name="show_pagination" type="list"
+				description="JGLOBAL_PAGINATION_DESC"
+				label="JGLOBAL_PAGINATION_LABEL"
+			>
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+				<option value="2">JGLOBAL_AUTO</option>
+			</field>
+
+			<field name="show_pagination_results" type="list"
+				label="JGLOBAL_PAGINATION_RESULTS_LABEL"
+				description="JGLOBAL_PAGINATION_RESULTS_DESC">
+
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+		</field>
+		<field name="display_num" type="list"
+				default="10"
+				description="JGLOBAL_NUMBER_ITEMS_LIST_DESC"
+				label="JGLOBAL_NUMBER_ITEMS_LIST_LABEL">
+				<option value="5">J5</option>
+				<option value="10">J10</option>
+				<option value="15">J15</option>
+				<option value="20">J20</option>
+				<option value="25">J25</option>
+				<option value="30">J30</option>
+				<option value="50">J50</option>
+				<option value="100">J100</option>
+				<option value="0">JALL</option>
+		</field>
+
+	</fieldset>
+
+</fields>
+</metadata>

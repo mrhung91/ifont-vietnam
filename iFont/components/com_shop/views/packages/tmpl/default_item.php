@@ -15,7 +15,7 @@ $doc = JFactory::getDocument();
 <div class="ofh mg_bot30px">
 	<div class="headindex">
 		<ul class="left">
-			<li class="fix_txt"><a href="<?php echo $doc->baseurl; ?>index.php?option=com_shop&view=package&id=<?php echo $this->item->id; ?>">
+			<li class="fix_txt"><a href="<?php echo ShopHelperRoute::getPackageRoute($this->item->id); ?>">
 				<?php echo $this->item->name; ?></a>&nbsp;|&nbsp;đăng bởi <?php echo $this->item->user; ?></li>
 			<li><span class="ico01 os"></span> <span class="ico02 os"></span><span class="ico03 os"></span>
 			</li>
