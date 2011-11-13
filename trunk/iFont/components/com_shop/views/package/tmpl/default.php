@@ -11,36 +11,33 @@
 defined('_JEXEC') or die;
 
 JHtml::addIncludePath(JPATH_COMPONENT.'/helpers');
-
+$doc = JFactory::getDocument();
 ?>
 <div class="package-list<?php echo $this->pageclass_sfx;?>">
 
-	<?php if ($this->params->get('show_page_heading', 1)) : ?>
+	<?php if ($this->params->get('show_page_heading', 0)) : ?>
 	<h1>
 		<?php echo $this->escape($this->params->get('page_heading')); ?>
 	</h1>
 	<?php endif; ?>
 
-	<?php if ($this->params->get('show_package_title', 1) OR $this->params->get('page_subheading')) : ?>
-	<h2>
-		<?php echo $this->escape($this->params->get('page_subheading')); ?>
-		<?php if ($this->params->get('show_package_title')) : ?>
-			<span class="subheading-package"><?php echo $this->package->title;?></span>
-		<?php endif; ?>
+	<?php if ($this->params->get('show_package_title', 1)) : ?>
+	<h2 class="title clearfix">
+		<span class="title-label"><?php echo $this->package->name;?></span>
+		<span class="title-info">
+			<?php echo $this->pagination->total; ?> <?php echo JText::_("Types"); ?>
+			&nbsp;|&nbsp;
+			<?php echo number_format($this->package->price, 0, ",", "."); ?> VNĐ
+			<span>Mua trọn bộ</span>
+		</span>
 	</h2>
 	<?php endif; ?>
 
-	<?php if ($this->params->get('show_description', 1) || $this->params->def('show_description_image', 1)) : ?>
 	<div class="package-desc">
-		<?php if ($this->params->get('show_description_image') && $this->package->getParams()->get('image')) : ?>
-			<img src="<?php echo $this->package->getParams()->get('image'); ?>"/>
-		<?php endif; ?>
-		<?php if ($this->params->get('show_description') && $this->package->description) : ?>
-			<?php echo JHtml::_('content.prepare', $this->package->description); ?>
-		<?php endif; ?>
+		<?php echo JText::_("Introduction"); ?>
+		<?php echo $this->package->description; ?>
 		<div class="clr"></div>
 	</div>
-	<?php endif; ?>
 
 	<div class="package-items">
 		<?php echo $this->loadTemplate('fonts'); ?>

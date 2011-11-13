@@ -37,7 +37,7 @@ abstract class ShopHelperRoute
 		if ((int) $package_id > 0) {
 			$package = JTable::getInstance("Package", "ShopTable");
 			if($package->load($package_id)) {
-				$needles['package'] = array_reverse($package->getPath());
+				$needles['package'] = $package->package_id.':'.$package->alias;
 				$needles['packages'] = $needles['package'];
 				$link .= '&package='.$package_id;
 			}

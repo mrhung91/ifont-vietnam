@@ -34,6 +34,7 @@ class ShopModelFonts extends JModelList
 				'id', 'a.package_id',
 				'name', 'a.name',
 				'alias', 'a.alias',
+				'price', 'a.price',
 				'packageid', 'a.package_id', 'category_title',
 				'state', 'a.state',
 				'created', 'a.created',
@@ -147,7 +148,7 @@ class ShopModelFonts extends JModelList
 		$query->select(
 			$this->getState(
 				'list.select',
-				'a.font_id as id, a.name, a.alias, a.package_id, a.created, a.created_by, ' .
+				'a.font_id as id, a.name, a.alias, a.price, a.package_id, a.created, a.created_by, ' .
 				// use created if modified is 0
 				'CASE WHEN a.modified = 0 THEN a.created ELSE a.modified END as modified, ' .
 					'a.modified_by, uam.name as modified_by_name,' .

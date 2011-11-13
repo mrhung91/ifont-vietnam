@@ -12,37 +12,55 @@ defined('_JEXEC') or die;
 $doc			= JFactory::getDocument();
 $doc->addScript($doc->baseurl.'/templates/site/javascript/jquery.form.js', 'text/javascript', true);
 ?>
-<form id="contact-form" action="<?php echo JRoute::_('index.php'); ?>" method="post" class="form-validate">
-	<h3>LIÊN HỆ</h3>
-	<input name="jform[contact_name]" id="txtContactName" value="Tên" type="text" class="text" />
-	<input name="jform[contact_email]" id="txtContactEmail" value="Địa chỉ thư" type="text" class="text" />
-	<textarea name="jform[contact_message]" id="txtContactContent">Nội dung</textarea>
-	<a class="button" href="javascript:;" onclick="submitContact(this);">&nbsp;</a>
+<div class="heading">Liên hệ</div>
+<div class="form_contact">
+	<form id="contact-form" action="<?php echo JRoute::_('index.php'); ?>" method="post" class="form-validate">
+		<div class="bg_white">
+			<input name="jform[contact_name]" id="txtContactName" value="Tên" type="text" class="tf_contact" />
+		</div>
+		<div class="bg_white">
+			<input name="jform[contact_email]" id="txtContactEmail" value="Địa chỉ thư" type="text" class="tf_contact" />
+		</div>
+		<div class="bg_white">
+			<div class="mg_bot15px">
+				<textarea name="jform[contact_message]" id="txtContactContent" class="ta_contact">Nội dung</textarea>
+			</div>
+			<div class="fix01 mg_bbot15px">
+				<input type="button" class="btn_send" value="gửi" onclick="submitContact(this);" />
+			</div>
+		</div>
 
-	<input type="hidden" name="option" value="com_contact" />
-	<input type="hidden" name="task" value="contact.ajaxSubmit" />
-	<input type="hidden" name="return" value="<?php echo JURI::current();?>" />
-	<input type="hidden" name="id" value="<?php echo $contact_id; ?>" />
-	<input type="hidden" name="jform[contact_subject]" value="Liên hệ" />
-	<?php echo JHtml::_( 'form.token' ); ?>
-</form>
+		<input type="hidden" name="option" value="com_contact" />
+		<input type="hidden" name="task" value="contact.ajaxSubmit" />
+		<input type="hidden" name="return" value="<?php echo JURI::current();?>" />
+		<input type="hidden" name="id" value="<?php echo $contact_id; ?>" />
+		<input type="hidden" name="jform[contact_subject]" value="Liên hệ" />
+		<?php echo JHtml::_( 'form.token' ); ?>
+	</form>
+</div>
 
 <script type="text/javascript">
+$inputs = jQuery("#contact-form").find("input.tf_contact,textarea");
 jQuery(document).ready(function() {
-	jQuery("#contact-form").find("input.text,textarea").each(function() {
+	$inputs.each(function() {
 		this.defaultValue = jQuery(this).val();
 		jQuery(this).focus(function() {
 			if (this.defaultValue == jQuery(this).val()) {
 				jQuery(this).val("");
+			}
+		}).blur(function() {
+			if ("" == jQuery(this).val()) {
+				jQuery(this).val(this.defaultValue);
 			}
 		});
 	});
 });
 function submitContact(btSubmit) {
 	btSubmit.disabled = true;
+
 	jQuery("#contact-form").ajaxSubmit({
 		beforeSubmit: function() {
-			jQuery("#contact-form").find("input.text,textarea").each(function() {
+			$inputs.each(function() {
 				jQuery(this).val(jQuery.trim(jQuery(this).val()));
 			});
 			var name = jQuery("#txtContactName").val();
@@ -67,7 +85,7 @@ function submitContact(btSubmit) {
 		},
 		success: function() {
 			btSubmit.disabled = false;
-			jQuery("#contact-form").find("input.text,textarea").val("");
+			$inputs.val("");
 		}
 	});
 }
