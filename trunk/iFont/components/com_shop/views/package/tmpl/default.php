@@ -10,36 +10,45 @@
 // no direct access
 defined('_JEXEC') or die;
 
-JHtml::addIncludePath(JPATH_COMPONENT.'/helpers');
-$doc = JFactory::getDocument();
+require_once JPATH_COMPONENT .'/helpers/package.php';
+$num_fonts = ShopHelperPackage::getNumFonts($this->package->package_id);
+setlocale(LC_MONETARY, 'en_US');
 ?>
-<div class="package-list<?php echo $this->pageclass_sfx;?>">
+<div class="package<?php echo $this->pageclass_sfx;?>">
 
-	<?php if ($this->params->get('show_page_heading', 0)) : ?>
-	<h1>
-		<?php echo $this->escape($this->params->get('page_heading')); ?>
-	</h1>
-	<?php endif; ?>
+	<div class="heading_bderbot">
+		<h3 class="ico_arrow fl"><?php echo $this->package->name;?></h3>
+		<div class="headindex fr">
+			<ul class="right">
+				<li class="fix_txt"><?php echo $num_fonts; ?> kiểu&nbsp;|
+					&nbsp;<?php echo number_format($this->package->price, 0, '', "."); ?> VNĐ</li>
+				<li class="btn_buy"><a id="lnkBuyPackage" href="javascript:;"
+						onclick="buyPackage(<?php echo $this->package->package_id; ?>)">Mua trọn bộ</a></li>
+			</ul>
+		</div>
+	</div>
 
-	<?php if ($this->params->get('show_package_title', 1)) : ?>
-	<h2 class="title clearfix">
-		<span class="title-label"><?php echo $this->package->name;?></span>
-		<span class="title-info">
-			<?php echo $this->pagination->total; ?> <?php echo JText::_("Types"); ?>
-			&nbsp;|&nbsp;
-			<?php echo number_format($this->package->price, 0, ",", "."); ?> VNĐ
-			<span>Mua trọn bộ</span>
-		</span>
-	</h2>
-	<?php endif; ?>
-
-	<div class="package-desc">
-		<?php echo JText::_("Introduction"); ?>
-		<?php echo $this->package->description; ?>
-		<div class="clr"></div>
+	<div class="txt01 mg_bot30px">
+		<strong>Giới thiệu:</strong>
+		<p><?php echo JHtml::_('content.prepare', $this->package->description); ?></p>
 	</div>
 
 	<div class="package-items">
-		<?php echo $this->loadTemplate('fonts'); ?>
+	<?php foreach ($this->items as $index => $item): ?>
+	<?php
+		$this->item = $item;
+		echo $this->loadTemplate('item');
+	?>
+	<?php endforeach; ?>
 	</div>
+
+	<?php // Add pagination links ?>
+	<?php if (!empty($this->items)) : ?>
+		<?php if (($this->params->def('show_pagination', 2) == 1  || ($this->params->get('show_pagination') == 2)) && ($this->pagination->get('pages.total') > 1)) : ?>
+		<div class="pagination">
+			<?php echo $this->pagination->getPagesLinks(); ?>
+		</div>
+		<?php endif; ?>
+	</form>
+	<?php  endif; ?>
 </div>

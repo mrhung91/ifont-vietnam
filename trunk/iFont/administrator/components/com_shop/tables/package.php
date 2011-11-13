@@ -113,4 +113,9 @@ class ShopTablePackage extends JTable
 		}
 		return false;
 	}
+
+	public function getPath() {
+		return $this->package_id.':'.$this->alias;
+	}
+
 }

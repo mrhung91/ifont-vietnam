@@ -91,7 +91,8 @@ class ShopViewPackage extends JView
 
 		$id = (int) @$menu->query['id'];
 
-		if ($menu && ($menu->query['option'] != 'com_shop' || $menu->query['view'] == 'font' || $id != $this->package->id)) {
+		if ($menu && ($menu->query['option'] != 'com_shop' || $menu->query['view'] == 'font' ||
+				$id != $this->package->package_id)) {
 			$path = array(array('title' => $this->package->name, 'link' => ''));
 
 			$path = array_reverse($path);

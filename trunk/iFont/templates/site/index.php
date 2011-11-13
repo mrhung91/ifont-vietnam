@@ -26,6 +26,7 @@ $app			= JFactory::getApplication();
 $doc			= JFactory::getDocument();
 $templateparams	= $app->getTemplate(true)->params;
 $tplUrl			= $this->baseurl . "/templates/site";
+$user			= JFactory::getUser();
 ?>
 <?php if(!$templateparams->get('html5', 0)): ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -83,5 +84,27 @@ $tplUrl			= $this->baseurl . "/templates/site";
 		</div>
 	</div>
 	 <div id="overlay" style="display: none;"></div>
+	 <?php if ($user == null): ?>
+	 <div id="dlgLogin" style="display: none;">
+	 	<div class="box_login" id="login">
+			<h3>Đăng nhập</h3>
+		    <form id="formLogin" name="formLogin" action="">
+		    	<h5>Thông tin đăng nhập</h5>
+		        <ul>
+			        <li class="w195">Email đăng nhập</li>
+			        <li class="bg_tflogin"><input type="text" class="tf_login" name="email" id="txtLoginEmail"></li>
+			        <div class="clr hg10px"></div>
+			        <li class="w195">Mật khẩu</li>
+			        <li class="bg_tflogin"><input type="text" class="tf_login" name="password" id="txtLoginPassword" ></li>
+			        <div class="clr hg10px"></div>
+			        <li class="italic"><a href="#">Quên mật khẩu?</a>|<a href="#">Đăng ký</a></li>
+			        <div class="clr hg20px"></div>
+			        <li class="button_login"><input type="button" class="btn" value="Đăng nhập"></li>
+		        </ul>
+		    </form>
+		    <div class="ico_close"><a href="javascript:;" onlick="closeLoginBox();"></a></div>
+		</div>
+	 </div>
+	 <?php endif; ?>
 </body>
 </html>

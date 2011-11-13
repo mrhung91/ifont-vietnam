@@ -37,7 +37,7 @@ abstract class ShopHelperRoute
 		if ((int) $package_id > 0) {
 			$package = JTable::getInstance("Package", "ShopTable");
 			if($package->load($package_id)) {
-				$needles['package'] = $package->package_id.':'.$package->alias;
+				$needles['package'] = $package->getPath();
 				$needles['packages'] = $needles['package'];
 				$link .= '&package='.$package_id;
 			}
@@ -53,10 +53,9 @@ abstract class ShopHelperRoute
 		return $link;
 	}
 
-	public static function getPackageRoute($packageid) {
-		$id = (int) $packageid;
-		$model = JModel::getInstance("Package", "Shop");
-		$package = $model->get($id);
+	public static function getPackageRoute($package_id) {
+		$id = (int) $package_id;
+		$package = JTable::getInstance("Package", "ShopTable");
 
 		if($id < 1) {
 			$link = '';
@@ -65,16 +64,13 @@ abstract class ShopHelperRoute
 				'package' => array($id)
 			);
 
-			if ($item = self::_findItem($needles))
-			{
+			if ($item = self::_findItem($needles)) {
 				$link = 'index.php?Itemid='.$item;
-			}
-			else
-			{
+			} else {
 				//Create the link
 				$link = 'index.php?option=com_shop&view=package&id='.$id;
-				if($package) {
-					$packageids = array_reverse($package->getPath());
+				if ($package->load($package_id)) {
+					$packageids = $package->getPath();
 					$needles = array(
 						'package' => $packageids,
 						'packages' => $packageids
@@ -92,34 +88,29 @@ abstract class ShopHelperRoute
 		return $link;
 	}
 
-	public static function getFormRoute($id)
-	{
+	public static function getFormRoute($id) {
 		//Create the link
 		if ($id) {
-			$link = 'index.php?option=com_content&task=article.edit&a_id='. $id;
+			$link = 'index.php?option=com_shop&task=font.edit&a_id='. $id;
 		} else {
-			$link = 'index.php?option=com_content&task=article.edit&a_id=0';
+			$link = 'index.php?option=com_shop&task=font.edit&a_id=0';
 		}
 
 		return $link;
 	}
 
-	protected static function _findItem($needles = null)
-	{
+	protected static function _findItem($needles = null) {
 		$app		= JFactory::getApplication();
 		$menus		= $app->getMenu('site');
 
 		// Prepare the reverse lookup array.
-		if (self::$lookup === null)
-		{
+		if (self::$lookup === null) {
 			self::$lookup = array();
 
 			$component	= JComponentHelper::getComponent('com_content');
 			$items		= $menus->getItems('component_id', $component->id);
-			foreach ($items as $item)
-			{
-				if (isset($item->query) && isset($item->query['view']))
-				{
+			foreach ($items as $item) {
+				if (isset($item->query) && isset($item->query['view'])) {
 					$view = $item->query['view'];
 					if (!isset(self::$lookup[$view])) {
 						self::$lookup[$view] = array();
@@ -131,25 +122,19 @@ abstract class ShopHelperRoute
 			}
 		}
 
-		if ($needles)
-		{
-			foreach ($needles as $view => $ids)
-			{
-				if (isset(self::$lookup[$view]))
-				{
-					foreach($ids as $id)
-					{
+		if ($needles) {
+			foreach ($needles as $view => $ids) {
+				if (isset(self::$lookup[$view])) {
+					foreach($ids as $id) {
 						if (isset(self::$lookup[$view][(int)$id])) {
 							return self::$lookup[$view][(int)$id];
 						}
 					}
 				}
 			}
-		}
-		else
-		{
+		} else {
 			$active = $menus->getActive();
-			if ($active && $active->component == 'com_content') {
+			if ($active && $active->component == 'com_shop') {
 				return $active->id;
 			}
 		}

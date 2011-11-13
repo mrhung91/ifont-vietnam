@@ -26,6 +26,26 @@
 	src: local('../fonts/HelveticaiDesignVn-Lt'), local('../fonts/HelveticaiDesignVn-Lt'), url('../fonts/HelveticaiDesignVn-Lt.ttf') format('truetype');
 }
 
+.clearfix:after {
+    clear: both;
+    content: ".";
+    display: block;
+    height: 0;
+    line-height: 0;
+    visibility: hidden;
+}
+
+.clearfix {
+    display: inline-block;
+}
+
+html[xmlns] .clearfix {
+    display: block;
+}
+* html .clearfix {
+    height: 1%;
+}
+
 .newletter, h3{ font-family:'HelveticaiDesignVn-UltLt', Arial, Helvetica, sans-serif;}
 
 h4, #content .detail li.change_font, .btn, .btn_buy, .btn_buy_big, .detail_djs h5, h5{ font-family:'HelveticaiDesignVn-BdCn', Arial, Helvetica, sans-serif;}
@@ -120,17 +140,6 @@ h5{ font-size:22px; line-height:26px; color:#333; margin-bottom:15px; padding:0;
 .headindex ul.right a{ height:22px; line-height:20px; color:#FFF; display:block; float:left; margin:0 3px; background:url(../images/arrow_r.png) no-repeat right center; text-transform:uppercase; padding: 0 15px 0 0;}
 .show_img_font{ border:1px solid #ececec;}
 
-.paging_main{ overflow:hidden; position:relative; left:-6px;}
-.paging_main ul{}
-.paging_main li{ float:left;}
-.paging_main a.arrow_left{ background:url(../images/arrow_paging.png) no-repeat left top; width:18px; height:33px; display:block; position:relative; top:10px;}
-.paging_main a.arrow_right{ background:url(../images/arrow_paging.png) no-repeat right top; width:18px; height:33px; display:block; position:relative; top:10px;}
-.paging_main a{ font-size:48px; line-height:48px; margin:0 6px; color:#a7a7a7;}
-.paging_main a:hover{ color:#067776;}
-.paging_main li.active{ color:#067776; font-size:48px; line-height:48px; margin:0 6px;}
-.paging_main a.arrow_left:hover{ background:url(../images/arrow_paging.png) no-repeat left bottom;}
-.paging_main a.arrow_right:hover{ background:url(../images/arrow_paging.png) no-repeat right bottom;}
-
 #content .detail{ font-size:22px; line-height:26px;}
 #content .detail ul{}
 #content .detail li{ overflow:hidden;}
@@ -187,5 +196,40 @@ h5{ font-size:22px; line-height:26px; color:#333; margin-bottom:15px; padding:0;
 .detail_djs{}
 .detail_djs span{ color:#067776;}
 
+/* Pagination */
+.pagination li { float: left; }
+.pagination, .pagination a { font-size:48px; line-height:48px; margin:0 6px; }
+.pagination a { color: #a7a7a7; }
+.pagination span, .pagination a:hover { color: #067776; }
 
+.pagination-prev, .pagination-next { margin-top: 10px; }
+.pagination-prev span, .pagination-prev a {
+    background: url("../images/arrow_paging.png") no-repeat scroll left top transparent;
+    display: block;
+    height: 33px;
+    top: 10px;
+    width: 18px;
+    font-size: 48px;
+    line-height: 48px;
+    margin: 0 6px;
+}
 
+.pagination-prev a:hover {
+    background: url("../images/arrow_paging.png") no-repeat scroll left bottom transparent;
+}
+
+/* Pagination */
+.pagination-next span, .pagination-next a {
+    background: url("../images/arrow_paging.png") no-repeat scroll right top transparent;
+    display: block;
+    height: 33px;
+    top: 10px;
+    width: 18px;
+    font-size: 48px;
+    line-height: 48px;
+    margin: 0 6px;
+}
+
+.pagination-next a:hover {
+    background: url("../images/arrow_paging.png") no-repeat scroll right bottom transparent;
+}
