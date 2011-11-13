@@ -31,8 +31,8 @@ JHtml::_('behavior.keepalive');
 	</div>
 </form>
 <?php else : ?>
-<div class="boxlogin">
-	<a href="<?php echo JRoute::_("index.php?option=com_users&view=login&Itemid=183"); ?>">Đăng nhập</a>
-	<span>|</span>
-	<a href="<?php echo JRoute::_("index.php?option=com_users&view=registration&Itemid=184"); ?>">Đăng ký</a></div>
+<div class="newletter">
+	<a href="<?php echo JRoute::_("index.php?option=com_users&view=login&Itemid=183"); ?>">Đăng nhập</a>|<a
+		 href="<?php echo JRoute::_("index.php?option=com_users&view=registration&Itemid=184"); ?>">Đăng ký</a>
+</div>
 <?php endif; ?>

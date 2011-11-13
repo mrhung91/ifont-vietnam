@@ -25,6 +25,7 @@ JHtml::_('behavior.framework', true);
 $app			= JFactory::getApplication();
 $doc			= JFactory::getDocument();
 $templateparams	= $app->getTemplate(true)->params;
+$tplUrl			= $this->baseurl . "/templates/site";
 ?>
 <?php if(!$templateparams->get('html5', 0)): ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -38,41 +39,47 @@ $templateparams	= $app->getTemplate(true)->params;
 	dir="<?php echo $this->direction; ?>">
 <head>
 	<jdoc:include type="head" />
-	<link rel="stylesheet" href="<?php echo $this->baseurl; ?>/templates/site/css/style.css" type="text/css" />
+	<link rel="stylesheet" href="<?php echo $tplUrl; ?>/css/style.css" type="text/css" />
 	<?php if($templateparams->get('html5', 0)) { ?>
 	<!--[if lt IE 9]>
 	<![endif]-->
 	<?php } ?>
-	<script type="text/javascript" src="<?php echo $this->baseurl; ?>/templates/site/javascript/jquery-1.6.2.min.js"></script>
-	<script type="text/javascript" src="<?php echo $this->baseurl; ?>/templates/site/javascript/main.js"></script>
-	<script type="text/javascript">
-	jQuery.noConflict();
-	</script>
+	<script type="text/javascript" src="<?php echo $tplUrl; ?>/javascript/jquery-1.6.2.min.js"></script>
+	<script type="text/javascript" src="<?php echo $tplUrl; ?>/javascript/main.js"></script>
 </head>
 <body>
-	<div id="container" class="clearfix">
-		<div id="coleft">
-			<div id="toolsleft">
+	<div id="container">
+		<div class="panel_left">
+			<div class="menu">
 				<jdoc:include type="modules" name="position-7" />
 			</div>
-			<div id="contactbox">
+			<div class="contact">
 				<jdoc:include type="modules" name="position-4" />
 			</div>
 		</div>
-		<div id="coright">
-			<div id="topbar">
-				<jdoc:include type="modules" name="position-6" />
+		<div class="panel_right">
+			<div id="header">
+				<div class="left">
+					<div class="logo">
+						<a href="<?php echo $this->baseurl; ?>">
+							<img src="<?php echo $tplUrl; ?>/images/logo.png" width="108" height="77" />
+						</a>
+					</div>
+				</div>
+				<div class="right">
+					<div class="nav_menuTop">
+						<jdoc:include type="modules" name="position-6" />
+					</div>
+				</div>
 			</div>
-			<div id="toplogo">
-				<jdoc:include type="modules" name="position-8" />
-			</div>
-			<div id="main">
+			<div id="content">
 				<jdoc:include type="component" />
 				<jdoc:include type="modules" name="position-5" />
 			</div>
-			<div id="footer">
-				<p>Copyright &copy; 2011 vf.vn - All Rights Reserved.</p>
-			</div>
+			<div id="footer">&copy; 2011 vf.vn - All Rights Reserved.</div>
+		</div>
+		<div id="ads">
+			<jdoc:include type="modules" name="position-13" />
 		</div>
 	</div>
 	 <div id="overlay" style="display: none;"></div>

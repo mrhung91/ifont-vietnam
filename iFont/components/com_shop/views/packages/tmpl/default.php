@@ -15,11 +15,15 @@ JHtml::addIncludePath(JPATH_COMPONENT.'/helpers');
 ?>
 <div class="categories-list<?php echo $this->pageclass_sfx;?>">
 <?php if ($this->params->get('show_page_heading', 1)) : ?>
-<h1>
-	<?php echo $this->escape($this->params->get('page_heading')); ?>
-</h1>
+	<div class="heading_bderbot">
+		<h3 class="textright"><?php echo $this->escape($this->params->get('page_heading')); ?></h3>
+	</div>
 <?php endif; ?>
+
+<?php foreach ($this->items as $item): ?>
 <?php
-echo $this->loadTemplate('items');
+	$this->item = &$item;
+	echo $this->loadTemplate('item');
 ?>
+<?php endforeach; ?>
 </div>
