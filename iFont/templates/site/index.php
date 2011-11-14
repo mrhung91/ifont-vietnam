@@ -41,15 +41,18 @@ $user			= JFactory::getUser();
 <head>
 	<jdoc:include type="head" />
 	<link rel="stylesheet" href="<?php echo $tplUrl; ?>/css/style.css" type="text/css" />
+	<link rel="stylesheet" href="<?php echo $tplUrl; ?>/javascript/jquery.simpledialog.0.1.css" type="text/css" />
 	<?php if($templateparams->get('html5', 0)) { ?>
 	<!--[if lt IE 9]>
 	<![endif]-->
 	<?php } ?>
 	<script type="text/javascript" src="<?php echo $tplUrl; ?>/javascript/jquery-1.6.2.min.js"></script>
+	<script type="text/javascript" src="<?php echo $tplUrl; ?>/javascript/jquery.simpledialog.0.1.pack.js"></script>
+	<script type="text/javascript" src="<?php echo $tplUrl; ?>/javascript/jquery.form.js"></script>
 	<script type="text/javascript" src="<?php echo $tplUrl; ?>/javascript/main.js"></script>
 </head>
 <body>
-	<div id="container">
+	<div id="container" class="clearfix">
 		<div class="panel_left">
 			<div class="menu">
 				<jdoc:include type="modules" name="position-7" />
@@ -83,28 +86,37 @@ $user			= JFactory::getUser();
 			<jdoc:include type="modules" name="position-13" />
 		</div>
 	</div>
-	 <div id="overlay" style="display: none;"></div>
-	 <?php if ($user == null): ?>
-	 <div id="dlgLogin" style="display: none;">
-	 	<div class="box_login" id="login">
+	<?php if ($user->id == 0): ?>
+	<div id="loginDlg" style="display: none;">
+		<div class="box_login" id="login">
 			<h3>Đăng nhập</h3>
-		    <form id="formLogin" name="formLogin" action="">
-		    	<h5>Thông tin đăng nhập</h5>
-		        <ul>
-			        <li class="w195">Email đăng nhập</li>
-			        <li class="bg_tflogin"><input type="text" class="tf_login" name="email" id="txtLoginEmail"></li>
-			        <div class="clr hg10px"></div>
-			        <li class="w195">Mật khẩu</li>
-			        <li class="bg_tflogin"><input type="text" class="tf_login" name="password" id="txtLoginPassword" ></li>
-			        <div class="clr hg10px"></div>
-			        <li class="italic"><a href="#">Quên mật khẩu?</a>|<a href="#">Đăng ký</a></li>
-			        <div class="clr hg20px"></div>
-			        <li class="button_login"><input type="button" class="btn" value="Đăng nhập"></li>
-		        </ul>
+			<form id="formLogin" name="formLogin" onsubmit="return submitAjaxLogin();"
+					action="<?php echo JRoute::_('index.php?option=com_users&task=user.ajaxLogin'); ?>" method="post">
+				<h5>Thông tin đăng nhập</h5>
+				<ul>
+					<li class="w195">Email đăng nhập</li>
+					<li class="bg_tflogin"><input type="text" class="tf_login"
+						name="username" id="txtLoginEmail">
+					</li>
+					<div class="clr hg10px"></div>
+					<li class="w195">Mật khẩu</li>
+					<li class="bg_tflogin"><input type="password" class="tf_login"
+						name="password" id="txtLoginPassword">
+					</li>
+					<div class="clr hg10px"></div>
+					<li class="italic"><a href="#">Quên mật khẩu?</a>|<a href="#">Đăng
+							ký</a></li>
+					<div class="clr hg20px"></div>
+					<li class="button_login"><input type="submit" class="btn" value="Đăng nhập" />
+					</li>
+				</ul>
+		        <?php echo JHtml::_('form.token'); ?>
 		    </form>
-		    <div class="ico_close"><a href="javascript:;" onlick="closeLoginBox();"></a></div>
+			<div class="ico_close">
+				<a href="#" class="close"></a>
+			</div>
 		</div>
-	 </div>
-	 <?php endif; ?>
+	</div>
+	<?php endif; ?>
 </body>
 </html>
