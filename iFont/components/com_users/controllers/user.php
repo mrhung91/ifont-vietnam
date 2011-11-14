@@ -224,4 +224,45 @@ class UsersControllerUser extends UsersController
 		// Check for request forgeries
 		JRequest::checkToken('post') or jexit(JText::_('JINVALID_TOKEN'));
 	}
+
+	public function ajaxLogin() {
+		JRequest::checkToken('post') or jexit(JText::_('JInvalid_Token'));
+
+		$app = JFactory::getApplication();
+
+		// Populate the data array:
+		$data = array();
+		$data['return'] = base64_decode(JRequest::getVar('return', '', 'POST', 'BASE64'));
+		$data['username'] = JRequest::getVar('username', '', 'method', 'username');
+		$data['password'] = JRequest::getString('password', '', 'post', JREQUEST_ALLOWRAW);
+
+		// Set the return URL if empty.
+		if (empty($data['return'])) {
+			$data['return'] = 'index.php?option=com_users&view=profile';
+		}
+
+		// Get the log in options.
+		$options = array();
+		$options['remember'] = JRequest::getBool('remember', false);
+		$options['return'] = $data['return'];
+
+		// Get the log in credentials.
+		$credentials = array();
+		$credentials['username'] = $data['username'];
+		$credentials['password'] = $data['password'];
+
+		// Perform the log in.
+		$error = $app->login($credentials, $options);
+
+		// Check if the log in succeeded.
+		if ($error === true) {
+			echo "0";
+			$app->setUserState('users.login.form.data', array());
+			JApplication::close();
+		} else {
+			echo "1";
+			JApplication::close();
+		}
+	}
+
 }
