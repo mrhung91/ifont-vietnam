@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 JHtml::_('behavior.keepalive');
 ?>
 <?php if ($type == 'logout') : ?>
+<div class="welcome">
 <form action="<?php echo JRoute::_('index.php', true, $params->get('usesecure')); ?>" method="post" id="login-form">
 <?php if ($params->get('greeting')) : ?>
 	<div class="login-greeting">
@@ -30,9 +31,10 @@ JHtml::_('behavior.keepalive');
 		<?php echo JHtml::_('form.token'); ?>
 	</div>
 </form>
+</div>
 <?php else : ?>
 <div class="newletter">
-	<a href="<?php echo JRoute::_("index.php?option=com_users&view=login&Itemid=183"); ?>">Đăng nhập</a>|<a
-		 href="<?php echo JRoute::_("index.php?option=com_users&view=registration&Itemid=184"); ?>">Đăng ký</a>
+	<a id="lnkLogin" class="dialog" href="#" rel="loginDlg">Đăng nhập</a>|<a
+		  id="lnkRegister" class="dialog" href="<?php echo JRoute::_("index.php?option=com_users&view=registration&Itemid=184"); ?>" rel="registerDlg">Đăng ký</a>
 </div>
 <?php endif; ?>

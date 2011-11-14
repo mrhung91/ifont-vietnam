@@ -46,8 +46,6 @@ html[xmlns] .clearfix {
     height: 1%;
 }
 
-.newletter, h3{ font-family:'HelveticaiDesignVn-UltLt', Arial, Helvetica, sans-serif;}
-
 h4, #content .detail li.change_font, .btn, .btn_buy, .btn_buy_big, .detail_djs h5, h5{ font-family:'HelveticaiDesignVn-BdCn', Arial, Helvetica, sans-serif;}
 
 body{ font-size:15px; color:#a7a7a7; font-family:'HelveticaiDesignVn-UltLt', Arial, Helvetica, sans-serif; line-height:18px; background:url(../images/bg_body.png) repeat-y center;}
@@ -99,8 +97,11 @@ a{ text-decoration:none; color:#a7a7a7;}
 .btn_search{ background:url(../images/ico_search.png) no-repeat 2px 2px; width:16px; height:16px; border:none; cursor:pointer; margin:0 5px 0 0; position:relative; top:1px;}
 .tf_search{ width:110px; height:18px; background:none; border:none; color:#9e9e9e; font-family:'HelveticaiDesignVn-UltLt', Arial, Helvetica, sans-serif; font-size:15px; line-height:18px;
 	 background: url("../images/ico_search.png") no-repeat scroll 2px 2px transparent; padding-left: 20px; }
-.newletter{ background:#5e5e5e; color:#FFF; height:22px; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; behavior:url('css/css3.htc'); overflow:hidden; float:left; margin:0 0 0 22px;}
-.newletter a{ color:#FFF; padding:0 8px; line-height:20px;}
+.newletter, .welcome { -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; behavior:url('css/css3.htc'); overflow:hidden; float:left; margin:0 0 0 22px;}
+.newletter { background:#5e5e5e; color:#FFF; }
+.newletter a{ color:#FFF; padding:0 8px; line-height:20px; height:22px; }
+.newletter, h3{ font-family:'HelveticaiDesignVn-UltLt', Arial, Helvetica, sans-serif;}
+.welcome .login-greeting, .welcome .logout-button { float: left; }
 
 h3{ font-size:48px; line-height:52px; text-transform:uppercase;}
 h3.textright{ text-align:right;}
@@ -153,7 +154,7 @@ h5{ font-size:22px; line-height:26px; color:#333; margin-bottom:15px; padding:0;
 
 .box_login{ background:#FFF; width:500px; padding:30px; font-size:22px; line-height:26px; position:relative; overflow:hidden;}
 .box_login h4{ text-transform:none;}
-.bg_tflogin{ border:1px solid #cfcfcf; padding:5px; width:293px;}
+.bg_tflogin{ border:1px solid #cfcfcf; padding:5px; width:290px;}
 .tf_login{ width:293px; height:22px; background:none; border:none; color:#9e9e9e; font-family:'HelveticaiDesignVn-UltLt', Arial, Helvetica, sans-serif; font-size:22px; line-height:26px;}
 .bg_tfregister{ border:1px solid #cfcfcf; padding:5px; width:270px;}
 .tf_register{ width:270px; height:22px; background:none; border:none; color:#9e9e9e; font-family:'HelveticaiDesignVn-UltLt', Arial, Helvetica, sans-serif; font-size:22px; line-height:26px;}
