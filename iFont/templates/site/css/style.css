@@ -239,3 +239,13 @@ h5{ font-size:22px; line-height:26px; color:#333; margin-bottom:15px; padding:0;
     background: url("../images/arrow_paging.png") no-repeat scroll right bottom transparent;
 }
 
+h3 a.shop-back {
+	background: url("../images/ico_arrow.png") no-repeat left center transparent;
+	width: 36px;
+	height: 32px;
+	display: block;
+	float: left;
+	margin-top: 10px;
+}
+
+.package .package-name { margin-left: 29px; }

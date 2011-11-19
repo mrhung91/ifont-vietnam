@@ -12,7 +12,8 @@ defined('_JEXEC') or die;
 JHtml::_('behavior.keepalive');
 require_once JPATH_SITE . '/components/com_shop/helpers/cart.php';
 $cartInfo = ShopHelperCart::getShopCartInfo();
-$num_fonts = count($cartInfo['fonts']);
+$num_fonts = isset($cartInfo['fonts']) ? count($cartInfo['fonts']) : 0;
+$num_packages = isset($cartInfo['packages']) ? count($cartInfo['packages']) : 0;
 $cartUrl = JRoute::_("index.php?option=com_shop&view=cart&Itemid=185");
 ?>
 <?php if ($type == 'logout') : ?>
@@ -38,7 +39,9 @@ $cartUrl = JRoute::_("index.php?option=com_shop&view=cart&Itemid=185");
 <br />
 <div class="cart-info">
 	<a href="<?php echo $cartUrl; ?>">Giỏ hàng</a>:&nbsp;
-	<span id="lblNumCartFonts"><?php echo $num_fonts; ?></span> phông</div>
+	<span id="lblNumCartFonts"><?php echo $num_fonts; ?></span> phông,
+	<span id="lblNumCartPackages"><?php echo $num_packages; ?></span> gói phông
+	</div>
 </div>
 <?php else : ?>
 <div class="newletter">
