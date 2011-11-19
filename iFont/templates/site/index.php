@@ -10,17 +10,6 @@
 // No direct access.
 defined('_JEXEC') or die;
 
-// check modules
-/* $showRightColumn	= ($this->countModules('position-3') or $this->countModules('position-6') or $this->countModules('position-8'));
- $showbottom			= ($this->countModules('position-9') or $this->countModules('position-10') or $this->countModules('position-11'));
-$showleft			= ($this->countModules('position-4') or $this->countModules('position-7') or $this->countModules('position-5'));
-
-if ($showRightColumn==0 and $showleft==0) {
-$showno = 0;
-} */
-
-JHtml::_('behavior.framework', true);
-
 // get params
 $app			= JFactory::getApplication();
 $doc			= JFactory::getDocument();
@@ -112,9 +101,61 @@ $user			= JFactory::getUser();
 				</ul>
 		        <?php echo JHtml::_('form.token'); ?>
 		    </form>
-			<div class="ico_close">
-				<a href="#" class="close"></a>
-			</div>
+			<div class="ico_close"><a href="#" class="close"></a></div>
+		</div>
+	</div>
+	<div id="registerDlg" style="display: none;">
+		<div class="box_login">
+			<h3>Đăng ký</h3>
+			<form id="formRegister" onsubmit="return submitAjaxRegister();"
+					action="<?php echo JRoute::_('index.php?option=com_users&task=registration.ajaxRegister'); ?>"
+					method="post" class="form-validate">
+				<h5>Thông tin đăng nhập</h5>
+				<ul>
+					<li class="w195">Email đăng nhập</li>
+					<li class="bg_tfregister">
+						<input type="text" class="tf_register email validate-email required" name="jform[email1]"
+							id="txtRegEmail" />
+					</li>
+					<li class="check_error"></li>
+					<div class="clr hg10px"></div>
+
+					<li class="w195">Mật khẩu</li>
+					<li class="bg_tfregister">
+						<input type="password" class="tf_register validate-password required" name="jform[password1]"
+							id="txtRegPassword1" />
+					</li>
+					<li class="check_error"></li>
+					<div class="clr hg10px"></div>
+
+					<li class="w195">Nhập lại mật khẩu</li>
+					<li class="bg_tfregister">
+						<input type="password" class="tf_register validate-password required" name="jform[password2]"
+							id="txtRegPassword2" />
+					</li>
+					<li class="check_error"></li>
+					<div class="clr hg10px"></div>
+
+					<li class="italic">(Email đăng nhập cũng sẽ là email dùng để chuyển phông).</li>
+					<div class="clr hg10px"></div>
+					<li class="w195">Số điện thoại</li>
+					<li class="bg_tfregister">
+						<input type="text" class="tf_register" name="jform[phone]" id="txtRegPhone" />
+					</li>
+					<li class="check_error"></li>
+					<div class="clr hg10px"></div>
+
+					<li class="italic">(Số điện thoại sẽ dùng để xác nhận việc mua  phông).</li>
+					<div class="clr hg20px"></div>
+
+					<li class="button_login mg_left10px"><input type="button" class="btn close close" value="Hủy bỏ" name=""></li>
+					<li class="button_login"><input type="submit" class="btn" value="Đăng ký" name=""></li>
+				</ul>
+				<?php echo JHtml::_('form.token');?>
+				<input type="hidden" name="jform[name]" id="txtRegName" />
+				<input type="hidden" name="jform[username]" id="txtRegUsername" />
+			</form>
+			<div class="ico_close"><a href="#" class="close"></a></div>
 		</div>
 	</div>
 	<?php endif; ?>

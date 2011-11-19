@@ -246,4 +246,13 @@ class ShopModelPackage extends JModelList
 		return $this->_item;
 	}
 
+	public function getPackageFonts($package_id) {
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true)
+			->from('#__shop_font AS a')
+			->where('a.package_id=' . $package_id);
+		$result = $this->_db->loadObjectList();
+		return $result;
+	}
+
 }

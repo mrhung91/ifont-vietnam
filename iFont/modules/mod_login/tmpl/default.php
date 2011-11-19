@@ -10,6 +10,10 @@
 // no direct access
 defined('_JEXEC') or die;
 JHtml::_('behavior.keepalive');
+require_once JPATH_SITE . '/components/com_shop/helpers/cart.php';
+$cartInfo = ShopHelperCart::getShopCartInfo();
+$num_fonts = count($cartInfo['fonts']);
+$cartUrl = JRoute::_("index.php?option=com_shop&view=cart&Itemid=185");
 ?>
 <?php if ($type == 'logout') : ?>
 <div class="welcome">
@@ -31,10 +35,14 @@ JHtml::_('behavior.keepalive');
 		<?php echo JHtml::_('form.token'); ?>
 	</div>
 </form>
+<br />
+<div class="cart-info">
+	<a href="<?php echo $cartUrl; ?>">Giỏ hàng</a>:&nbsp;
+	<span id="lblNumCartFonts"><?php echo $num_fonts; ?></span> phông</div>
 </div>
 <?php else : ?>
 <div class="newletter">
 	<a id="lnkLogin" class="dialog" href="#" rel="loginDlg">Đăng nhập</a>|<a
-		  id="lnkRegister" class="dialog" href="<?php echo JRoute::_("index.php?option=com_users&view=registration&Itemid=184"); ?>" rel="registerDlg">Đăng ký</a>
+		  id="lnkRegister" class="dialog" href="#" rel="registerDlg">Đăng ký</a>
 </div>
 <?php endif; ?>

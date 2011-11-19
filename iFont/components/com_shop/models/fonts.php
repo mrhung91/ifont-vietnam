@@ -287,8 +287,15 @@ class ShopModelFonts extends JModelList
 
 		// Convert the parameter fields into objects.
 		foreach ($items as &$item) {
+			require_once JPATH_COMPONENT . "/helpers/cart.php";
 			$item->params = clone $this->getState('params');
 			$item->params->set('access-view', true);
+
+			if (ShopHelperCart::isFontAdded($item->id)) {
+				$item->isFontAdded = true;
+			} else {
+				$item->isFontAdded = false;
+			}
 		}
 
 		return $items;
