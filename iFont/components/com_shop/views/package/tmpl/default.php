@@ -17,13 +17,16 @@ setlocale(LC_MONETARY, 'en_US');
 <div class="package<?php echo $this->pageclass_sfx;?>">
 
 	<div class="heading_bderbot">
-		<h3 class="ico_arrow fl"><?php echo $this->package->name;?></h3>
+		<h3 class="fl textright">
+			<a href="javascript:;" onclick="history.go(-1);" class="shop-back"></a>
+			<span class="package-name"><?php echo $this->package->name;?></span>
+		</h3>
 		<div class="headindex fr">
-			<ul class="right">
+			<ul class="right package-detail">
 				<li class="fix_txt"><?php echo $num_fonts; ?> kiểu&nbsp;|
 					&nbsp;<?php echo number_format($this->package->price, 0, '', "."); ?> VNĐ</li>
 				<li class="btn_buy"><a id="lnkBuyPackage" href="javascript:;"
-						onclick="buyPackage(<?php echo $this->package->package_id; ?>)">Mua trọn bộ</a></li>
+						onclick="buyPackage(this, <?php echo $this->package->package_id; ?>)">Mua trọn bộ</a></li>
 			</ul>
 		</div>
 	</div>

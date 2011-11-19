@@ -14,12 +14,11 @@ $doc = JFactory::getDocument();
 ?>
 <div class="col">
 	<div class="row1 row-font-info">
-		<a class="row-package" href="<?php echo $this->item->package_link; ?>" title="Xem gói phông">
-			<?php echo $this->item->package_name; ?></a>
-		<?php echo $this->item->name; ?>
+		<a class="row-package" href="<?php echo $this->item->link; ?>" title="Xem gói phông">
+			<?php echo $this->item->name; ?></a>
 	</div>
 	<div class="row2">
-		<a href="javascript:;" onclick="removeFontFromCart(this, <?php echo $this->item->id; ?>);">Bỏ chọn</a>
+		<a href="javascript:;" onclick="removePackageFromCart(this, <?php echo $this->item->id; ?>);">Bỏ chọn</a>
 	</div>
 	<div class="row3"><?php echo number_format($this->item->price, 0, '', "."); ?> VNĐ</div>
 </div>

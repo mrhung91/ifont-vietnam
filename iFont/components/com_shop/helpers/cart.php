@@ -45,6 +45,23 @@ class ShopHelperCart {
 		return false;
 	}
 
+	public static function removePackageFromCart($package_id) {
+		$cartInfo = ShopHelperCart::getShopCartInfo();
+		if ($cartInfo == null || !isset($cartInfo["packages"])) {
+			return false;
+		}
+		$packageMap = $cartInfo["packages"];
+		if (isset($packageMap[$package_id])) {
+			unset($packageMap[$package_id]);
+			$cartInfo["packages"] = $packageMap;
+
+			$session = JFactory::getSession();
+			$session->set('shopCart', $cartInfo);
+			return true;
+		}
+		return false;
+	}
+
 	public static function addPackageToCart($package) {
 		$cartInfo = ShopHelperCart::getShopCartInfo();
 		if (!isset($cartInfo["packages"])) {
@@ -73,6 +90,20 @@ class ShopHelperCart {
 
 		$fontMap = $cartInfo["fonts"];
 		if (isset($fontMap[$font_id])) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public static function isPackageAdded($package_id) {
+		$cartInfo = ShopHelperCart::getShopCartInfo();
+		if (!isset($cartInfo["packages"])) {
+			return false;
+		}
+
+		$packageMap = $cartInfo["packages"];
+		if (isset($packageMap[$package_id])) {
 			return true;
 		}
 
