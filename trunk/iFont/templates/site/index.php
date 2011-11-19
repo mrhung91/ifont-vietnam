@@ -54,7 +54,7 @@ $user			= JFactory::getUser();
 			<div id="header">
 				<div class="left">
 					<div class="logo">
-						<a href="<?php echo $this->baseurl; ?>">
+						<a href="<?php echo JURI::base(); ?>">
 							<img src="<?php echo $tplUrl; ?>/images/logo.png" width="108" height="77" />
 						</a>
 					</div>
