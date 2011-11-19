@@ -14,7 +14,7 @@ jimport('joomla.application.component.controllerform');
  * @package		Joomla.Site
  * @subpackage	com_content
  */
-class ShopControllerCart extends JControllerForm
+class ShopControllerFont extends JControllerForm
 {
 	/**
 	 * @since	1.6
@@ -176,77 +176,23 @@ class ShopControllerCart extends JControllerForm
 		require_once JPATH_COMPONENT.'/helpers/cart.php';
 		$cartInfo = ShopHelperCart::getShopCartInfo();
 		$fontMap = $cartInfo["fonts"];
-		if ($fontMap == null || !isset($fontMap[$font_id])) {
+		if ($fontMap == null) {
+			$fontMap = array();
+		}
+		if (!isset($fontMap[$font_id])) {
 			$fontMap[$font_id] = 1;
 			$font = JTable::getInstance('Font', 'ShopTable');
 			$font->load($font_id);
+			ShopHelperCart::addFontToCart($font);
 
-			$package = JTable::getInstance('Package', 'ShopTable');
-			$package->load($font->package_id);
-
-			ShopHelperCart::addFontToCart($font, $package);
-
-			$this->_ajaxReturn("Phông được đưa vào giỏ hàng thành công");
+			$this->_ajaxReturn("Phông được đặt thành công");
 		} else {
 			$this->_ajaxReturn("Phông đã được đặt");
 		}
 	}
 
-	public function ajaxRemoveFontFromCart() {
-		$font_id = JRequest::getInt("font_id");
-		if ($font_id == 0) {
-			echo "Phông không hợp lệ";
-			return null;
-		}
-
-		require_once JPATH_COMPONENT.'/helpers/cart.php';
-		$result = ShopHelperCart::removeFontFromCart($font_id);
-		if ($result) {
-			$this->_ajaxReturn("Phông được xóa khỏi giỏ hàng thành công");
-		}
-		$this->_ajaxReturn("Phông không có trong giỏ hàng");
-	}
-
-	public function ajaxBuyPackage() {
-		$package_id = JRequest::getInt("package_id");
-		if ($package_id == 0) {
-			echo "Phông không hợp lệ";
-			return null;
-		}
-
-		require_once JPATH_COMPONENT.'/helpers/cart.php';
-		$cartInfo = ShopHelperCart::getShopCartInfo();
-		$packageMap = $cartInfo["packages"];
-		if ($packageMap == null || !isset($packageMap[$package_id])) {
-			$package = JTable::getInstance('Package', 'ShopTable');
-			$package->load($package_id);
-			ShopHelperCart::addPackageToCart($package);
-
-			$this->_ajaxReturn("Gói phông được đưa vào giỏ hàng thành công.");
-		} else {
-			$this->_ajaxReturn("Gói phông đã được đặt.");
-		}
-	}
-
-	public function ajaxRemovePackageFromCart() {
-		$package_id = JRequest::getInt("package_id");
-		if ($package_id == 0) {
-			echo "Gói phông không hợp lệ";
-			return null;
-		}
-
-		require_once JPATH_COMPONENT.'/helpers/cart.php';
-		$result = ShopHelperCart::removePackageFromCart($package_id);
-		if ($result) {
-			$this->_ajaxReturn("Gói phông được xóa khỏi giỏ hàng thành công");
-		}
-		$this->_ajaxReturn("Gói phông không có trong giỏ hàng");
-	}
-
-	private function _ajaxReturn($message) {
-		jimport("site.util.ajax");
-		$resContent = SiteAjax::buildJsonString(array("message" => $message));
-		echo $resContent;
+	private function _ajaxReturn($code) {
+		echo $code;
 		JApplication::close();
 	}
 

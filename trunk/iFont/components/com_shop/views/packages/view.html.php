@@ -50,6 +50,15 @@ class ShopViewPackages extends JView
 		//Escape strings for HTML output
 		$this->pageclass_sfx = htmlspecialchars($params->get('pageclass_sfx'));
 
+		require_once JPATH_COMPONENT . "/helpers/cart.php";
+		foreach ($items as &$item) {
+			if (ShopHelperCart::isPackageAdded($item->id)) {
+				$item->isPackageAdded = true;
+			} else {
+				$item->isPackageAdded = false;
+			}
+		}
+
 		$this->assignRef('params',		$params);
 		$this->assignRef('items',		$items);
 
