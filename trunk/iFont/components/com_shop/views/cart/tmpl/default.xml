@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="Cart View" option="Cart View Option">
+		<message>
+			View Shop Cart
+		</message>
+	</layout>
+
+	<!-- Add fields to the parameters object for the layout. -->
+	<fields name="params">
+		<fieldset name="basic" label="JGLOBAL_CATEGORY_OPTIONS">
+
+			<field name="page_subheading" type="text"
+				description="JGLOBAL_SUBHEADING_DESC"
+				label="JGLOBAL_SUBHEADING_LABEL"
+				size="20"
+			/>
+
+		</fieldset>
+	</fields>
+</metadata>

@@ -48,6 +48,14 @@ class ShopController extends JController
 		if ($vName == 'form' && !$this->checkEditId('com_shop.edit.font', $id)) {
 			// Somehow the person just went to the form - we don't allow that.
 			return JError::raiseError(403, JText::sprintf('JLIB_APPLICATION_ERROR_UNHELD_ID', $id));
+		} else if ($vName == 'cart') {
+			// If the user is a guest, redirect to the home page.
+			$user = JFactory::getUser();
+			if ($user->get('guest') == 1) {
+				// Redirect to home page.
+				$this->setRedirect(JRoute::_('index.php', false));
+				return;
+			}
 		}
 
 		parent::display($cachable, $safeurlparams);

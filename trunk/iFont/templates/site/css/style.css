@@ -102,6 +102,7 @@ a{ text-decoration:none; color:#a7a7a7;}
 .newletter a{ color:#FFF; padding:0 8px; line-height:20px; height:22px; }
 .newletter, h3{ font-family:'HelveticaiDesignVn-UltLt', Arial, Helvetica, sans-serif;}
 .welcome .login-greeting, .welcome .logout-button { float: left; }
+.welcome .cart-info a { text-decoration: underline; }
 
 h3{ font-size:48px; line-height:52px; text-transform:uppercase;}
 h3.textright{ text-align:right;}
@@ -170,6 +171,9 @@ h5{ font-size:22px; line-height:26px; color:#333; margin-bottom:15px; padding:0;
 .box_login .button_login{ float:right;}
 .btn{ background:#4c4c4c; color:#FFF; border:none; font-size:22px; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; behavior:url('css/css3.htc'); cursor:pointer; padding:0 10px 4px;}
 
+/* Register box */
+#member-registration { width: 500px; }
+
 .ico_close{ width:29px; height:29px; position:absolute; top:30px; right:30px;}
 .ico_close a{ background:url(../images/ico_close.png) no-repeat; width:29px; height:29px; display:block;}
 .txt01{ line-height:26px; font-size:22px;}
@@ -184,7 +188,8 @@ h5{ font-size:22px; line-height:26px; color:#333; margin-bottom:15px; padding:0;
 .table .col .row2 a{ background:url(../images/no_check.png) no-repeat left center; padding:0 0 0 15px;}
 .table .col .row3{ float:right; width:14%; text-align:right; padding:8px 3%;}
 
-.table .col .row1 strong{ color:#067776;}
+.table a.row-package { font-weight: bold; color: #067776; text-decoration: none; }
+.table a:hover { text-decoration: underline; }
 
 .link_green{ position:relative; top:5px; color:#067776;}
 .link_green a{ color:#067776;}
@@ -219,7 +224,6 @@ h5{ font-size:22px; line-height:26px; color:#333; margin-bottom:15px; padding:0;
     background: url("../images/arrow_paging.png") no-repeat scroll left bottom transparent;
 }
 
-/* Pagination */
 .pagination-next span, .pagination-next a {
     background: url("../images/arrow_paging.png") no-repeat scroll right top transparent;
     display: block;
@@ -234,3 +238,4 @@ h5{ font-size:22px; line-height:26px; color:#333; margin-bottom:15px; padding:0;
 .pagination-next a:hover {
     background: url("../images/arrow_paging.png") no-repeat scroll right bottom transparent;
 }
+

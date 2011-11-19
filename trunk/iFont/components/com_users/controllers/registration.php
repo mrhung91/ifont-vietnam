@@ -175,4 +175,47 @@ class UsersControllerRegistration extends UsersController
 
 		return true;
 	}
+	/**
+	 * Method to register a user using AJAX.
+	 *
+	 * @return	boolean		True on success, false on failure.
+	 * @since	1.6
+	 */
+	public function ajaxRegister() {
+		// Check for request forgeries.
+		JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+
+		// Initialise variables.
+		$app	= JFactory::getApplication();
+		$model	= $this->getModel('Registration', 'UsersModel');
+
+		// Get the user data.
+		$data = JRequest::getVar('jform', array(), 'post', 'array');
+
+		// Validate the posted data.
+		$form	= $model->getForm();
+		if (!$form) {
+			$this->_ajaxReturn("Dữ liệu không hợp lệ");
+		}
+
+		// Attempt to save the data.
+		$return	= $model->register($data);
+
+		// Check for errors.
+		if ($return === false) {
+			// Save the data in the session.
+			$app->setUserState('com_users.registration.data', $data);
+			$this->_ajaxReturn($model->getError());
+		}
+
+		// Flush the data from the session.
+		$app->setUserState('com_users.registration.data', null);
+		$this->_ajaxReturn("0");
+	}
+
+	private function _ajaxReturn($code) {
+		echo $code;
+		JApplication::close();
+	}
+
 }
