@@ -64,6 +64,11 @@
 		size="60"
 		description="Thumbnail Image" />
 
+	<field name="file_path" type="media" directory="fonts"
+		hide_none="1" label="Font File"
+		size="60"
+		description="Font File" />
+
 	<field name="actions" type="hidden"
 		multiple="true"
 	/>

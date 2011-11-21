@@ -50,6 +50,9 @@ $fieldsets = $this->form->getFieldsets();
 			<li><?php echo $this->form->getLabel('thumb'); ?>
 			<?php echo $this->form->getInput('thumb'); ?></li>
 
+			<li><?php echo $this->form->getLabel('file_path'); ?>
+			<?php echo $this->form->getInput('file_path'); ?></li>
+
 			<li><?php echo $this->form->getLabel('font_id'); ?>
 			<?php echo $this->form->getInput('font_id'); ?></li>
 		</ul>

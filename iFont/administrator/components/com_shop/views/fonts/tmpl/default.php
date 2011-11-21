@@ -53,6 +53,9 @@ $loggeduser = JFactory::getUser();
 				<th class="left">
 					<?php echo JHtml::_('grid.sort', 'COM_SHOP_HEADING_NAME', 'a.name', $listDirn, $listOrder); ?>
 				</th>
+				<th class="left" width="40%">
+					<?php echo JHtml::_('grid.sort', 'File path', 'a.file_path', $listDirn, $listOrder); ?>
+				</th>
 				<th class="nowrap" width="5%">
 					<?php echo JHtml::_('grid.sort', 'COM_SHOP_HEADING_ENABLED', 'a.block', $listDirn, $listOrder); ?>
 				</th>
@@ -89,6 +92,9 @@ $loggeduser = JFactory::getUser();
 					<?php else : ?>
 						<?php echo $this->escape($item->name); ?>
 					<?php endif; ?>
+				</td>
+				<td>
+					<?php echo $this->escape($item->file_path); ?></a>
 				</td>
 				<td class="center">
 					<?php if ($canChange) : ?>

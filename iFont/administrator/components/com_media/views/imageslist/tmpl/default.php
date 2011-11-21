@@ -23,6 +23,11 @@ defined('_JEXEC') or die;
 			echo $this->loadTemplate('image');
 		endfor; ?>
 
+		<?php for ($i=0,$n=count($this->documents); $i<$n; $i++) :
+			$this->setDocument($i);
+			echo $this->loadTemplate('document');
+		endfor; ?>
+
 </div>
 <?php } else { ?>
 	<div id="media-noimages">

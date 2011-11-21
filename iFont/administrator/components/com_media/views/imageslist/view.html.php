@@ -37,17 +37,18 @@ class MediaViewImagesList extends JView
 		$document->addScriptDeclaration("var ImageManager = window.parent.ImageManager;");
 
 		$images = $this->get('images');
+		$documents = $this->get('documents');
 		$folders = $this->get('folders');
 		$state = $this->get('state');
 
 		$this->assign('baseURL', COM_MEDIA_BASEURL);
 		$this->assignRef('images', $images);
+		$this->assignRef('documents', $documents);
 		$this->assignRef('folders', $folders);
 		$this->assignRef('state', $state);
 
 		parent::display($tpl);
 	}
-
 
 	function setFolder($index = 0)
 	{
@@ -66,4 +67,14 @@ class MediaViewImagesList extends JView
 			$this->_tmp_img = new JObject;
 		}
 	}
+
+	function setDocument($index = 0)
+	{
+		if (isset($this->documents[$index])) {
+			$this->_tmp_document = &$this->documents[$index];
+		} else {
+			$this->_tmp_document = new JObject;
+		}
+	}
+
 }
