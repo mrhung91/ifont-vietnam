@@ -33,6 +33,7 @@ class ShopModelFonts extends JModelList
 				'name', 'a.name',
 				'description', 'a.description',
 				'price', 'a.price',
+				'file_path', 'a.file_path',
 				'package_id', 'a.package_id',
 			);
 		}
@@ -192,7 +193,7 @@ class ShopModelFonts extends JModelList
 		$query->select(
 			$this->getState(
 				'list.select',
-				'a.font_id, a.name, a.alias, a.price, a.package_id, a.status, a.thumb'
+				'a.font_id, a.name, a.alias, a.price, a.package_id, a.status, a.thumb, a.file_path'
 			)
 		);
 		$query->from('#__shop_font AS a');

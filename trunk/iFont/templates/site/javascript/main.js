@@ -178,12 +178,61 @@ function submitAjaxRegister() {
 
 function onAjaxRegisterSuccess(result) {
 	if (result == "0") {
-		alert("Đăng ký tài khoản thành công.");
+		alert("Tài khoản của bạn đã được tạo và một liên kết kích hoạt đã được gửi đến địa chỉ email của bạn.");
 		$("#formRegister").get(0).reset();
 		$.simpleDialog.close();
 		return;
 	}
 	alert(result);
+}
+
+function onRenderSampleFontsText() {
+	var text = $.trim($("#txtSampleText").val());
+	if (text == 'Nhập chữ để xem ví dụ') {
+		return;
+	}
+
+	var fontIds = null;
+	$("div[id*='font-sample']").each(function() {
+		var fontId = getObjectId(this.id);
+		if (fontIds != null) {
+			fontIds += "," + fontId;
+		} else {
+			fontIds = fontId;
+		}
+	});
+	if (fontIds == null) {
+		return;
+	}
+
+	$.post(
+		"index.php?option=com_shop&task=font.ajaxRenderSample",
+		{
+			fontIds : fontIds,
+			text: text
+		},
+		function(data) {
+			if (data != null) {
+				loadFontThumbs(data);
+			} else if (data.error != null) {
+				alert(data.errror);
+			} else {
+				alert("Lỗi khi hiển thị text mẫu.");
+			}
+		},
+		"json"
+	);
+}
+
+function loadFontThumbs(thumbs) {
+	for (var font_id in thumbs) {
+		$("div#font-sample-" + font_id).find("img").attr("src", thumbs[font_id]);
+	}
+}
+
+function getObjectId(idStr) {
+	var pos = idStr.lastIndexOf("-");
+	return window.parseInt(idStr.substr(pos + 1));
 }
 
 $(document).ready(function() {
@@ -192,4 +241,8 @@ $(document).ready(function() {
 			showCloseLabel : false
 		});
 	});
+
+	$("input#txtSampleText").change(function() {
+		onRenderSampleFontsText();
+	})
 });
