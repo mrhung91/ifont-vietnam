@@ -19,6 +19,41 @@ JHtml::addIncludePath(JPATH_COMPONENT.'/helpers');
 		<h3 class="textright"><?php echo $this->escape($this->params->get('page_heading')); ?></h3>
 	</div>
 <?php endif; ?>
+	<div id="search_font">
+		<div class="bg_gray">
+			<form method="get" action="">
+				<div class="fl mg_left25px relative">
+					<div class="bg_white">
+						<input type="text" class="tf_01"
+							onblur="if(this.value=='') {this.value='Nhập chữ để xem ví dụ'}"
+							onfocus="if(this.value=='Nhập chữ để xem ví dụ') {this.value=''}"
+							value="Nhập chữ để xem ví dụ" name="" id="txtSamplePackageText" />
+					</div>
+					<span class="ajax-loading absolute hide"></span>
+				</div>
+				<div class="fl mg_left25px">
+					<div class="txt fl">Sắp xếp</div>
+					<div class="bg_white fl">
+						<input type="text" class="tf_02"
+							onblur="if(this.value=='') {this.value='Mới nhất'}"
+							onfocus="if(this.value=='Mới nhất') {this.value=''}"
+							value="Mới nhất" name="">
+					</div>
+				</div>
+				<!-- <div class="fl">
+					<div class="txt fl">Kiểu</div>
+					<div class="bg_white fl">
+						<input type="text" class="tf_03"
+							onblur="if(this.value=='') {this.value='Sans - Serif'}"
+							onfocus="if(this.value=='Sans - Serif') {this.value=''}"
+							value="Sans - Serif" name="">
+					</div>
+				</div>
+				 -->
+			</form>
+		</div>
+	</div>
+
 
 <?php foreach ($this->items as $item): ?>
 <?php
