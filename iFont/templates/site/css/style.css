@@ -251,3 +251,13 @@ h3 a.shop-back {
 }
 
 .package .package-name { margin-left: 29px; }
+.hide { display: none; }
+.relative { position: relative; }
+.absolute { position: absolute; }
+.ajax-loading {
+    background: url(../images/loading.gif) no-repeat;
+    height: 16px;
+    right: -20px;
+    top: 11px;
+    width: 16px;
+}

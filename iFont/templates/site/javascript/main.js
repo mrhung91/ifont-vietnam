@@ -205,6 +205,7 @@ function onRenderSampleFontsText() {
 		return;
 	}
 
+	$("span.ajax-loading").removeClass("hide");
 	$.post(
 		"index.php?option=com_shop&task=font.ajaxRenderSample",
 		{
@@ -212,6 +213,7 @@ function onRenderSampleFontsText() {
 			text: text
 		},
 		function(data) {
+			$("span.ajax-loading").addClass("hide");
 			if (data != null) {
 				loadFontThumbs(data);
 			} else if (data.error != null) {
@@ -230,6 +232,48 @@ function loadFontThumbs(thumbs) {
 	}
 }
 
+function onRenderSamplePackagesText() {
+	var text = $.trim($("#txtSamplePackageText").val());
+	if (text == 'Nhập chữ để xem ví dụ') {
+		return;
+	}
+
+	var packageIds = null;
+	$("div[id*='package-sample']").each(function() {
+		var packageId = getObjectId(this.id);
+		if (packageIds != null) {
+			packageIds += "," + packageId;
+		} else {
+			packageIds = packageId;
+		}
+	});
+	if (packageIds == null) {
+		return;
+	}
+
+	$("span.ajax-loading").removeClass("hide");
+	$.post(
+		"index.php?option=com_shop&task=package.ajaxRenderSample",
+		{
+			packageIds : packageIds,
+			text: text
+		},
+		function(data) {
+			$("span.ajax-loading").addClass("hide");
+			if (data != null) {
+				for (var packageId in data) {
+					$("div#package-sample-" + packageId).find("img").attr("src", data[packageId]);
+				}
+			} else if (data.error != null) {
+				alert(data.errror);
+			} else {
+				alert("Lỗi khi hiển thị text mẫu.");
+			}
+		},
+		"json"
+	);
+}
+
 function getObjectId(idStr) {
 	var pos = idStr.lastIndexOf("-");
 	return window.parseInt(idStr.substr(pos + 1));
@@ -244,5 +288,9 @@ $(document).ready(function() {
 
 	$("input#txtSampleText").change(function() {
 		onRenderSampleFontsText();
-	})
+	});
+
+	$("input#txtSamplePackageText").change(function() {
+		onRenderSamplePackagesText();
+	});
 });

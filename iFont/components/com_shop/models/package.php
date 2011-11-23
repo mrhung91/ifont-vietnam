@@ -255,4 +255,17 @@ class ShopModelPackage extends JModelList
 		return $result;
 	}
 
+	public function getLatestPackageFont($package_id) {
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true)
+			->from('#__shop_font AS a')
+			->select('a.font_id as id, a.name, a.alias, a.price, a.package_id, a.created, a.created_by, ' .
+						'a.thumb, a.file_path')
+			->where('a.package_id=' . $package_id)
+			->order('a.font_id DESC');
+		$this->_db->setQuery($query, 0, 1);
+		$result = $this->_db->loadObject();
+		return $result;
+	}
+
 }

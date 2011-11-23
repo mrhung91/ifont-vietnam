@@ -11,11 +11,12 @@
 // no direct access
 defined('_JEXEC') or die;
 $doc = JFactory::getDocument();
+$package_id = $this->item->id;
 ?>
 <div class="ofh mg_bot30px">
 	<div class="headindex">
 		<ul class="left">
-			<li class="fix_txt"><a href="<?php echo ShopHelperRoute::getPackageRoute($this->item->id); ?>">
+			<li class="fix_txt"><a href="<?php echo ShopHelperRoute::getPackageRoute($package_id); ?>">
 				<?php echo $this->item->name; ?></a>&nbsp;|&nbsp;đăng bởi <?php echo $this->item->user; ?></li>
 			<li><span class="ico01 os"></span> <span class="ico02 os"></span><span class="ico03 os"></span>
 			</li>
@@ -24,11 +25,11 @@ $doc = JFactory::getDocument();
 		<ul class="right">
 			<li class="fix_txt"><?php echo $this->item->num_fonts; ?> kiểu</li>
 			<li class="btn_buy"><a href="javascript:;"
-				onclick="buyPackage(this, <?php echo $this->item->id; ?>)">MUA</a></li>
+				onclick="buyPackage(this, <?php echo $package_id; ?>)">MUA</a></li>
 		</ul>
 		<?php endif; ?>
 	</div>
-	<div class="show_img_font">
+	<div class="show_img_font" id="package-sample-<?php echo $package_id; ?>">
 		<img src="<?php echo $doc->baseurl . $this->item->thumb; ?>" />
 	</div>
 </div>

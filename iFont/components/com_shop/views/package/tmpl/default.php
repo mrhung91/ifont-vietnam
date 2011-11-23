@@ -36,6 +36,29 @@ setlocale(LC_MONETARY, 'en_US');
 		<p><?php echo JHtml::_('content.prepare', $this->package->description); ?></p>
 	</div>
 
+	<div id="search_font">
+		<div class="bg_gray">
+			<div class="fl mg_left25px relative">
+				<div class="bg_white">
+					<input type="text" class="tf_01"
+						onblur="if(this.value=='') {this.value='Nhập chữ để xem ví dụ'}"
+						onfocus="if(this.value=='Nhập chữ để xem ví dụ') {this.value=''}"
+						value="Nhập chữ để xem ví dụ" name="" id="txtSampleText" />
+				</div>
+				<span class="ajax-loading absolute hide"></span>
+			</div>
+			<div class="fl mg_left25px">
+				<div class="txt fl">Sắp xếp</div>
+				<div class="bg_white fl">
+					<input type="text" class="tf_02"
+						onblur="if(this.value=='') {this.value='Mới nhất'}"
+						onfocus="if(this.value=='Mới nhất') {this.value=''}"
+						value="Mới nhất" name="" />
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<div class="package-items">
 	<?php foreach ($this->items as $index => $item): ?>
 	<?php

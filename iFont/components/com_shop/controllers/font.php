@@ -191,6 +191,41 @@ class ShopControllerFont extends JControllerForm
 		}
 	}
 
+	function ajaxRenderSample() {
+		$fontIdsStr = JRequest::getString("fontIds");
+		if ($fontIdsStr == "") {
+			return null;
+		}
+
+		require JPATH_COMPONENT . DS . "helpers" . DS . "font.php";
+		$text = JRequest::getString("text");
+		$thumbs = array();
+		$fontIds = explode(",", $fontIdsStr);
+		$fontTbl = JTable::getInstance("Font", "ShopTable");
+		foreach ($fontIds as $fontId) {
+			$fontId = intval($fontId);
+			if ($fontId == 0) {
+				continue;
+			}
+
+			if ($fontTbl->load($fontId)) {
+				$file_path = $fontTbl->file_path;
+				if (empty($file_path)) {
+					continue;
+				}
+
+				$font_file = JPATH_SITE . DS . $file_path;
+				$thumbUrl = ShopHelperFont::render($fontId, $font_file, $text);
+				if (!empty($thumbUrl)) {
+					$thumbs[$fontId] = $thumbUrl;
+				}
+			}
+		}
+
+		echo json_encode($thumbs);
+		JApplication::close();
+	}
+
 	private function _ajaxReturn($code) {
 		echo $code;
 		JApplication::close();

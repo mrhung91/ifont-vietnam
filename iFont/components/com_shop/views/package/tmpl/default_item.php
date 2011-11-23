@@ -30,7 +30,7 @@ $item_id = $this->item->id;
 		</ul>
 		<?php endif; ?>
 	</div>
-	<div class="show_img_font">
+	<div class="show_img_font" id="font-sample-<?php echo $item_id; ?>">
 		<img src="<?php echo $doc->baseurl . $this->item->thumb; ?>" />
 	</div>
 </div>
