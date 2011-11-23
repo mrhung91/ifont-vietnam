@@ -16,6 +16,7 @@ $doc			= JFactory::getDocument();
 $templateparams	= $app->getTemplate(true)->params;
 $tplUrl			= $this->baseurl . "/templates/site";
 $user			= JFactory::getUser();
+$userId			= $user->get('id');
 ?>
 <?php if(!$templateparams->get('html5', 0)): ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -39,6 +40,9 @@ $user			= JFactory::getUser();
 	<script type="text/javascript" src="<?php echo $tplUrl; ?>/javascript/jquery.simpledialog.0.1.pack.js"></script>
 	<script type="text/javascript" src="<?php echo $tplUrl; ?>/javascript/jquery.form.js"></script>
 	<script type="text/javascript" src="<?php echo $tplUrl; ?>/javascript/main.js"></script>
+	<script type="text/javascript">
+	var userId = <?php echo $userId; ?>;
+	</script>
 </head>
 <body>
 	<div id="container" class="clearfix">
@@ -93,8 +97,10 @@ $user			= JFactory::getUser();
 						name="password" id="txtLoginPassword">
 					</li>
 					<div class="clr hg10px"></div>
-					<li class="italic"><a href="#">Quên mật khẩu?</a>|<a href="#">Đăng
-							ký</a></li>
+					<li class="italic">
+						<a href="<?php echo JRoute::_("index.php?option=com_users&view=reset"); ?>">Quên mật khẩu?</a>|
+						<a href="javascript:;" onclick="showRegisterBox();">Đăng ký</a>
+					</li>
 					<div class="clr hg20px"></div>
 					<li class="button_login"><input type="submit" class="btn" value="Đăng nhập" />
 					</li>
