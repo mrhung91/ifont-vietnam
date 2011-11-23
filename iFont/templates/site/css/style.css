@@ -84,7 +84,8 @@ a{ text-decoration:none; color:#a7a7a7;}
 .form_contact{ overflow:hidden;}
 .form_contact .bg_white{ background:#FFF; width:184px; padding:2px 8px; margin-bottom:15px; overflow:hidden;}
 .tf_contact{ width:184px; background:#FFF; border:none; color:#9e9e9e; font-family:'HelveticaiDesignVn-UltLt', Arial, Helvetica, sans-serif; font-size:18px; line-height:18px;}
-.ta_contact{ background:#FFF; border:none; color:#9e9e9e; font-family:'HelveticaiDesignVn-UltLt', Arial, Helvetica, sans-serif; font-size:18px; line-height:18px; width:184px; height:100px;}
+.ta_contact{ background:#FFF; border:none; color:#9e9e9e; font-family:'HelveticaiDesignVn-UltLt', Arial, Helvetica, sans-serif; font-size:18px; line-height:18px; width:184px; height:100px;
+	overflow-y: hidden; }
 .btn_send{ width:33px; height:33px; -moz-border-radius: 33px; -webkit-border-radius: 33px; border-radius: 33px; behavior:url('css/css3.htc'); overflow:hidden; background:#333333; border:none; color:#FFF; font-family:'HelveticaiDesignVn-UltLt', Arial, Helvetica, sans-serif; font-size:18px; line-height:18px; padding-bottom:4px; cursor:pointer;}
 
 
@@ -144,7 +145,6 @@ h5{ font-size:22px; line-height:26px; color:#333; margin-bottom:15px; padding:0;
 
 #content .detail{ font-size:22px; line-height:26px;}
 #content .detail ul{}
-#content .detail li{ overflow:hidden;}
 #content .detail li.change_font{ float:left; color:#333; width:30px;}
 #content .detail li a{ color:#358788;}
 #content .detail li a:hover{ text-decoration:underline;}
@@ -260,4 +260,13 @@ h3 a.shop-back {
     right: -20px;
     top: 11px;
     width: 16px;
+}
+
+#content .detail li.last {
+	margin-bottom: 0;
+}
+
+#content .detail li {
+	margin-bottom: 26px;
+    overflow: hidden;
 }
