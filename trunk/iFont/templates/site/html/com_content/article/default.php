@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 <div class="heading_bderbot">
 	<h3 class="textright"><?php echo $this->escape($this->params->get('page_heading')); ?></h3>
 </div>
-<div class="w455 about">
+<div class="main-text">
 	<?php echo $this->item->text; ?>
 
 	<?php echo $this->item->event->afterDisplayContent; ?>
