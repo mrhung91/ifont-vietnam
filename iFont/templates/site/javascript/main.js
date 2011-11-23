@@ -3,11 +3,22 @@ function showOverlay() {
 			.show();
 }
 
+function checkAuthentication() {
+	if (userId == 0) {
+		$("#lnkLogin").click();
+		return false;
+	}
+	return true;
+}
+
 function hideOverlay() {
 	jQuery("#overlay").hide();
 }
 
 function buyPackage(lnkObj, package_id) {
+	if (!checkAuthentication()) {
+		return;
+	}
 	$.post(
 		"index.php?option=com_shop&task=cart.ajaxBuyPackage",
 		{
@@ -31,6 +42,10 @@ function buyPackage(lnkObj, package_id) {
 }
 
 function buyFont(lnkObj, font_id) {
+	if (!checkAuthentication()) {
+		return;
+	}
+
 	$.post(
 		"index.php?option=com_shop&task=cart.ajaxBuyFont",
 		{
@@ -277,6 +292,11 @@ function onRenderSamplePackagesText() {
 function getObjectId(idStr) {
 	var pos = idStr.lastIndexOf("-");
 	return window.parseInt(idStr.substr(pos + 1));
+}
+
+function showRegisterBox() {
+	$("a.close").click();
+	$("#lnkRegister").click();
 }
 
 $(document).ready(function() {
