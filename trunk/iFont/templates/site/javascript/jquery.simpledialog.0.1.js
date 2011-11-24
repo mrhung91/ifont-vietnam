@@ -103,7 +103,7 @@
     closeLabelClass: 'sd_closelabel',
     showCloseLabel: true,
     closeLabel: 'close &times;',
-    opacity: 0.6,
+    opacity: 0.8,
     duration: 400,
     easing: 'linear',
     zIndex: 1000,
