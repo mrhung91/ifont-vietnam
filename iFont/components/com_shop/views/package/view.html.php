@@ -37,6 +37,7 @@ class ShopViewPackage extends JView
 		$items		= $this->get('Items');
 		$package	= $this->get('Package');
 		$pagination = $this->get('Pagination');
+		$filterOrder	= $this->get('FilterOrder');
 
 		// Check for errors.
 		if (count($errors = $this->get('Errors'))) {
@@ -62,6 +63,8 @@ class ShopViewPackage extends JView
 		$this->assignRef('params', $params);
 		$this->assignRef('pagination', $pagination);
 		$this->assignRef('user', $user);
+		$this->assignRef('filterOrder',	$filterOrder);
+		$this->assignRef('Itemid',	JRequest::getInt('Itemid', 0));
 
 		$this->_prepareDocument();
 

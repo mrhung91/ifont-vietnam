@@ -18,8 +18,16 @@ jimport('joomla.application.component.helper');
  * @subpackage	com_shop
  * @since		1.6
  */
-class ShopModelPackages extends JModelList
-{
+class ShopModelPackages extends JModelList {
+
+	const SORT_BY_DATE_NEWEST = 1;
+	const SORT_BY_DATE_OLDEST = 2;
+
+	public static $_SORT_CRITERIA = array(
+		ShopModelPackages::SORT_BY_DATE_NEWEST => 'Mới nhất',
+		ShopModelPackages::SORT_BY_DATE_OLDEST => 'Cũ nhất',
+	);
+
 	/**
 	 * Model context string.
 	 *
@@ -27,16 +35,21 @@ class ShopModelPackages extends JModelList
 	 */
 	public $_context = 'com_shop.packages';
 
-	/**
-	 * The category context (allows other extensions to derived from this model).
-	 *
-	 * @var		string
-	 */
-	protected $_extension = 'com_shop';
+	public function __construct($config = array())
+	{
+		if (empty($config['filter_fields'])) {
+			$config['filter_fields'] = array(
+					'id', 'a.id',
+					'title', 'a.title',
+					'alias', 'a.alias',
+					'package_id', 'a.package_id', 'package_title',
+					'created', 'a.created',
+					'created_by', 'a.created_by',
+				);
+			}
 
-	private $_parent = null;
-
-	private $_items = null;
+	parent::__construct($config);
+	}
 
 	/**
 	 * Method to auto-populate the model state.
@@ -45,14 +58,17 @@ class ShopModelPackages extends JModelList
 	 *
 	 * @since	1.6
 	 */
-	protected function populateState()
-	{
+	protected function populateState() {
+		require_once JPATH_COMPONENT . "/helpers/package.php";
 		$app = JFactory::getApplication();
-		$this->setState('filter.extension', $this->_extension);
 
-		// Get the parent id if defined.
-		$parentId = JRequest::getInt('id');
-		$this->setState('filter.parentId', $parentId);
+		$value = JRequest::getUInt('limit', $app->getCfg('list_limit', 0));
+		$this->setState('list.limit', $value);
+
+		$value = JRequest::getUInt('limitstart', 0);
+		$this->setState('list.start', $value);
+
+		$this->_buildSort();
 
 		$params = $app->getParams();
 		$this->setState('params', $params);
@@ -94,14 +110,14 @@ class ShopModelPackages extends JModelList
 		$nullDate	= $db->quote($db->getNullDate());
 
 		$query->select('a.package_id as id, a.name as name, a.price, a.alias, a.description,'
-			. ' a.thumb, a.is_vietnamese, a.is_mac, a.is_windows'
+			. ' a.thumb, a.is_vietnamese, a.is_mac, a.is_windows, a.created'
 		);
 		$query->from('#__shop_package as a');
 		$query->join('LEFT', '#__users AS u ON u.id = a.created_by');
 		$query->select('u.name as user');
 		$query->where('a.status=1');
 
-		$query->order('a.package_id DESC');
+		$query->order($this->getState('list.ordering', 'a.package_id').' '.$this->getState('list.direction', 'ASC'));
 
 		return $query;
 	}
@@ -124,18 +140,45 @@ class ShopModelPackages extends JModelList
 		return $this->cache['items'];
 	}
 
-	public function getParent()
-	{
-		if (!is_object($this->_parent)) {
-			$this->getItems();
+	public function getFilterOrder() {
+		$filterOrder = $this->getState('list.filter_order');
+		if ($filterOrder == null) {
+			$filterOrder = ShopModelPackages::SORT_BY_DATE_NEWEST;
+			$this->_buildSort();
 		}
-
-		return $this->_parent;
+		$criteria = ShopModelPackages::$_SORT_CRITERIA;
+		if (isset($criteria[$filterOrder])) {
+			return $criteria[$filterOrder];
+		}
+		return $criteria[0];
 	}
 
 	private function _getNumFonts($package_id) {
 		require_once JPATH_COMPONENT .'/helpers/package.php';
 		return ShopHelperPackage::getNumFonts($package_id);
+	}
+
+	private function _buildSort() {
+		$orderCol = null;
+		$listOrder = null;
+
+		$filterOrder	= JRequest::getInt('filter_order', 'a.package_id');
+		switch ($filterOrder) {
+			case ShopModelPackages::SORT_BY_DATE_OLDEST:
+				$orderCol = "a.created";
+				$listOrder = "ASC";
+				break;
+
+			case ShopModelPackages::SORT_BY_DATE_NEWEST:
+			default:
+				$orderCol = "a.created";
+				$listOrder = "DESC";
+				break;
+
+		}
+		$this->setState('list.filter_order', $filterOrder);
+		$this->setState('list.ordering', $orderCol);
+		$this->setState('list.direction', $listOrder);
 	}
 
 }

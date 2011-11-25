@@ -32,6 +32,8 @@ function buyPackage(lnkObj, package_id) {
 				var $parent = $(lnkObj).parent().parent();
 				if (!$parent.hasClass("package-detail")) {
 					$parent.remove();
+				} else {
+					$(lnkObj).parent().remove();
 				}
 			} else {
 				alert("Mua gói phông thất bại");
@@ -79,17 +81,12 @@ function removeFontFromCart(lnkObj, font_id) {
 		function(data) {
 			if (data != null && data.message != null) {
 				alert(data.message);
-				var num_fonts = window.parseInt($("#lblNumCartFonts").text());
-				$("#lblNumCartFonts").text(num_fonts - 1);
-				$(lnkObj).parent().parent().remove();
-				if ($(".font-list").find(".row-font-info").length == 0) {
-					$(".font-list").removeClass("table").html("Không có phông nào trong giỏ hàng.");
-				}
 			} else if (data.error != null) {
 				alert(data.errror);
 			} else {
 				alert("Xóa phông khỏi giỏ hàng thất bại.");
 			}
+			window.location.href = window.location.href;
 		},
 		"json"
 	);
@@ -104,17 +101,12 @@ function removePackageFromCart(lnkObj, package_id) {
 			function(data) {
 				if (data != null && data.message != null) {
 					alert(data.message);
-					var num_packages = window.parseInt($("#lblNumCartPackages").text());
-					$("#lblNumCartPackages").text(num_packages - 1);
-					$(lnkObj).parent().parent().remove();
-					if ($(".font-list").find(".row-font-info").length == 0) {
-						$(".font-list").removeClass("table").html("Không có phông nào trong giỏ hàng.");
-					}
 				} else if (data.error != null) {
 					alert(data.errror);
 				} else {
 					alert("Xóa gói phông khỏi giỏ hàng thất bại.");
 				}
+				window.location.href = window.location.href;
 			},
 			"json"
 	);
@@ -201,10 +193,15 @@ function onAjaxRegisterSuccess(result) {
 	alert(result);
 }
 
-function onRenderSampleFontsText() {
-	var text = $.trim($("#txtSampleText").val());
-	if (text == 'Nhập chữ để xem ví dụ') {
-		return;
+function onRenderSampleFontsText(sampleText) {
+	var text = null;
+	if (sampleText == null) {
+		text = $.trim($("#txtSampleText").val());
+		if (text == 'Nhập chữ để xem ví dụ') {
+			return;
+		}
+	} else {
+		text = sampleText;
 	}
 
 	var fontIds = null;
@@ -247,10 +244,15 @@ function loadFontThumbs(thumbs) {
 	}
 }
 
-function onRenderSamplePackagesText() {
-	var text = $.trim($("#txtSamplePackageText").val());
-	if (text == 'Nhập chữ để xem ví dụ') {
-		return;
+function onRenderSamplePackagesText(sampleText) {
+	var text = null;
+	if (sampleText == null) {
+		text = $.trim($("#txtSampleText").val());
+		if (text == 'Nhập chữ để xem ví dụ') {
+			return;
+		}
+	} else {
+		text = sampleText;
 	}
 
 	var packageIds = null;
@@ -297,6 +299,33 @@ function getObjectId(idStr) {
 function showRegisterBox() {
 	$("a.close").click();
 	$("#lnkRegister").click();
+}
+
+function showObject(objectId) {
+	$(objectId).removeClass("hide");
+}
+
+function hideObject(objectId) {
+	$(objectId).addClass("hide");
+}
+
+function toggleDisplay(dropdownId) {
+	var $dropdown = $(dropdownId);
+	if ($dropdown.hasClass("hide")) {
+		$dropdown.removeClass("hide");
+	} else {
+		$dropdown.addClass("hide");
+	}
+}
+
+function onSortPackages(filter_order) {
+	$("#txtFilterOrder").val(filter_order);
+	$("#shopForm").submit();
+}
+
+function onSortFonts(filter_order) {
+	$("#txtFilterOrder").val(filter_order);
+	$("#shopForm").submit();
 }
 
 $(document).ready(function() {

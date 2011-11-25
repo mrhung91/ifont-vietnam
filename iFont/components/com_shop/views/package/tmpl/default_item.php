@@ -31,6 +31,6 @@ $item_id = $this->item->id;
 		<?php endif; ?>
 	</div>
 	<div class="show_img_font" id="font-sample-<?php echo $item_id; ?>">
-		<img src="<?php echo $doc->baseurl . $this->item->thumb; ?>" />
+		<img />
 	</div>
 </div>
