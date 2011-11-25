@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 require_once JPATH_COMPONENT .'/helpers/package.php';
+$package_id = $this->package->package_id;
 $num_fonts = ShopHelperPackage::getNumFonts($this->package->package_id);
 setlocale(LC_MONETARY, 'en_US');
 ?>
@@ -26,7 +27,7 @@ setlocale(LC_MONETARY, 'en_US');
 				<li class="fix_txt"><?php echo $num_fonts; ?> kiểu&nbsp;|
 					&nbsp;<?php echo number_format($this->package->price, 0, '', "."); ?> VNĐ</li>
 				<li class="btn_buy"><a id="lnkBuyPackage" href="javascript:;"
-						onclick="buyPackage(this, <?php echo $this->package->package_id; ?>)">Mua trọn bộ</a></li>
+						onclick="buyPackage(this, <?php echo $package_id; ?>)">Mua trọn bộ</a></li>
 			</ul>
 		</div>
 	</div>
@@ -49,11 +50,14 @@ setlocale(LC_MONETARY, 'en_US');
 			</div>
 			<div class="fl mg_left25px">
 				<div class="txt fl">Sắp xếp</div>
-				<div class="bg_white fl">
-					<input type="text" class="tf_02"
-						onblur="if(this.value=='') {this.value='Mới nhất'}"
-						onfocus="if(this.value=='Mới nhất') {this.value=''}"
-						value="Mới nhất" name="" />
+				<div class="bg_white fl sort" id="divSortFonts">
+					<a href="javascript:;" class="sort-text" id="lnkSortFonts"><?php echo $this->filterOrder; ?></a>
+					<span class="sort-dropdown hide" id="sortDropdown">
+						<ul>
+							<li><a href="javascript:;" onclick="onSortFonts(<?php echo ShopModelPackage::SORT_BY_DATE_NEWEST; ?>)">Mới nhất</a></li>
+							<li><a href="javascript:;" onclick="onSortFonts(<?php echo ShopModelPackage::SORT_BY_DATE_OLDEST; ?>)">Cũ nhất</a></li>
+						</ul>
+					</span>
 				</div>
 			</div>
 		</div>
@@ -78,3 +82,25 @@ setlocale(LC_MONETARY, 'en_US');
 	</form>
 	<?php  endif; ?>
 </div>
+
+<form id="shopForm" method="get"
+		action="<?php echo JRoute::_("index.php?option=com_shop&view=package&id=" . $package_id . "&Itemid=" . $this->Itemid); ?>">
+	<input type="hidden" name="option" value="com_shop" />
+	<input type="hidden" name="view" value="package" />
+	<input type="hidden" name="id" value="<?php echo $package_id; ?>" />
+	<input type="hidden" name="Itemid" value="<?php echo $this->Itemid; ?>" />
+	<input type="hidden" name="filter_order" id="txtFilterOrder" value="" />
+</form>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#divSortFonts").mouseover(function() {
+		showObject('#sortDropdown');
+	})
+	.mouseout(function() {
+		hideObject('#sortDropdown');
+	});
+
+	onRenderSampleFontsText("ABCDEFGHIJKLMNOPQRSTUVXYZW");
+});
+</script>

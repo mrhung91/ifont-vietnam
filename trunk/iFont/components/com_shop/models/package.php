@@ -19,8 +19,16 @@ jimport('joomla.application.component.modellist');
  * @subpackage	com_shop
  * @since		1.5
  */
-class ShopModelPackage extends JModelList
-{
+class ShopModelPackage extends JModelList {
+
+	const SORT_BY_DATE_NEWEST = 1;
+	const SORT_BY_DATE_OLDEST = 2;
+
+	public static $_SORT_CRITERIA = array(
+		ShopModelPackage::SORT_BY_DATE_NEWEST => 'Mới nhất',
+		ShopModelPackage::SORT_BY_DATE_OLDEST => 'Cũ nhất',
+	);
+
 	/**
 	 * Category items data
 	 *
@@ -80,6 +88,7 @@ class ShopModelPackage extends JModelList
 		// Initiliase variables.
 		$app	= JFactory::getApplication('site');
 		$pk		= JRequest::getInt('id');
+		$itemid = JRequest::getInt('id', 0) . ':' . JRequest::getInt('Itemid', 0);
 
 		$this->setState('package.id', $pk);
 
@@ -118,19 +127,7 @@ class ShopModelPackage extends JModelList
 		$this->setState('list.filter', JRequest::getString('filter-search'));
 
 		// filter.order
-		$itemid = JRequest::getInt('id', 0) . ':' . JRequest::getInt('Itemid', 0);
-		$orderCol = $app->getUserStateFromRequest('com_shop.package.list.' . $itemid . '.filter_order', 'filter_order', '', 'string');
-		if (!in_array($orderCol, $this->filter_fields)) {
-			$orderCol = 'a.package_id';
-		}
-		$this->setState('list.ordering', $orderCol);
-
-		$listOrder = $app->getUserStateFromRequest('com_shop.package.list.' . $itemid . '.filter_order_Dir',
-			'filter_order_Dir', '', 'cmd');
-		if (!in_array(strtoupper($listOrder), array('ASC', 'DESC', ''))) {
-			$listOrder = 'ASC';
-		}
-		$this->setState('list.direction', $listOrder);
+		$this->_buildSort();
 
 		$this->setState('list.start', JRequest::getVar('limitstart', 0, '', 'int'));
 
@@ -155,7 +152,7 @@ class ShopModelPackage extends JModelList
 			$model = JModel::getInstance('Fonts', 'ShopModel', array('ignore_request' => true));
 			$model->setState('params', JFactory::getApplication()->getParams());
 			$model->setState('filter.package_id', $package->package_id);
-			$model->setState('list.ordering', $this->_buildShopOrderBy());
+			$model->setState('list.ordering', $this->_buildSort());
 			$model->setState('list.start', $this->getState('list.start'));
 			$model->setState('list.limit', $limit);
 			$model->setState('list.direction', $this->getState('list.direction'));
@@ -176,39 +173,6 @@ class ShopModelPackage extends JModelList
 		}
 
 		return $this->_fonts;
-	}
-
-	/**
-	 * Build the orderby for the query
-	 *
-	 * @return	string	$orderby portion of query
-	 * @since	1.5
-	 */
-	protected function _buildShopOrderBy()
-	{
-		$app		= JFactory::getApplication('site');
-		$db			= $this->getDbo();
-		$params		= $this->state->params;
-		$itemid		= JRequest::getInt('id', 0) . ':' . JRequest::getInt('Itemid', 0);
-		$orderCol	= $app->getUserStateFromRequest('com_shop.package.list.' . $itemid . '.filter_order', 'filter_order', '', 'string');
-		$orderDirn	= $app->getUserStateFromRequest('com_shop.package.list.' . $itemid . '.filter_order_Dir', 'filter_order_Dir', '', 'cmd');
-		$orderby	= ' ';
-
-		if (!in_array($orderCol, $this->filter_fields)) {
-			$orderCol = null;
-		}
-
-		if (!in_array(strtoupper($orderDirn), array('ASC', 'DESC', ''))) {
-			$orderDirn = 'ASC';
-		}
-
-		if ($orderCol && $orderDirn) {
-			$orderby .= $db->getEscaped($orderCol) . ' ' . $db->getEscaped($orderDirn) . ', ';
-		}
-
-		$orderby .= ' a.created ';
-
-		return $orderby;
 	}
 
 	public function getPagination()
@@ -267,5 +231,81 @@ class ShopModelPackage extends JModelList
 		$result = $this->_db->loadObject();
 		return $result;
 	}
+
+	public function getFilterOrder() {
+		$filterOrder = $this->getState('list.filter_order');
+		if ($filterOrder == null) {
+			$filterOrder = ShopModelPackage::SORT_BY_DATE_NEWEST;
+			$this->_buildSort();
+		}
+		$criteria = ShopModelPackage::$_SORT_CRITERIA;
+		if (isset($criteria[$filterOrder])) {
+			return $criteria[$filterOrder];
+		}
+		return $criteria[0];
+	}
+
+	/**
+	 * Build the orderby for the query
+	 *
+	 * @return	string	$orderby portion of query
+	 * @since	1.5
+	 */
+	protected function _buildShopOrderBy() {
+		$app		= JFactory::getApplication('site');
+		$db			= $this->getDbo();
+		$params		= $this->state->params;
+		$itemid		= JRequest::getInt('id', 0) . ':' . JRequest::getInt('Itemid', 0);
+		$orderCol	= $app->getUserStateFromRequest('com_shop.package.list.' . $itemid . '.filter_order', 'filter_order', '', 'string');
+		$orderDirn	= $app->getUserStateFromRequest('com_shop.package.list.' . $itemid . '.filter_order_Dir', 'filter_order_Dir', '', 'cmd');
+		$orderby	= ' ';
+
+		if (!in_array($orderCol, $this->filter_fields)) {
+			$orderCol = null;
+		}
+
+		if (!in_array(strtoupper($orderDirn), array('ASC', 'DESC', ''))) {
+			$orderDirn = 'ASC';
+		}
+
+		if ($orderCol && $orderDirn) {
+			$orderby .= $db->getEscaped($orderCol) . ' ' . $db->getEscaped($orderDirn) . ', ';
+		}
+
+		$orderby .= ' a.created ';
+
+		return $orderby;
+	}
+
+	private function _buildSort() {
+		$db			= $this->getDbo();
+
+		$orderCol = null;
+		$listOrder = null;
+
+		$filterOrder	= JRequest::getInt('filter_order', 'a.package_id');
+		switch ($filterOrder) {
+			case ShopModelPackage::SORT_BY_DATE_OLDEST:
+				$orderCol = "a.created";
+				$listOrder = "ASC";
+				break;
+
+			case ShopModelPackage::SORT_BY_DATE_NEWEST:
+			default:
+				$orderCol = "a.created";
+				$listOrder = "DESC";
+				break;
+
+		}
+		$this->setState('list.filter_order', $filterOrder);
+		$this->setState('list.ordering', $orderCol);
+		$this->setState('list.direction', $listOrder);
+
+		if ($orderCol && $listOrder) {
+			$orderby = $db->getEscaped($orderCol);
+		}
+		return $orderby;
+	}
+
 
 }

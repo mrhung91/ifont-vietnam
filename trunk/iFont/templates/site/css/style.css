@@ -112,7 +112,7 @@ h4{ font-size:22px; line-height:26px; text-transform:uppercase; color:#333; marg
 h5{ font-size:22px; line-height:26px; color:#333; margin-bottom:15px; padding:0;}
 #content{ padding:0 0 40px 22px;}
 
-#content .bg_gray{ background:#ececec; padding:10px; -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; behavior:url('css/css3.htc'); overflow:hidden;}
+#content .bg_gray{ background:#ececec; padding:10px; -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; behavior:url('css/css3.htc'); height: 38px; }
 #content .bg_white{ background:#FFF; padding:10px; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; behavior:url('css/css3.htc');}
 .heading_bderbot{ border-bottom:4px solid #575757; padding:0 0 10px; margin-bottom:20px; overflow:hidden;}
 .heading_bderbot .headindex{ position:relative; top:23px;}
@@ -269,4 +269,43 @@ h3 a.shop-back {
 #content .detail li {
 	margin-bottom: 26px;
     overflow: hidden;
+}
+
+div.sort {
+	position: relative;
+}
+
+.sort-text {
+    font-size: 15px;
+    font-weight: bold;
+    height: 18px;
+    line-height: 18px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.sort-dropdown {
+	position: absolute;
+	left: 0;
+	top: 38px;
+	width: 82px;
+	font-size: 15px;
+    font-weight: bold;
+	background-color: #ECECEC;
+	border-radius: 3px 3px 3px 3px;
+}
+
+.sort-dropdown li {
+	margin: 5px 0;
+    height: 18px;
+    line-height: 18px;
+	text-align: center;
+}
+
+.sort-dropdown li a {
+    display: block;
+
+}
+
+.sort-dropdown li a:hover {
+    color: #FFFFFF;
 }

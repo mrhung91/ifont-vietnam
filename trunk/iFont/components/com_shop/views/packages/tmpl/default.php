@@ -9,9 +9,6 @@
 
 // no direct access
 defined('_JEXEC') or die;
-
-JHtml::addIncludePath(JPATH_COMPONENT.'/helpers');
-
 ?>
 <div class="categories-list<?php echo $this->pageclass_sfx;?>">
 <?php if ($this->params->get('show_page_heading', 1)) : ?>
@@ -33,11 +30,14 @@ JHtml::addIncludePath(JPATH_COMPONENT.'/helpers');
 				</div>
 				<div class="fl mg_left25px">
 					<div class="txt fl">Sắp xếp</div>
-					<div class="bg_white fl">
-						<input type="text" class="tf_02"
-							onblur="if(this.value=='') {this.value='Mới nhất'}"
-							onfocus="if(this.value=='Mới nhất') {this.value=''}"
-							value="Mới nhất" name="">
+					<div class="bg_white fl sort" id="divSortPackages">
+						<a href="javascript:;" class="sort-text" id="lnkSortPackages"><?php echo $this->filterOrder; ?></a>
+						<span class="sort-dropdown hide" id="sortDropdown">
+							<ul>
+								<li><a href="javascript:;" onclick="onSortPackages(<?php echo ShopModelPackages::SORT_BY_DATE_NEWEST; ?>)">Mới nhất</a></li>
+								<li><a href="javascript:;" onclick="onSortPackages(<?php echo ShopModelPackages::SORT_BY_DATE_OLDEST; ?>)">Cũ nhất</a></li>
+							</ul>
+						</span>
 					</div>
 				</div>
 				<!-- <div class="fl">
@@ -62,3 +62,22 @@ JHtml::addIncludePath(JPATH_COMPONENT.'/helpers');
 ?>
 <?php endforeach; ?>
 </div>
+
+<form id="shopForm" action="<?php echo JRoute::_("index.php?option=com_shop&view=packages"); ?>" method="get">
+	<input type="hidden" name="option" value="com_shop" />
+	<input type="hidden" name="view" value="packages" />
+	<input type="hidden" name="filter_order" id="txtFilterOrder" value="" />
+</form>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#divSortPackages").mouseover(function() {
+		showObject('#sortDropdown');
+	})
+	.mouseout(function() {
+		hideObject('#sortDropdown');
+	});
+
+	onRenderSamplePackagesText("ABCDEFGHIJKLMNOPQRSTUVXYZW");
+});
+</script>
