@@ -11,13 +11,13 @@ jimport('joomla.application.component.controllerform');
  * @subpackage	com_shop
  * @since		1.6
  */
-class ShopControllerType extends JControllerForm
+class ShopControllerFont extends JControllerForm
 {
 	/**
 	 * @var		string	The prefix to use with controller messages.
 	 * @since	1.6
 	 */
-	protected $text_prefix = 'COM_SHOP_FONT_TYPE';
+	protected $text_prefix = 'COM_SHOP_FONT';
 
 	/**
 	 * Overrides JControllerForm::allowEdit
