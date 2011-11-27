@@ -36,6 +36,8 @@ defined('_JEXEC') or die;
 							<ul>
 								<li><a href="javascript:;" onclick="onSortPackages(<?php echo ShopModelPackages::SORT_BY_DATE_NEWEST; ?>)">Mới nhất</a></li>
 								<li><a href="javascript:;" onclick="onSortPackages(<?php echo ShopModelPackages::SORT_BY_DATE_OLDEST; ?>)">Cũ nhất</a></li>
+								<li><a href="javascript:;" onclick="onSortPackages(<?php echo ShopModelPackages::SORT_BY_ALPHABET; ?>)">ABC</a></li>
+								<li><a href="javascript:;" onclick="onSortPackages(<?php echo ShopModelPackages::SORT_BY_ORDER_TIMES; ?>)">Mua nhiều</a></li>
 							</ul>
 						</span>
 					</div>
@@ -67,6 +69,7 @@ defined('_JEXEC') or die;
 	<input type="hidden" name="option" value="com_shop" />
 	<input type="hidden" name="view" value="packages" />
 	<input type="hidden" name="filter_order" id="txtFilterOrder" value="" />
+	<input type="hidden" name="filter_type" id="txtFilterType" value="" />
 </form>
 
 <script type="text/javascript">
@@ -76,6 +79,10 @@ $(document).ready(function() {
 	})
 	.mouseout(function() {
 		hideObject('#sortDropdown');
+	});
+
+	$("input#txtSamplePackageText").keyup(function() {
+		onRenderSamplePackagesText();
 	});
 
 	onRenderSamplePackagesText("ABCDEFGHIJKLMNOPQRSTUVXYZW");

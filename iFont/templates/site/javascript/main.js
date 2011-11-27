@@ -244,10 +244,11 @@ function loadFontThumbs(thumbs) {
 	}
 }
 
+var renderIndex = 0;
 function onRenderSamplePackagesText(sampleText) {
 	var text = null;
 	if (sampleText == null) {
-		text = $.trim($("#txtSampleText").val());
+		text = $.trim($("#txtSamplePackageText").val());
 		if (text == 'Nhập chữ để xem ví dụ') {
 			return;
 		}
@@ -268,6 +269,7 @@ function onRenderSamplePackagesText(sampleText) {
 		return;
 	}
 
+	var currentIndex = ++renderIndex;
 	$("span.ajax-loading").removeClass("hide");
 	$.post(
 		"index.php?option=com_shop&task=package.ajaxRenderSample",
@@ -276,6 +278,9 @@ function onRenderSamplePackagesText(sampleText) {
 			text: text
 		},
 		function(data) {
+			if (currentIndex != renderIndex) {
+				return;
+			}
 			$("span.ajax-loading").addClass("hide");
 			if (data != null) {
 				for (var packageId in data) {
@@ -333,13 +338,5 @@ $(document).ready(function() {
 		$(this).simpleDialog({
 			showCloseLabel : false
 		});
-	});
-
-	$("input#txtSampleText").change(function() {
-		onRenderSampleFontsText();
-	});
-
-	$("input#txtSamplePackageText").change(function() {
-		onRenderSamplePackagesText();
 	});
 });
