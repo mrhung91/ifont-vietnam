@@ -22,10 +22,14 @@ class ShopModelPackages extends JModelList {
 
 	const SORT_BY_DATE_NEWEST = 1;
 	const SORT_BY_DATE_OLDEST = 2;
+	const SORT_BY_ALPHABET = 3;
+	const SORT_BY_ORDER_TIMES = 4;
 
 	public static $_SORT_CRITERIA = array(
 		ShopModelPackages::SORT_BY_DATE_NEWEST => 'Mới nhất',
 		ShopModelPackages::SORT_BY_DATE_OLDEST => 'Cũ nhất',
+		ShopModelPackages::SORT_BY_ALPHABET => 'ABC',
+		ShopModelPackages::SORT_BY_ORDER_TIMES => 'Mua nhiều',
 	);
 
 	/**
@@ -167,6 +171,16 @@ class ShopModelPackages extends JModelList {
 			case ShopModelPackages::SORT_BY_DATE_OLDEST:
 				$orderCol = "a.created";
 				$listOrder = "ASC";
+				break;
+
+			case ShopModelPackages::SORT_BY_ALPHABET:
+				$orderCol = "a.name";
+				$listOrder = "ASC";
+				break;
+
+			case ShopModelPackages::SORT_BY_ORDER_TIMES:
+				$orderCol = "a.order_times";
+				$listOrder = "DESC";
 				break;
 
 			case ShopModelPackages::SORT_BY_DATE_NEWEST:

@@ -39,7 +39,7 @@ $userId			= $user->get('id');
 	<script type="text/javascript" src="<?php echo $tplUrl; ?>/javascript/jquery-1.6.2.min.js"></script>
 	<script type="text/javascript" src="<?php echo $tplUrl; ?>/javascript/jquery.simpledialog.0.1.pack.js"></script>
 	<script type="text/javascript" src="<?php echo $tplUrl; ?>/javascript/jquery.form.js"></script>
-	<script type="text/javascript" src="<?php echo $tplUrl; ?>/javascript/main.js"></script>
+	<script type="text/javascript" src="<?php echo $tplUrl; ?>/javascript/main.js?ver=1.0.0"></script>
 	<script type="text/javascript">
 	var userId = <?php echo $userId; ?>;
 	</script>

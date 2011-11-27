@@ -56,6 +56,8 @@ setlocale(LC_MONETARY, 'en_US');
 						<ul>
 							<li><a href="javascript:;" onclick="onSortFonts(<?php echo ShopModelPackage::SORT_BY_DATE_NEWEST; ?>)">Mới nhất</a></li>
 							<li><a href="javascript:;" onclick="onSortFonts(<?php echo ShopModelPackage::SORT_BY_DATE_OLDEST; ?>)">Cũ nhất</a></li>
+							<li><a href="javascript:;" onclick="onSortFonts(<?php echo ShopModelPackage::SORT_BY_ALPHABET; ?>)">ABC</a></li>
+							<li><a href="javascript:;" onclick="onSortFonts(<?php echo ShopModelPackage::SORT_BY_ORDER_TIMES; ?>)">Mua nhiều</a></li>
 						</ul>
 					</span>
 				</div>
@@ -99,6 +101,10 @@ $(document).ready(function() {
 	})
 	.mouseout(function() {
 		hideObject('#sortDropdown');
+	});
+
+	$("input#txtSampleText").keyup(function() {
+		onRenderSampleFontsText();
 	});
 
 	onRenderSampleFontsText("ABCDEFGHIJKLMNOPQRSTUVXYZW");
