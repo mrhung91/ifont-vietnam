@@ -81,16 +81,16 @@ setlocale(LC_MONETARY, 'en_US');
 			<?php echo $this->pagination->getPagesLinks(); ?>
 		</div>
 		<?php endif; ?>
-	</form>
 	<?php  endif; ?>
 </div>
 
-<form id="shopForm" method="get"
+<form id="shopForm" method="post"
 		action="<?php echo JRoute::_("index.php?option=com_shop&view=package&id=" . $package_id . "&Itemid=" . $this->Itemid); ?>">
 	<input type="hidden" name="option" value="com_shop" />
 	<input type="hidden" name="view" value="package" />
 	<input type="hidden" name="id" value="<?php echo $package_id; ?>" />
 	<input type="hidden" name="Itemid" value="<?php echo $this->Itemid; ?>" />
+	<input type="hidden" name="limitstart" id="txtFilterType" value="<?php echo $this->pagination->limitstart; ?>" />
 	<input type="hidden" name="filter_order" id="txtFilterOrder" value="" />
 </form>
 
@@ -108,5 +108,14 @@ $(document).ready(function() {
 	});
 
 	onRenderSampleFontsText("ABCDEFGHIJKLMNOPQRSTUVXYZW");
+
+	$(".pagination").find("a").unbind("click").bind("click", function() {
+		var limitstart = getQueryVariableValue(this.href, "limitstart");
+		if (limitstart == null) {
+			limitstart = 0;
+		}
+		$("#txtLimitStart").val(limitstart);
+		$("#shopForm").submit();
+	});
 });
 </script>

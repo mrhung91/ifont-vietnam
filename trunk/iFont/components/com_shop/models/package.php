@@ -138,7 +138,6 @@ class ShopModelPackage extends JModelList {
 		$limit = $app->getUserStateFromRequest('com_shop.package.list.' . $itemid . '.limit', 'limit', $params->get('display_num'));
 
 		$this->setState('list.limit', $limit);
-
 	}
 
 	/**

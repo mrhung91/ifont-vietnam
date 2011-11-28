@@ -65,12 +65,27 @@ class ShopModelPackages extends JModelList {
 	protected function populateState() {
 		require_once JPATH_COMPONENT . "/helpers/package.php";
 		$app = JFactory::getApplication();
+		$itemid = JRequest::getInt('id', 0) . ':' . JRequest::getInt('Itemid', 0);
 
-		$value = JRequest::getUInt('limit', $app->getCfg('list_limit', 0));
-		$this->setState('list.limit', $value);
+		// Load the parameters. Merge Global and Menu Item params into new object
+		$params = $app->getParams();
+		$menuParams = new JRegistry;
 
-		$value = JRequest::getUInt('limitstart', 0);
-		$this->setState('list.start', $value);
+		if ($menu = $app->getMenu()->getActive()) {
+		$menuParams->loadString($menu->params);
+		}
+
+		$mergedParams = clone $menuParams;
+		$mergedParams->merge($params);
+
+		$this->setState('params', $mergedParams);
+
+		$this->setState('list.start', JRequest::getVar('limitstart', 0, '', 'int'));
+
+		$limit = $app->getUserStateFromRequest('com_shop.packages.list.' . $itemid . '.limit', 'limit',
+				$params->get('display_num'));
+
+		$this->setState('list.limit', $limit);
 
 		// Load the filter state.
 		$type = $this->getUserStateFromRequest($this->context.'.filter.type', 'filter_type');
@@ -155,6 +170,7 @@ class ShopModelPackages extends JModelList {
 	}
 
 	public function getFilterOrder() {
+		$result = new stdClass();
 		$filterOrder = $this->getState('list.filter_order');
 		if ($filterOrder == null) {
 			$filterOrder = ShopModelPackages::SORT_BY_DATE_NEWEST;
@@ -162,13 +178,14 @@ class ShopModelPackages extends JModelList {
 		}
 		$criteria = ShopModelPackages::$_SORT_CRITERIA;
 		if (isset($criteria[$filterOrder])) {
-			return $criteria[$filterOrder];
+			$result->text = $criteria[$filterOrder];
 		}
-		return $criteria[0];
+		$result->value = $filterOrder;
+		return $result;
 	}
 
 	public function getFilterType() {
-		$result = null;
+		$result = new stdClass();
 		$filterType = intval($this->getState('filter.type'));
 		if ($filterType != 0) {
 			$filterTypeText = $this->getState('list.filter_type_text');
@@ -177,10 +194,11 @@ class ShopModelPackages extends JModelList {
 				$filterTypeText = $model->getTypeNameById($filterType);
 				$this->setState('list.filter_type_text', $filterTypeText);
 			}
-			$result = $filterTypeText;
+			$result->text = $filterTypeText;
 		} else {
-			$result = "Tất cả";
+			$result->text = "Tất cả";
 		}
+		$result->value = $filterType;
 		return $result;
 	}
 

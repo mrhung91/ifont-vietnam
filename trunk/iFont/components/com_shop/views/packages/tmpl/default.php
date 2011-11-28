@@ -31,7 +31,7 @@ defined('_JEXEC') or die;
 				<div class="fl mg_left25px">
 					<div class="txt fl">Sắp xếp</div>
 					<div class="bg_white fl sort" id="divSortPackages">
-						<a href="javascript:;" class="sort-text" id="lnkSortPackages"><?php echo $this->filterOrder; ?></a>
+						<a href="javascript:;" class="sort-text" id="lnkSortPackages"><?php echo $this->filterOrder->text; ?></a>
 						<span class="sort-dropdown hide" id="sortDropdown">
 							<ul>
 								<li><a href="javascript:;" onclick="onSortPackages(<?php echo ShopModelPackages::SORT_BY_DATE_NEWEST; ?>)">Mới nhất</a></li>
@@ -45,7 +45,7 @@ defined('_JEXEC') or die;
 				<div class="fl">
 					<div class="txt fl">Kiểu</div>
 					<div class="bg_white fl sort" id="divTypes">
-						<a href="javascript:;" class="sort-text" id="lnkFilterTypes"><?php echo $this->filterType; ?></a>
+						<a href="javascript:;" class="sort-text" id="lnkFilterTypes"><?php echo $this->filterType->text; ?></a>
 						<span class="sort-dropdown hide" id="typeDropdown">
 							<ul>
 								<li><a href="javascript:;" onclick="onChgFilterType(0)">Tất cả</a></li>
@@ -67,6 +67,15 @@ defined('_JEXEC') or die;
 		echo $this->loadTemplate('item');
 	?>
 	<?php endforeach; ?>
+
+	<?php // Add pagination links ?>
+	<?php if (!empty($this->items)) : ?>
+		<?php if (($this->params->def('show_pagination', 2) == 1  || ($this->params->get('show_pagination') == 2)) && ($this->pagination->get('pages.total') > 1)) : ?>
+		<div class="pagination">
+			<?php echo $this->pagination->getPagesLinks(); ?>
+		</div>
+		<?php endif; ?>
+	<?php  endif; ?>
 	<?php else: ?>
 	<div class="no-result">
 	Không có gói phông nào.
@@ -74,11 +83,13 @@ defined('_JEXEC') or die;
 	<?php endif; ?>
 </div>
 
-<form id="shopForm" action="<?php echo JRoute::_("index.php?option=com_shop&view=packages"); ?>" method="get">
+<form id="shopForm" action="<?php echo JRoute::_("index.php?option=com_shop&view=packages"); ?>" method="post">
 	<input type="hidden" name="option" value="com_shop" />
 	<input type="hidden" name="view" value="packages" />
-	<input type="hidden" name="filter_order" id="txtFilterOrder" value="" />
-	<input type="hidden" name="filter_type" id="txtFilterType" value="" />
+	<input type="hidden" name="filter_order" id="txtFilterOrder" value="<?php echo $this->filterOrder->value; ?>" />
+	<input type="hidden" name="filter_type" id="txtFilterType" value="<?php echo $this->filterType->value; ?>" />
+	<input type="hidden" name="limitstart" id="txtFilterType" value="<?php echo $this->pagination->limitstart; ?>" />
+	<input type="hidden" name="Itemid" value="<?php echo $this->Itemid; ?>" />
 </form>
 
 <script type="text/javascript">
@@ -102,10 +113,20 @@ $(document).ready(function() {
 	});
 
 	onRenderSamplePackagesText("ABCDEFGHIJKLMNOPQRSTUVXYZW");
+
+	$(".pagination").find("a").unbind("click").bind("click", function() {
+		var limitstart = getQueryVariableValue(this.href, "limitstart");
+		if (limitstart == null) {
+			limitstart = 0;
+		}
+		$("#txtLimitStart").val(limitstart);
+		$("#shopForm").submit();
+	});
 });
 
 function onChgFilterType(type_id) {
 	$("#txtFilterType").val(type_id);
+	$("#txtLimitStart").val(0);
 	$("#shopForm").submit();
 }
 </script>
