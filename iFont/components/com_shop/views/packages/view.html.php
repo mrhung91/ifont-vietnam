@@ -22,6 +22,7 @@ class ShopViewPackages extends JView
 	protected $state = null;
 	protected $item = null;
 	protected $items = null;
+	protected $pagination;
 
 	/**
 	 * Display the view
@@ -65,9 +66,11 @@ class ShopViewPackages extends JView
 
 		$this->assignRef('params',		$params);
 		$this->assignRef('items',		$items);
+		$this->assignRef('pagination', $pagination);
 		$this->assignRef('filterOrder',	$filterOrder);
 		$this->assignRef('filterType',	$filterType);
 		$this->assignRef('types',	$types);
+		$this->assignRef('Itemid',	JRequest::getInt("Itemid"));
 
 		$this->_prepareDocument();
 
