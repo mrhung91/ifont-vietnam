@@ -38,6 +38,8 @@ class ShopController extends JController
 			case 'font':
 			case 'packages':
 			case 'package':
+			case 'types':
+			case 'type':
 				return $canDo->get('core.admin');
 				break;
 

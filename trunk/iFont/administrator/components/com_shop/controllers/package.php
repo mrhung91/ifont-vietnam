@@ -52,7 +52,6 @@ class ShopControllerPackage extends JControllerForm
 	public function save($key = null, $urlVar = null)
 	{
 		$data = JRequest::getVar('jform', array(), 'post', 'array');
-
 		return parent::save();
 	}
 }

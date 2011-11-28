@@ -12,14 +12,12 @@ defined('_JEXEC') or die('Restricted access');
 
 jimport('joomla.database.table');
 
-class ShopTablePackage extends JTable {
+class ShopTablePackageType extends JTable {
 
 	protected $_types;
 
-	function __construct(&$db)
-	{
-		parent::__construct('#__shop_package', 'package_id', $db);
-		$this->created = JFactory::getDate()->toMySQL();
+	function __construct(&$db) {
+		parent::__construct('#__shop_package_type', 'id', $db);
 	}
 
 	/**
@@ -29,26 +27,14 @@ class ShopTablePackage extends JTable {
 	 * @see		JTable::check
 	 * @since	1.5
 	 */
-	function check()
-	{
-		jimport('joomla.filter.output');
-
-		// Set name
-		$this->name = htmlspecialchars_decode($this->name, ENT_QUOTES);
-
-		// Set alias
-		$this->alias = JApplication::stringURLSafe($this->alias);
-		if (empty($this->alias)) {
-			$this->alias = JApplication::stringURLSafe($this->name);
-		}
-
+	function check() {
 		return true;
 	}
 
 	protected function _getAssetName()
 	{
 		$k = $this->_tbl_key;
-		return 'com_shop.package.'.(int) $this->$k;
+		return 'com_shop.package_type.'.(int) $this->$k;
 	}
 
 	protected function _getAssetTitle()
@@ -72,8 +58,8 @@ class ShopTablePackage extends JTable {
 			$array['params'] = (string)$registry;
 		}
 
-		if (isset($array['types']) && is_array($array['types'])) {
-			$this->setTypes($array['types']);
+		if (isset($array['type']) && is_array($array['type'])) {
+			$this->setTypes($array['type']);
 		}
 
 		return parent::bind($array, $ignore);
@@ -102,22 +88,6 @@ class ShopTablePackage extends JTable {
 
 	public function store($updateNulls = false) {
 		if (parent::store($updateNulls)) {
-			if ($this->package_id && $this->_types != null) {
-				$db	=& JFactory::getDBO();
-				$query = $this->_db->getQuery(true);
-				$query->delete();
-				$query->from('`#__shop_package_type`');
-				$query->where('package_id = ' . $this->package_id);
-//				$query->where('type_id not in (' . implode(",", $this->_types) . ")");
-				$this->_db->setQuery($query);
-				$this->_db->query();
-
-				foreach ($this->_types as $typeId) {
-					$typeModel = JModel::getInstance("PackageType", "ShopModel");
-					$data = array("package_id" => $this->package_id, "type_id" => $typeId);
-					$typeModel->save($data);
-				}
-			}
 			return true;
 		}
 		return false;

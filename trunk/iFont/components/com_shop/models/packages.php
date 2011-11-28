@@ -72,6 +72,10 @@ class ShopModelPackages extends JModelList {
 		$value = JRequest::getUInt('limitstart', 0);
 		$this->setState('list.start', $value);
 
+		// Load the filter state.
+		$type = $this->getUserStateFromRequest($this->context.'.filter.type', 'filter_type');
+		$this->setState('filter.type', $type);
+
 		$this->_buildSort();
 
 		$params = $app->getParams();
@@ -121,6 +125,12 @@ class ShopModelPackages extends JModelList {
 		$query->select('u.name as user');
 		$query->where('a.status=1');
 
+		$type = $this->getState('filter.type', 0);
+		if ($type != 0) {
+			$query->join('INNER', '#__shop_package_type AS spt ON spt.package_id = a.package_id');
+			$query->where('spt.type_id = ' . $type);
+		}
+
 		$query->order($this->getState('list.ordering', 'a.package_id').' '.$this->getState('list.direction', 'ASC'));
 
 		return $query;
@@ -155,6 +165,23 @@ class ShopModelPackages extends JModelList {
 			return $criteria[$filterOrder];
 		}
 		return $criteria[0];
+	}
+
+	public function getFilterType() {
+		$result = null;
+		$filterType = intval($this->getState('filter.type'));
+		if ($filterType != 0) {
+			$filterTypeText = $this->getState('list.filter_type_text');
+			if (empty($filterTypeText)) {
+				$model = JModel::getInstance("Type", "ShopModel");
+				$filterTypeText = $model->getTypeNameById($filterType);
+				$this->setState('list.filter_type_text', $filterTypeText);
+			}
+			$result = $filterTypeText;
+		} else {
+			$result = "Tất cả";
+		}
+		return $result;
 	}
 
 	private function _getNumFonts($package_id) {
@@ -193,6 +220,30 @@ class ShopModelPackages extends JModelList {
 		$this->setState('list.filter_order', $filterOrder);
 		$this->setState('list.ordering', $orderCol);
 		$this->setState('list.direction', $listOrder);
+	}
+
+	public function getTypes() {
+		// Get a storage key.
+		$cache = JCache::getInstance();
+		$types = $cache->get("shop.font.types");
+
+		// Try to load the data from internal storage.
+		if (empty($types)) {
+			$db		= $this->getDbo();
+			$query	= $db->getQuery(true);
+
+			$query->select('id AS value, title AS text');
+			$query->from('#__shop_type AS a');
+			$query->order('a.title');
+
+			$db->setQuery($query);
+			$types = $db->loadObjectList();
+
+			// Add the items to the internal cache.
+			$cache->set("shop.font.types", $types);
+		}
+
+		return $types;
 	}
 
 }

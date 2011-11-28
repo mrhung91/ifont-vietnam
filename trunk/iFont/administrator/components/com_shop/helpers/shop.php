@@ -35,20 +35,27 @@ class ShopHelper
 	 */
 	public static function addSubmenu($vName)
 	{
-		JSubMenuHelper::addEntry(
-			JText::_('COM_SHOP_SUBMENU_FONTS'),
-			'index.php?option=com_shop&view=fonts',
-			$vName == 'fonts'
-		);
 
 		// Groups and Levels are restricted to core.admin
 		$canDo = self::getActions();
 
 		if ($canDo->get('core.admin')) {
 			JSubMenuHelper::addEntry(
-				JText::_('COM_SHOP_SUBMENU_PACKAGES'),
+				"Fonts",
+				'index.php?option=com_shop&view=fonts',
+				$vName == 'fonts'
+			);
+
+			JSubMenuHelper::addEntry(
+				"Packages",
 				'index.php?option=com_shop&view=packages',
 				$vName == 'packages'
+			);
+
+			JSubMenuHelper::addEntry(
+				"Types",
+				'index.php?option=com_shop&view=types',
+				$vName == 'types'
 			);
 		}
 	}
@@ -89,22 +96,6 @@ class ShopHelper
 		$options	= array();
 		$options[]	= JHtml::_('select.option', '0', JText::_('JENABLED'));
 		$options[]	= JHtml::_('select.option', '1', JText::_('JDISABLED'));
-
-		return $options;
-	}
-
-	/**
-	 * Get a list of filter options for the activated state of a user.
-	 *
-	 * @return	array	An array of JHtmlOption elements.
-	 * @since	1.6
-	 */
-	static function getActiveOptions()
-	{
-		// Build the filter options.
-		$options	= array();
-		$options[]	= JHtml::_('select.option', '0', JText::_('COM_USERS_ACTIVATED'));
-		$options[]	= JHtml::_('select.option', '1', JText::_('COM_USERS_UNACTIVATED'));
 
 		return $options;
 	}

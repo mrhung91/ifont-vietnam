@@ -5,19 +5,19 @@ defined('_JEXEC') or die;
 jimport('joomla.application.component.controllerform');
 
 /**
- * User controller class.
+ * Font type controller class.
  *
  * @package		Joomla.Administrator
  * @subpackage	com_users
  * @since		1.6
  */
-class ShopControllerFont extends JControllerForm
+class ShopControllerType extends JControllerForm
 {
 	/**
 	 * @var		string	The prefix to use with controller messages.
 	 * @since	1.6
 	 */
-	protected $text_prefix = 'COM_SHOP_FONT';
+	protected $text_prefix = 'COM_SHOP_TYPE';
 
 	/**
 	 * Overrides JControllerForm::allowEdit

@@ -43,6 +43,9 @@ $fieldsets = $this->form->getFieldsets();
 			<li><?php echo $this->form->getLabel('price'); ?>
 			<?php echo $this->form->getInput('price'); ?></li>
 
+			<li><?php echo $this->form->getLabel('types'); ?>
+			<?php echo $this->form->getInput('types'); ?></li>
+
 			<li><?php echo $this->form->getLabel('is_vietnamese'); ?>
 			<?php echo $this->form->getInput('is_vietnamese'); ?></li>
 

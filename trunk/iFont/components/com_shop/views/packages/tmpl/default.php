@@ -42,27 +42,36 @@ defined('_JEXEC') or die;
 						</span>
 					</div>
 				</div>
-				<!-- <div class="fl">
+				<div class="fl">
 					<div class="txt fl">Kiểu</div>
-					<div class="bg_white fl">
-						<input type="text" class="tf_03"
-							onblur="if(this.value=='') {this.value='Sans - Serif'}"
-							onfocus="if(this.value=='Sans - Serif') {this.value=''}"
-							value="Sans - Serif" name="">
+					<div class="bg_white fl sort" id="divTypes">
+						<a href="javascript:;" class="sort-text" id="lnkFilterTypes"><?php echo $this->filterType; ?></a>
+						<span class="sort-dropdown hide" id="typeDropdown">
+							<ul>
+								<li><a href="javascript:;" onclick="onChgFilterType(0)">Tất cả</a></li>
+								<?php foreach ($this->types as $type): ?>
+								<li><a href="javascript:;" onclick="onChgFilterType(<?php echo $type->value; ?>)"><?php echo $type->text; ?></a></li>
+								<?php endforeach; ?>
+							</ul>
+						</span>
 					</div>
 				</div>
-				 -->
 			</form>
 		</div>
 	</div>
 
-
-<?php foreach ($this->items as $item): ?>
-<?php
-	$this->item = &$item;
-	echo $this->loadTemplate('item');
-?>
-<?php endforeach; ?>
+	<?php if (!empty($this->items)): ?>
+	<?php foreach ($this->items as $item): ?>
+	<?php
+		$this->item = &$item;
+		echo $this->loadTemplate('item');
+	?>
+	<?php endforeach; ?>
+	<?php else: ?>
+	<div class="no-result">
+	Không có gói phông nào.
+	</div>
+	<?php endif; ?>
 </div>
 
 <form id="shopForm" action="<?php echo JRoute::_("index.php?option=com_shop&view=packages"); ?>" method="get">
@@ -81,10 +90,22 @@ $(document).ready(function() {
 		hideObject('#sortDropdown');
 	});
 
+	$("#divTypes").mouseover(function() {
+		showObject('#typeDropdown');
+	})
+	.mouseout(function() {
+		hideObject('#typeDropdown');
+	});
+
 	$("input#txtSamplePackageText").keyup(function() {
 		onRenderSamplePackagesText();
 	});
 
 	onRenderSamplePackagesText("ABCDEFGHIJKLMNOPQRSTUVXYZW");
 });
+
+function onChgFilterType(type_id) {
+	$("#txtFilterType").val(type_id);
+	$("#shopForm").submit();
+}
 </script>
