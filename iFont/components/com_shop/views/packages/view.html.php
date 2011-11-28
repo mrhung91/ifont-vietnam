@@ -33,8 +33,10 @@ class ShopViewPackages extends JView
 		// Initialise variables
 		$state			= $this->get('State');
 		$items			= $this->get('Items');
-		$pagination = $this->get('Pagination');
+		$pagination 	= $this->get('Pagination');
 		$filterOrder	= $this->get('FilterOrder');
+		$filterType		= $this->get('FilterType');
+		$types			= $this->get('Types');
 
 		// Check for errors.
 		if (count($errors = $this->get('Errors'))) {
@@ -64,6 +66,8 @@ class ShopViewPackages extends JView
 		$this->assignRef('params',		$params);
 		$this->assignRef('items',		$items);
 		$this->assignRef('filterOrder',	$filterOrder);
+		$this->assignRef('filterType',	$filterType);
+		$this->assignRef('types',	$types);
 
 		$this->_prepareDocument();
 

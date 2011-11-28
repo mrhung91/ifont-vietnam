@@ -20,6 +20,12 @@
 		size="40"
 	/>
 
+	<field name="types" type="type" extension="com_shop"
+		label="Font Type" description="Font Type"
+		class="inputbox" multiple="multiple" size="10"
+	>
+	</field>
+
 	<field
 		name="status"
 		type="list"

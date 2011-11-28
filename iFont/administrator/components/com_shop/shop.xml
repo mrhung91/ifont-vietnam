@@ -14,30 +14,28 @@
 	<description>Shop Component</description>
 	<scriptfile>install.shop.php</scriptfile>
 
-	<languages folder="site">
-		<language tag="en-GB">language/en-GB.com_shop.ini</language>
-	</languages>
-
 	<administration>
-		<menu img="class:contact">Shop</menu>
+		<menu img="class:contact">COM_SHOP_MENU_SHOP</menu>
 		<submenu>
 			<!--
 				Note that all & must be escaped to &amp; for the file to be valid
 				XML and be parsed by the installer
 			-->
-			<menu link="option=com_shop&amp;view=package"
-				view="packages" img="class:contact" alt="Shop/Packages">Package</menu>
-			<menu link="option=com_shop&amp;view=font" img="class:contact"
-				view="fonts" alt="Shop/Fonts">Font</menu>
+			<menu link="option=com_shop&amp;view=packages" img="class:contact" alt="Shop/Packages">COM_SHOP_SUBMENU_PACKAGES</menu>
+			<menu link="option=com_shop&amp;view=fonts" img="class:contact" alt="Shop/Fonts">COM_SHOP_SUBMENU_FONTS</menu>
+			<menu link="option=com_shop&amp;view=types" img="class:contact" alt="Shop/Types">COM_SHOP_SUBMENU_TYPES</menu>
 		</submenu>
 		<files>
-			<filename>backend.zip</filename>
-			<filename>frontend.zip</filename>
+			<filename>install/backend.zip</filename>
+			<filename>install/frontend.zip</filename>
 			<filename>index.html</filename>
 		</files>
-		<languages folder="admin">
-			<language tag="en-GB">language/en-GB.com_shop.ini</language>
-			<language tag="en-GB">language/en-GB.com_shop.sys.ini</language>
+		<languages folder="languages">
+			<language tag="en-GB">admin/en-GB.com_shop.sys.ini</language>
+			<language tag="en-GB">admin/en-GB.com_shop.ini</language>
 		</languages>
 	</administration>
+	<languages folder="languages">
+		<language tag="en-GB">site/en-GB.com_shop.ini</language>
+	</languages>
 </extension>

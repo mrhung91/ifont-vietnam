@@ -18,7 +18,16 @@ $package_id = $this->item->id;
 		<ul class="left">
 			<li class="fix_txt"><a href="<?php echo ShopHelperRoute::getPackageRoute($package_id); ?>">
 				<?php echo $this->item->name; ?></a>&nbsp;|&nbsp;đăng bởi <?php echo $this->item->user; ?></li>
-			<li><span class="ico01 os"></span> <span class="ico02 os"></span><span class="ico03 os"></span>
+			<li>
+				<?php if ($this->item->is_vietnamese): ?>
+				<span class="ico01 os"> </span>
+				<?php endif; ?>
+				<?php if ($this->item->is_mac): ?>
+				<span class="ico02 os"> </span>
+				<?php endif; ?>
+				<?php if ($this->item->is_windows): ?>
+				<span class="ico03 os"> </span>
+				<?php endif; ?>
 			</li>
 		</ul>
 		<?php if (!$this->item->isPackageAdded) : ?>

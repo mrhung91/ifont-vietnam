@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<field name="id" type="hidden"
+		default="0"
+		required="true"
+		readonly="true"
+	/>
+
+	<field name="title" type="text"
+		class="inputbox" required="true"
+		description="Type Title"
+		label="Type Title"
+		size="40"
+	/>
+
+	<field
+		name="description"
+		type="editor"
+		label="JGLOBAL_DESCRIPTION"
+		description="Enter font type description"
+		class="inputbox"
+		filter="safehtml"
+		buttons="true"
+		hide="readmore,pagebreak"/>
+
+	<field name="actions" type="hidden"
+		multiple="true"
+	/>
+
+	<field name="lft" type="hidden"
+		filter="unset"
+	/>
+	<field name="rgt" type="hidden"
+		filter="unset"
+	/>
+</form>
