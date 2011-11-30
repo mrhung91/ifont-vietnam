@@ -24,7 +24,7 @@ $fieldsets = $this->form->getFieldsets();
 <script type="text/javascript">
 	Joomla.submitbutton = function(task)
 	{
-		if (task == 'user.cancel' || document.formvalidator.isValid(document.id('user-form'))) {
+		if (task == 'package.cancel' || document.formvalidator.isValid(document.id('user-form'))) {
 			Joomla.submitform(task, document.getElementById('user-form'));
 		}
 	}
@@ -40,6 +40,9 @@ $fieldsets = $this->form->getFieldsets();
 			<li><?php echo $this->form->getLabel('alias'); ?>
 			<?php echo $this->form->getInput('alias'); ?></li>
 
+			<li><?php echo $this->form->getLabel('status'); ?>
+			<?php echo $this->form->getInput('status'); ?></li>
+
 			<li><?php echo $this->form->getLabel('price'); ?>
 			<?php echo $this->form->getInput('price'); ?></li>
 
@@ -54,9 +57,6 @@ $fieldsets = $this->form->getFieldsets();
 
 			<li><?php echo $this->form->getLabel('is_windows'); ?>
 			<?php echo $this->form->getInput('is_windows'); ?></li>
-
-			<li><?php echo $this->form->getLabel('thumb'); ?>
-			<?php echo $this->form->getInput('thumb'); ?></li>
 
 			<li><?php echo $this->form->getLabel('package_id'); ?>
 			<?php echo $this->form->getInput('package_id'); ?></li>

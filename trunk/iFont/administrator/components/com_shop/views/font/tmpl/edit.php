@@ -24,7 +24,7 @@ $fieldsets = $this->form->getFieldsets();
 <script type="text/javascript">
 	Joomla.submitbutton = function(task)
 	{
-		if (task == 'user.cancel' || document.formvalidator.isValid(document.id('user-form'))) {
+		if (task == 'font.cancel' || document.formvalidator.isValid(document.id('user-form'))) {
 			Joomla.submitform(task, document.getElementById('user-form'));
 		}
 	}
@@ -46,9 +46,6 @@ $fieldsets = $this->form->getFieldsets();
 
 			<li><?php echo $this->form->getLabel('price'); ?>
 			<?php echo $this->form->getInput('price'); ?></li>
-
-			<li><?php echo $this->form->getLabel('thumb'); ?>
-			<?php echo $this->form->getInput('thumb'); ?></li>
 
 			<li><?php echo $this->form->getLabel('file_path'); ?>
 			<?php echo $this->form->getInput('file_path'); ?></li>

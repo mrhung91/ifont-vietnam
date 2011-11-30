@@ -333,6 +333,18 @@ function onSortFonts(filter_order) {
 	$("#shopForm").submit();
 }
 
+function getQueryVariableValue(url, varName) {
+	var query = url.substring(1);
+    var vars = query.split("&");
+    for (var i = 0; i < vars.length; i++) {
+        var pair = vars[i].split("=");
+        if (pair[0] == varName) {
+            return pair[1];
+        }
+    }
+    return null;
+}
+
 $(document).ready(function() {
 	$("a.dialog").each(function() {
 		$(this).simpleDialog({

@@ -80,9 +80,9 @@ $loggeduser = JFactory::getUser();
 				</td>
 				<td class="center">
 					<?php if ($canChange) : ?>
-						<?php echo JHtml::_('grid.boolean', $i, !$item->status, 'package.unblock', 'package.block'); ?>
+						<?php echo JHtml::_('grid.boolean', $i, $item->status, 'package.unblock', 'package.block'); ?>
 					<?php else : ?>
-						<?php echo JText::_($item->status ? 'JNO' : 'JYES'); ?>
+						<?php echo JText::_($item->status ? 'JYES' : 'JNO'); ?>
 					<?php endif; ?>
 				</td>
 				<td class="center">

@@ -57,8 +57,6 @@ class JFormFieldPackage extends JFormFieldList
 			JError::raiseWarning(500, $db->getErrorMsg());
 		}
 
-		array_unshift($options, JHtml::_('select.option', '0', JText::_('No Client')));
-
 		return $options;
 	}
 }
