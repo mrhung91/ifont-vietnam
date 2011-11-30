@@ -49,6 +49,7 @@ class ShopViewPackages extends JView
 	 */
 	protected function addToolbar()
 	{
+		require_once JPATH_COMPONENT.'/helpers/shop.php';
 		$canDo	= ShopHelper::getActions();
 
 		JToolBarHelper::title(JText::_('COM_SHOP_VIEW_PACKAGES_TITLE'));
