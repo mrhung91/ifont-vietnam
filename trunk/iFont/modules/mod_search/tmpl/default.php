@@ -11,7 +11,7 @@
 defined('_JEXEC') or die;
 ?>
 <div class="boxsearch<?php echo $moduleclass_sfx ?>">
-	<form action="<?php echo JRoute::_('index.php');?>" method="post">
+	<form action="<?php echo JRoute::_('index.php?option=com_shop&view=search');?>" method="post">
 		<?php
 			$output = '<input name="filter-search" id="mod-search-searchword" maxlength="'.$maxlength.'"  class="tf_search'.$moduleclass_sfx.'" type="text" value="'.$text.'"  onblur="if (this.value==\'\') this.value=\''.$text.'\';" onfocus="if (this.value==\''.$text.'\') this.value=\'\';" />';
 
