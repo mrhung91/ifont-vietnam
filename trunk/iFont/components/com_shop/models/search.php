@@ -1,24 +1,34 @@
 <?php
 /**
- * @version		$Id: articles.php 21700 2011-06-28 04:32:41Z dextercowley $
+ * @version		$Id: package.php 21822 2011-07-12 10:40:17Z infograf768 $
+ * @package		Joomla.Site
+ * @subpackage	com_content
  * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-// Check to ensure this file is included in Joomla!
+// No direct access
 defined('_JEXEC') or die;
 
 jimport('joomla.application.component.modellist');
 
 /**
- * This models supports retrieving lists of articles.
+ * This models supports retrieving a package, the fonts associated with the package.
  *
  * @package		Joomla.Site
- * @subpackage	com_content
- * @since		1.6
+ * @subpackage	com_shop
+ * @since		1.5
  */
-class ShopModelFonts extends JModelList
-{
+class ShopModelSearch extends JModelList {
+
+	protected $_fonts = null;
+
+	/**
+	 * Model context string.
+	 *
+	 * @var		string
+	 */
+	protected $_context = 'com_shop.search';
 
 	/**
 	 * Constructor.
@@ -32,11 +42,9 @@ class ShopModelFonts extends JModelList
 		if (empty($config['filter_fields'])) {
 			$config['filter_fields'] = array(
 				'id', 'a.package_id',
-				'name', 'a.name',
+				'title', 'a.title',
 				'alias', 'a.alias',
-				'price', 'a.price',
-				'packageid', 'a.package_id', 'category_title',
-				'state', 'a.state',
+				'status', 'a.status',
 				'created', 'a.created',
 				'created_by', 'a.created_by',
 			);
@@ -50,258 +58,108 @@ class ShopModelFonts extends JModelList
 	 *
 	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @return	void
+	 * return	void
 	 * @since	1.6
 	 */
-	protected function populateState($ordering = 'ordering', $direction = 'ASC')
-	{
-		// Initialise variables.
-		$app = JFactory::getApplication();
-		$session = JFactory::getSession();
+	protected function populateState($ordering = null, $direction = null) {
+		// Initiliase variables.
+		$app	= JFactory::getApplication('site');
+		$pk		= JRequest::getInt('id');
+		$itemid = JRequest::getInt('id', 0) . ':' . JRequest::getInt('Itemid', 0);
 
-		// Adjust the context to support modal layouts.
-		if ($layout = JRequest::getVar('layout')) {
-			$this->context .= '.'.$layout;
+		$this->setState('package.id', $pk);
+
+		// Load the parameters. Merge Global and Menu Item params into new object
+		$params = $app->getParams();
+		$menuParams = new JRegistry;
+
+		if ($menu = $app->getMenu()->getActive()) {
+			$menuParams->loadString($menu->params);
 		}
 
-		$search = $this->getUserStateFromRequest($this->context.'.filter.search', 'filter_search');
-		$this->setState('filter.search', $search);
+		$mergedParams = clone $menuParams;
+		$mergedParams->merge($params);
 
-		$access = $this->getUserStateFromRequest($this->context.'.filter.access', 'filter_access', 0, 'int');
-		$this->setState('filter.access', $access);
-
-		$published = $this->getUserStateFromRequest($this->context.'.filter.published', 'filter_published', '');
-		$this->setState('filter.published', $published);
-
-		$packageId = $this->getUserStateFromRequest($this->context.'.filter.package_id', 'filter_package_id');
-		$this->setState('filter.package_id', $packageId);
-
-		// List state information.
-		parent::populateState('a.name', 'asc');
-	}
-
-	/**
-	 * Method to get a store id based on model configuration state.
-	 *
-	 * This is necessary because the model is used by the component and
-	 * different modules that might need different sets of data or different
-	 * ordering requirements.
-	 *
-	 * @param	string		$id	A prefix for the store id.
-	 *
-	 * @return	string		A store id.
-	 * @since	1.6
-	 */
-	protected function getStoreId($id = '')
-	{
-		// Compile the store id.
-		$id .= ':'.$this->getState('filter.font_id');
-		$id .= ':'.$this->getState('filter.font_id.include');
-		$id .= ':'.$this->getState('filter.package_id');
-		$id .= ':'.$this->getState('filter.package_id.include');
-		$id .= ':'.$this->getState('filter.author_id');
-		$id .= ':'.$this->getState('filter.author_id.include');
-		$id .= ':'.$this->getState('filter.author_alias');
-		$id .= ':'.$this->getState('filter.author_alias.include');
-		$id .= ':'.$this->getState('filter.date_filtering');
-		$id .= ':'.$this->getState('filter.date_field');
-		$id .= ':'.$this->getState('filter.start_date_range');
-		$id .= ':'.$this->getState('filter.end_date_range');
-		$id .= ':'.$this->getState('filter.relative_date');
-
-		return parent::getStoreId($id);
-	}
-
-	/**
-	 * Get the master query for retrieving a list of fonts subject to the model state.
-	 *
-	 * @return	JDatabaseQuery
-	 * @since	1.6
-	 */
-	function getListQuery()
-	{
+		$this->setState('params', $mergedParams);
+		$user		= JFactory::getUser();
 		// Create a new query object.
-		$db = $this->getDbo();
-		$query = $db->getQuery(true);
+		$db		= $this->getDbo();
+		$query	= $db->getQuery(true);
+		$groups	= implode(',', $user->getAuthorisedViewLevels());
 
-		// Select the required fields from the table.
-		$query->select(
-			$this->getState(
-				'list.select',
-				'a.font_id as id, a.name, a.alias, a.price, a.package_id, a.created, a.created_by, ' .
-				// use created if modified is 0
-				'CASE WHEN a.modified = 0 THEN a.created ELSE a.modified END as modified, ' .
-					'a.modified_by, uam.name as modified_by_name,' .
-				'a.thumb, a.file_path '
-			)
-		);
-
-		$query->from('#__shop_font AS a');
-
-		// Join over the packages.
-		$query->select('p.name AS package_title, p.alias AS package_alias');
-		$query->join('LEFT', '#__shop_package AS p ON p.package_id = a.package_id');
-
-		// Join over the users for the author and modified_by names.
-		$query->select("CASE WHEN a.created_by_alias > ' ' THEN a.created_by_alias ELSE ua.name END AS author");
-		$query->select("ua.email AS author_email");
-
-		$query->join('LEFT', '#__users AS ua ON ua.id = a.created_by');
-		$query->join('LEFT', '#__users AS uam ON uam.id = a.modified_by');
-
-		// Filter by a single or group of fonts.
-		$fontId = $this->getState('filter.font_id');
-
-		if (is_numeric($fontId)) {
-			$type = $this->getState('filter.font_id.include', true) ? '= ' : '<> ';
-			$query->where('a.font_id '.$type.(int) $articleId);
-		} else if (is_array($fontId)) {
-			JArrayHelper::toInteger($fontId);
-			$fontId = implode(',', $fontId);
-			$type = $this->getState('filter.font_id.include', true) ? 'IN' : 'NOT IN';
-			$query->where('a.font_id '.$type.' ('.$fontId.')');
+		if ((!$user->authorise('core.edit.state', 'com_shop')) &&  (!$user->authorise('core.edit', 'com_shop'))){
+			// limit to published for people who can't edit or edit.state.
+			$this->setState('filter.published', 1);
 		}
 
-		// Filter by a single or group of packages
-		$packageId = $this->getState('filter.package_id');
-
-		if (is_numeric($packageId)) {
-			$type = $this->getState('filter.package_id.include', true) ? '= ' : '<> ';
-
-			$packageEquals = 'a.package_id '.$type.(int) $packageId;
-			$query->where($packageEquals);
-		} else if (is_array($packageId) && (count($packageId) > 0)) {
-			JArrayHelper::toInteger($categoryId);
-			$categoryId = implode(',', $packageId);
-			if (!empty($categoryId)) {
-				$type = $this->getState('filter.package_id.include', true) ? 'IN' : 'NOT IN';
-				$query->where('a.package_id '.$type.' ('.$packageId.')');
-			}
-		}
-
-		// Filter by author
-		$authorId = $this->getState('filter.author_id');
-		$authorWhere = '';
-
-		if (is_numeric($authorId)) {
-			$type = $this->getState('filter.author_id.include', true) ? '= ' : '<> ';
-			$authorWhere = 'a.created_by '.$type.(int) $authorId;
-		}
-		else if (is_array($authorId)) {
-			JArrayHelper::toInteger($authorId);
-			$authorId = implode(',', $authorId);
-
-			if ($authorId) {
-				$type = $this->getState('filter.author_id.include', true) ? 'IN' : 'NOT IN';
-				$authorWhere = 'a.created_by '.$type.' ('.$authorId.')';
-			}
-		}
-
-		if (!empty($authorWhere) && !empty($authorAliasWhere)) {
-			$query->where('('.$authorWhere.' OR '.$authorAliasWhere.')');
-		}
-		else if (empty($authorWhere) && empty($authorAliasWhere)) {
-			// If both are empty we don't want to add to the query
+		// process show_noauth parameter
+		if (!$params->get('show_noauth')) {
+			$this->setState('filter.access', true);
 		}
 		else {
-			// One of these is empty, the other is not so we just add both
-			$query->where($authorWhere.$authorAliasWhere);
+			$this->setState('filter.access', false);
 		}
 
-		// Filter by start and end dates.
-		$nullDate	= $db->Quote($db->getNullDate());
-		$nowDate	= $db->Quote(JFactory::getDate()->toMySQL());
+		// Optional filter text
+		$this->setState('list.filter', JRequest::getString('filter-search'));
 
-		// Filter by Date Range or Relative Date
-		$dateFiltering = $this->getState('filter.date_filtering', 'off');
-		$dateField = $this->getState('filter.date_field', 'a.created');
+		$this->setState('list.start', JRequest::getVar('limitstart', 0, '', 'int'));
 
-		switch ($dateFiltering)
-		{
-			case 'range':
-				$startDateRange = $db->Quote($this->getState('filter.start_date_range', $nullDate));
-				$endDateRange = $db->Quote($this->getState('filter.end_date_range', $nullDate));
-				$query->where('('.$dateField.' >= '.$startDateRange.' AND '.$dateField .
-					' <= '.$endDateRange.')');
-				break;
+		$limit = $app->getUserStateFromRequest('com_shop.package.list.' . $itemid . '.limit', 'limit', $params->get('display_num'));
 
-			case 'relative':
-				$relativeDate = (int) $this->getState('filter.relative_date', 0);
-				$query->where($dateField.' >= DATE_SUB('.$nowDate.', INTERVAL ' .
-					$relativeDate.' DAY)');
-				break;
-
-			case 'off':
-			default:
-				break;
-		}
-
-		// process the filter for list views with user-entered filters
-		$params = $this->getState('params');
-
-		if ((is_object($params)) && ($params->get('filter_field') != 'hide') && ($filter = $this->getState('list.filter'))) {
-			// clean filter variable
-			$filter = JString::strtolower($filter);
-			$hitsFilter = intval($filter);
-			$filter = $db->Quote('%'.$db->getEscaped($filter, true).'%', false);
-
-			switch ($params->get('filter_field'))
-			{
-				case 'author':
-					$query->where(
-						'LOWER( CASE WHEN a.created_by_alias > '.$db->quote(' ').
-						' THEN a.created_by_alias ELSE ua.name END ) LIKE '.$filter.' '
-					);
-					break;
-
-				case 'name':
-				default: // default to 'title' if parameter is not valid
-					$query->where('LOWER( a.name ) LIKE '.$filter);
-					break;
-			}
-		}
-
-		// Add the list ordering clause.
-		$query->order($this->getState('list.ordering', 'a.ordering').' '.$this->getState('list.direction', 'ASC'));
-
-		return $query;
+		$this->setState('list.limit', $limit);
 	}
 
 	/**
-	 * Method to get a list of fonts.
+	 * Get the articles in the category
 	 *
-	 * Overriden to inject convert the attribs field into a JParameter object.
-	 *
-	 * @return	mixed	An array of objects on success, false on failure.
-	 * @since	1.6
+	 * @return	mixed	An array of articles or false if an error occurs.
+	 * @since	1.5
 	 */
-	public function getItems() {
-		$items	= parent::getItems();
-		$user	= JFactory::getUser();
-		$userId	= $user->get('id');
-		$guest	= $user->get('guest');
-		$groups	= $user->getAuthorisedViewLevels();
+	function getItems()
+	{
+		$params = $this->getState()->get('params');
+		$limit = $this->getState('list.limit');
 
-		// Get the global params
-		$globalParams = JComponentHelper::getParams('com_shop', true);
+		if ($this->_fonts === null) {
+			$model = JModel::getInstance('Fonts', 'ShopModel', array('ignore_request' => true));
+			$model->setState('params', JFactory::getApplication()->getParams());
+			$model->setState('list.start', $this->getState('list.start'));
+			$model->setState('list.limit', $limit);
+			$model->setState('list.direction', $this->getState('list.direction'));
+			$model->setState('list.filter', $this->getState('list.filter'));
 
-		require_once JPATH_COMPONENT . "/helpers/cart.php";
-		foreach ($items as &$item) {
-			$item->params = clone $this->getState('params');
-			$item->params->set('access-view', true);
+			if ($limit >= 0) {
+				$this->_fonts = $model->getItems();
 
-			if (ShopHelperCart::isFontAdded($item->id)) {
-				$item->isFontAdded = true;
-			} else {
-				$item->isFontAdded = false;
+				if ($this->_fonts === false) {
+					$this->setError($model->getError());
+				}
 			}
+			else {
+				$this->_fonts=array();
+			}
+
+			$this->_pagination = $model->getPagination();
 		}
 
-		return $items;
+		return $this->_fonts;
 	}
 
-	public function getStart() {
-		return $this->getState('list.start');
+	public function getFilterSearch() {
+		$filterSearch = $this->getState('list.filter');
+		if (empty($filterSearch)) {
+			$filterSearch = JRequest::getString("filter-search");
+		}
+		return $filterSearch;
+	}
+
+	public function getPagination()
+	{
+		if (empty($this->_pagination)) {
+			return null;
+		}
+		return $this->_pagination;
 	}
 
 }

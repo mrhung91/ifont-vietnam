@@ -215,6 +215,10 @@ class ShopControllerFont extends JControllerForm
 				}
 
 				$font_file = JPATH_SITE . DS . $file_path;
+				if (!file_exists($font_file)) {
+					continue;
+				}
+
 				$thumbUrl = ShopHelperFont::render($fontId, $font_file, $text);
 				if (!empty($thumbUrl)) {
 					$thumbs[$fontId] = $thumbUrl;
