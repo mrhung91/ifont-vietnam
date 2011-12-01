@@ -13,7 +13,11 @@ defined('_JEXEC') or die;
 setlocale(LC_MONETARY, 'en_US');
 ?>
 <div class="search<?php echo $this->pageclass_sfx;?>">
-
+	<?php if ($this->params->get('show_page_heading', 1)) : ?>
+		<div class="heading_bderbot">
+			<h3 class="textright"><?php echo $this->escape($this->params->get('page_heading')); ?></h3>
+		</div>
+	<?php endif; ?>
 	<div id="search_font">
 		<div class="bg_gray">
 			<div class="fl mg_left25px relative">

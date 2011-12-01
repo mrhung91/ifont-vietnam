@@ -72,32 +72,9 @@ class ShopViewSearch extends JView
 		$app		= JFactory::getApplication();
 		$menus		= $app->getMenu();
 		$pathway	= $app->getPathway();
-		$title		= null;
+		$title		= JText::_('COM_SHOP_SEARCH_FONTS');
 
-		// Because the application sets a default page title,
-		// we need to get it from the menu item itself
-		$menu = $menus->getActive();
-
-		if ($menu) {
-			$this->params->def('page_heading', $this->params->get('page_title', $menu->title));
-		} else {
-			$this->params->def('page_heading', JText::_('COM_SHOP_SEARCH_FONTS'));
-		}
-
-		$id = (int) @$menu->query['id'];
-
-		$title = $this->params->get('page_title', '');
-
-		if (empty($title)) {
-			$title = $app->getCfg('sitename');
-		}
-		elseif ($app->getCfg('sitename_pagetitles', 0) == 1) {
-			$title = JText::sprintf('JPAGETITLE', $app->getCfg('sitename'), $title);
-		}
-		elseif ($app->getCfg('sitename_pagetitles', 0) == 2) {
-			$title = JText::sprintf('JPAGETITLE', $title, $app->getCfg('sitename'));
-		}
-
+		$this->params->def('page_heading', $title);
 		$this->document->setTitle($title);
 	}
 }
