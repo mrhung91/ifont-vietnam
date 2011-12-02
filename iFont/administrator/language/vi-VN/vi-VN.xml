@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metafile version="1.7" client="administrator" method="upgrade">
-	<name>Vietnamese (Việt Nam)</name>
+	<name>Vietnamese (Viet Nam)</name>
 	<version>1.7.0</version>
 	<creationDate>2011-04-20</creationDate>
 	<author>buaxua.vn</author>
@@ -10,10 +10,10 @@
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
 	<description>Ngôn ngữ tiếng Việt cho Joomla 1.7 (Back-end)</description>
 	<metadata>
-		<name>Vietnamese (Việt Nam)</name>
+		<name>Vietnamese (Viet Nam)</name>
 		<tag>vi-VN</tag>
 		<rtl>0</rtl>
-		<locale>vi_VN, vie_VN, vn, vietnam, viet nam, vietnamese, Việt Nam</locale>
+		<locale>vi_VN, vie_VN, vn, vietnam, viet nam, vietnamese, Viet Nam</locale>
 		<firstDay>1</firstDay>
 	</metadata>
 </metafile>
