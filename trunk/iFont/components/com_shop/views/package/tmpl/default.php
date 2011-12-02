@@ -32,10 +32,12 @@ setlocale(LC_MONETARY, 'en_US');
 		</div>
 	</div>
 
+	<?php if ($this->pagination->limitstart == 0): ?>
 	<div class="txt01 mg_bot30px">
 		<strong>Giới thiệu:</strong>
 		<p><?php echo JHtml::_('content.prepare', $this->package->description); ?></p>
 	</div>
+	<?php endif; ?>
 
 	<div id="search_font">
 		<div class="bg_gray">
