@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install type="module" version="1.5.0">
+	<name>Sticky Article</name>
+	<author>Duong Thien Duc</author>
+	<creationDate>Sep 2008</creationDate>
+	<copyright>Copyright (C) 2005 - 2008 Open Source Matters. All rights reserved.</copyright>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+	<authorEmail>admin@joomla.org</authorEmail>
+	<authorUrl>www.joomla.org</authorUrl>
+	<version>1.5.0</version>
+	<description>This module loads content of an article</description>
+	<files>
+		<filename module="mod_sticky">mod_sticky.php</filename>
+		<filename module="mod_sticky">helper.php</filename>
+		<filename module="mod_sticky">tmpl/index.html</filename>
+		<filename module="mod_sticky">tmpl/default.php</filename>
+		<filename module="mod_sticky">tmpl/side.php</filename>
+	</files>
+	<config>
+		<fields name="params">
+			<fieldset name="basic"
+					addfieldpath="/administrator/components/com_content/models/fields">
+				<field
+					name="id"
+					type="modal_article"
+					label="Article"
+					description="Article" />
+			</fieldset>
+			<fieldset
+				name="advanced">
+				<field
+					name="layout"
+					type="modulelayout"
+					label="JFIELD_ALT_LAYOUT_LABEL"
+					description="JFIELD_ALT_MODULE_LAYOUT_DESC" />
+				<field
+					name="moduleclass_sfx"
+					type="text"
+					label="Suffix Class"
+					description="Suffix Class" />
+				<field
+					name="cache"
+					type="list"
+					default="1"
+					label="Caching"
+					description="Caching">
+					<option
+						value="1">JGLOBAL_USE_GLOBAL</option>
+					<option
+						value="0">No Caching</option>
+				</field>
+				<field
+					name="cache_time"
+					type="text"
+					default="900"
+					label="Cache Time"
+					description="Cache Time" />
+				<field
+					name="cachemode"
+					type="hidden"
+					default="itemid">
+					<option
+						value="itemid"></option>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
+</install>
