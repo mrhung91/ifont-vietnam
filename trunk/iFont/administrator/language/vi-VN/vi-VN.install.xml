@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <extension version="1.7" client="administrator" type="language" method="upgrade">
-	<name>Vietnamese (Việt Nam)</name>
+	<name>Vietnamese (Viet Nam)</name>
 	<tag>vi-VN</tag>
 	<version>1.7.0v1</version>
 	<creationDate>2011-07-21</creationDate>
