@@ -111,23 +111,21 @@ class ShopHelperCart {
 	}
 
 	public static function hasItem() {
-		if (!isset($cartInfo["fonts"])) {
-			return false;
+		$cartInfo = ShopHelperCart::getShopCartInfo();
+		if (isset($cartInfo["fonts"])) {
+			$fontMap = $cartInfo["fonts"];
+			if (!empty($fontMap)) {
+				return true;
+			}
 		}
 
-		$fontMap = $cartInfo["fonts"];
-		if (!empty($fontMap)) {
-			return true;
+		if (isset($cartInfo["packages"])) {
+			$packageMap = $cartInfo["packages"];
+			if (!empty($packageMap)) {
+				return true;
+			}
 		}
 
-		if (!isset($cartInfo["packages"])) {
-			return false;
-		}
-
-		$packageMap = $cartInfo["packages"];
-		if (!empty($packageMap)) {
-			return true;
-		}
 		return false;
 	}
 
