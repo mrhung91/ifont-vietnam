@@ -24,8 +24,16 @@ class ShopViewCart extends JView
 	protected $state;
 	protected $user;
 
-	function display($tpl = null)
-	{
+	function display($tpl = null) {
+		$layout		= $viewLayout	= JRequest::getCmd('layout', 'default');
+		if ($layout == 'result') {
+			$this->_displayCheckoutResult($tpl);
+		} else {
+			$this->_displayDefault($tpl);
+		}
+	}
+
+	private function _displayDefault($tpl = null) {
 		// Initialise variables.
 		$app		= JFactory::getApplication();
 		$user		= JFactory::getUser();
@@ -48,6 +56,19 @@ class ShopViewCart extends JView
 		parent::display($tpl);
 	}
 
+	private function _displayCheckoutResult($tpl = null) {
+		$this->state	= $this->get('State');
+		$this->params	= $this->state->get('params');
+		// Check for errors.
+		if (count($errors = $this->get('Errors'))) {
+			JError::raiseWarning(500, implode("\n", $errors));
+			return false;
+		}
+
+		$this->_prepareDocument();
+		parent::display($tpl);
+	}
+
 	/**
 	 * Prepares the document
 	 */
@@ -61,8 +82,7 @@ class ShopViewCart extends JView
 		// Because the application sets a default page title,
 		// we need to get it from the menu item itself
 		$menu = $menus->getActive();
-		if ($menu)
-		{
+		if ($menu) {
 			$this->params->def('page_heading', $this->params->get('page_title', $menu->title));
 		}
 		else

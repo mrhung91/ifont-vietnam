@@ -12,10 +12,12 @@ jimport('joomla.application.component.controllerform');
 
 /**
  * @package		Joomla.Site
- * @subpackage	com_content
+ * @subpackage	com_shop
  */
-class ShopControllerCart extends JControllerForm
-{
+class ShopControllerCart extends JControllerForm {
+
+	const ADMIN_EMAIL = 'duongthienduc@yahoo.com';
+
 	/**
 	 * @since	1.6
 	 */
@@ -24,7 +26,7 @@ class ShopControllerCart extends JControllerForm
 	/**
 	 * @since	1.6
 	 */
-	protected $view_list = 'packages';
+	protected $view_list = 'carts';
 
 	/**
 	 * Method to add a new record.
@@ -159,7 +161,7 @@ class ShopControllerCart extends JControllerForm
 	 * @return	object	The model.
 	 * @since	1.5
 	 */
-	public function &getModel($name = 'form', $prefix = '', $config = array('ignore_request' => true))
+	public function &getModel($name = 'Cart', $prefix = 'ShopModel', $config = array())
 	{
 		$model = parent::getModel($name, $prefix, $config);
 
@@ -248,6 +250,106 @@ class ShopControllerCart extends JControllerForm
 		$resContent = SiteAjax::buildJsonString(array("message" => $message));
 		echo $resContent;
 		JApplication::close();
+	}
+
+	public function checkout() {
+		JRequest::checkToken('post') or jexit(JText::_('JInvalid_Token'));
+		require JPATH_COMPONENT . '/helpers/cart.php';
+		$cartInfo = ShopHelperCart::getShopCartInfo();
+
+		$fonts = isset($cartInfo['fonts']) ? $cartInfo['fonts'] : null;
+		$packages = isset($cartInfo['packages']) ? $cartInfo['packages'] : null;
+
+		if (empty($fonts) && empty($packages)) {
+			$this->setRedirect(JURI::base());
+			return;
+		}
+
+		$user = JFactory::getUser();
+		$orderModel = JModel::getInstance("Order", "ShopModel");
+		$data = array(
+			"code" => "",
+			"state" => ShopModelOrder::STATE_PENDING,
+			"fonts" => $fonts,
+			"packages" => $packages
+		);
+
+		$msg = null;
+		if ($orderModel->save($data)) {
+			$this->_sendOrderEmail($user, $fonts, $packages);
+			$this->_clearCart();
+			$msg = "Gửi đơn hàng thành công.";
+			ShopHelperCart::clearCart();
+		} else {
+			$msg = "Gửi đơn hàng thất bại";
+		}
+		$this->setRedirect(JRoute::_('index.php?option=com_shop&view=cart&layout=result&id='.JFactory::getUser()->id), $msg, "checkout.result");
+	}
+
+	private function _clearCart() {
+		ShopHelperCart::clearCart();
+	}
+
+	private function _sendOrderEmail($user, $fonts, $packages) {
+		$app		= JFactory::getApplication();
+		$mailfrom	= $app->getCfg('mailfrom');
+		$fromname	= $app->getCfg('fromname');
+		$sitename	= $app->getCfg('sitename');
+		$subject	= $sitename . " - Đơn hàng mua phông";
+		$body		= "Đơn hàng của " . $user->username . ":\n";
+
+		$fontTotal	= 0;
+		if (!empty($fonts)) {
+			$index = 0;
+			$body .= "\nCác phông đã đặt:\n";
+			foreach ($fonts as $fontInfo) {
+				$fontTotal += $fontInfo->price;
+				$body .= $index . ". " . $fontInfo->name . "\n";
+			}
+			$body .= "Cộng: " . number_format($fontTotal, 0, '', ".") . " VNĐ";
+		}
+
+		$packageTotal	= 0;
+		if (!empty($packages)) {
+			$index = 0;
+			$body .= "\nCác gói phông đã đặt:\n";
+			foreach ($packages as $packageInfo) {
+				$packageTotal += $packageInfo->price;
+				$body .= ++$index . ". " . $packageInfo->name . "\n";
+			}
+			$body .= "Cộng: " . number_format($packageTotal, 0, '', ".") . " VNĐ";
+		}
+
+		$total = $fontTotal + $packageTotal;
+			$body .= "\n\nTổng cộng: " . number_format($packageTotal, 0, '', ".") . " VNĐ";
+
+		$result = JUtility::sendMail($mailfrom, $fromname, ShopControllerCart::ADMIN_EMAIL, $subject, $body);
+
+		// Check for an error.
+		if ($result !== true) {
+			$this->setError(JText::_('COM_SHOP_CHECKOUT_SEND_MAIL_FAILED'));
+
+			// Send a system message to administrators receiving system mails
+			$db = JFactory::getDBO();
+			$q = "SELECT id FROM #__users WHERE block = 0 AND sendEmail = 1";
+			$db->setQuery($q);
+			$sendEmail = $db->loadResultArray();
+			if (count($sendEmail) > 0) {
+				$jdate = new JDate();
+				// Build the query to add the messages
+				$q = "INSERT INTO `#__messages` (`user_id_from`, `user_id_to`, `date_time`, `subject`, `message`)
+							VALUES ";
+				$messages = array();
+				foreach ($sendEmail as $userid) {
+					$messages[] = "(".$userid.", ".$userid.", '".$jdate->toMySQL()."', '".JText::_('COM_SHOP_MAIL_SEND_FAILURE_SUBJECT')."', '".JText::sprintf('COM_SHOP_MAIL_SEND_FAILURE_BODY', $return, $data['username'])."')";
+				}
+				$q .= implode(',', $messages);
+				$db->setQuery($q);
+				$db->query();
+			}
+			return false;
+		}
+		return true;
 	}
 
 }

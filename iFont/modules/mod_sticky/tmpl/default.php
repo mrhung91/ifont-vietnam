@@ -3,9 +3,10 @@ defined('_JEXEC') or die('Restricted access');
 if (!class_exists("ShopHelperCart")) {
 	require JPATH_COMPONENT . DS . "helpers" . DS . "cart.php";
 }
-$hasCartItem = ShopHelperCart::hasItem();
+$view = JRequest::getCmd("view");
+$showCheckoutInfo = $view == "cart" && ShopHelperCart::hasItem();
 ?>
-<?php if ($hasCartItem): ?>
+<?php if ($showCheckoutInfo): ?>
 <div class="sticky<?php echo $params->get( 'moduleclass_sfx' ) ?>">
 	<?php if ($headerText) : ?>
 		<div class="bannerheader"><?php echo $headerText ?></div>
