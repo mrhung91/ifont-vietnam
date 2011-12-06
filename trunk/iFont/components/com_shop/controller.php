@@ -53,7 +53,7 @@ class ShopController extends JController
 			$user = JFactory::getUser();
 			if ($user->get('guest') == 1) {
 				// Redirect to home page.
-				$this->setRedirect(JRoute::_('index.php', false));
+				$this->setRedirect(JURI::base());
 				return;
 			}
 		}

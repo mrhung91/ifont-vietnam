@@ -129,5 +129,14 @@ class ShopHelperCart {
 		return false;
 	}
 
+	public static function clearCart() {
+		$cartInfo = ShopHelperCart::getShopCartInfo();
+		unset($cartInfo["fonts"]);
+		unset($cartInfo["packages"]);
+
+		$session = JFactory::getSession();
+		$session->set('shopCart', $cartInfo);
+	}
+
 }
 ?>
