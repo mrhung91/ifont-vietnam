@@ -134,7 +134,7 @@ class ShopModelOrders extends JModelList
 
 		// Filter by a single or group of packages.
 		$state = $this->getState('filter.state');
-		if ($state !== -1) {
+		if ($state != -1) {
 			$query->where('a.state = '.(int) $state);
 		} else {
 			$query->where('a.state <> ' . ShopConstants::ORDER_STATE_DELETED);
@@ -148,7 +148,7 @@ class ShopModelOrders extends JModelList
 		$search = $this->getState('filter.search');
 		if (!empty($search)) {
 			$search = $db->Quote('%'.$db->getEscaped($search, true).'%');
-			$query->where('(u.name LIKE '.$search.')');
+			$query->where('(ua.name LIKE '.$search.')');
 		}
 
 		// Add the list ordering clause.
