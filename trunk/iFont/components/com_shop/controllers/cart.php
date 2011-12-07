@@ -265,13 +265,26 @@ class ShopControllerCart extends JControllerForm {
 			return;
 		}
 
+		$total = 0;
+		if (!empty($fonts)) {
+			foreach ($fonts as $fontInfo) {
+				$total += $fontInfo->price;
+			}
+		}
+		if (!empty($packages)) {
+			foreach ($packages as $packageInfo) {
+				$total += $packageInfo->price;
+			}
+		}
+
 		$user = JFactory::getUser();
 		$orderModel = JModel::getInstance("Order", "ShopModel");
 		$data = array(
 			"code" => "",
 			"state" => ShopModelOrder::STATE_PENDING,
 			"fonts" => $fonts,
-			"packages" => $packages
+			"packages" => $packages,
+			"total" => $total
 		);
 
 		$msg = null;

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<field name="id" type="hidden"
+		default="0"
+		required="true"
+		readonly="true"
+	/>
+
+	<field
+		name="state"
+		type="list"
+		class="inputbox"
+		default="1"
+		size="1"
+		label="JSTATUS"
+		description="JSTATUS">
+		<option
+			value="0">
+			JPUBLISHED</option>
+		<option
+			value="1">
+			JPENDING</option>
+		<option
+			value="2">
+			JDELIVERED</option>
+		<option
+			value="3">
+			JREJECTED</option>
+		<option
+			value="4">
+			JDELETED</option>
+	</field>
+
+</form>
