@@ -10,13 +10,13 @@ defined('_JEXEC') or die;
 jimport('joomla.application.component.modellist');
 
 /**
- * Methods supporting a list of package records.
+ * Methods supporting a list of user records.
  *
  * @package		Joomla.Administrator
  * @subpackage	com_users
  * @since		1.6
  */
-class ShopModelPackages extends JModelList
+class ShopModelOrders extends JModelList
 {
 	/**
 	 * Constructor.
@@ -25,14 +25,11 @@ class ShopModelPackages extends JModelList
 	 * @see		JController
 	 * @since	1.6
 	 */
-	public function __construct($config = array())
-	{
+	public function __construct($config = array()) {
 		if (empty($config['filter_fields'])) {
 			$config['filter_fields'] = array(
-				'a.package_id',
-				'name', 'a.name',
-				'description', 'a.description',
-				'a.created', 'a.created',
+				'a.id', 'a.total', 'a.author_id',
+				'state', 'a.state', 'a.create', 'a.modified'
 			);
 		}
 
@@ -61,16 +58,15 @@ class ShopModelPackages extends JModelList
 		$search = $this->getUserStateFromRequest($this->context.'.filter.search', 'filter_search');
 		$this->setState('filter.search', $search);
 
-		// Load the filter state.
-		$type = $this->getUserStateFromRequest($this->context.'.filter.type', 'filter_type');
-		$this->setState('filter.type', $type);
+		$state = $this->getUserStateFromRequest($this->context.'.filter.state', 'filter_state', null, 'int');
+		$this->setState('filter.state', $state);
 
 		// Load the parameters.
 		$params		= JComponentHelper::getParams('com_shop');
 		$this->setState('params', $params);
 
 		// List state information.
-		parent::populateState('a.name', 'asc');
+		parent::populateState('a.created', 'desc');
 	}
 
 	/**
@@ -89,6 +85,7 @@ class ShopModelPackages extends JModelList
 	{
 		// Compile the store id.
 		$id	.= ':'.$this->getState('filter.search');
+		$id	.= ':'.$this->getState('filter.state');
 
 		return parent::getStoreId($id);
 	}
@@ -106,47 +103,6 @@ class ShopModelPackages extends JModelList
 		// Try to load the data from internal storage.
 		if (empty($this->cache[$store])) {
 			$items = parent::getItems();
-
-			// Bail out on an error or empty list.
-			if (empty($items)) {
-				$this->cache[$store] = $items;
-				return $items;
-			}
-
-			// First pass: get list of the font id's
-			$packageIds = array();
-			foreach ($items as $item) {
-				$packageIds[] = (int) $item->package_id;
-			}
-
-			// Get the counts from the database only for the users in the list.
-			$db		= $this->getDbo();
-			$query	= $db->getQuery(true);
-
-			// Join over the group mapping table.
-			$query->select('sf.package_id, COUNT(DISTINCT sf.font_id) as font_count')
-				->from('#__shop_font AS sf')
-				->where('sf.package_id IN ('.implode(',', $packageIds).')')
-				->group('sf.package_id');
-
-			$db->setQuery($query);
-
-			// Load the counts into an array indexed on the user id field.
-			$packages = $db->loadRow('package_id');
-
-			$error = $db->getErrorMsg();
-			if ($error) {
-				$this->setError($error);
-				return false;
-			}
-
-			// Second pass: collect the group counts into the master items array.
-			foreach ($items as &$item)
-			{
-				if (isset($packages[$item->package_id])) {
-					$item->font_count = $fontPackage[$item->package_id]->font_count;
-				}
-			}
 
 			// Add the items to the internal cache.
 			$this->cache[$store] = $items;
@@ -171,20 +127,28 @@ class ShopModelPackages extends JModelList
 		$query->select(
 			$this->getState(
 				'list.select',
-				'a.package_id, a.name, a.alias, a.status, a.thumb, a.is_vietnamese, a.is_mac, a.is_windows'
+				'a.id, a.code, a.state, a.total, a.created, a.created_by, a.modified, a.modified_by'
 			)
 		);
-		$query->from('#__shop_package AS a');
+		$query->from('#__shop_order AS a');
 
-		// Filter by search in name.
+		// Filter by a single or group of packages.
+		$state = $this->getState('filter.state');
+		if ($state !== -1) {
+			$query->where('a.state = '.(int) $state);
+		} else {
+			$query->where('a.state <> ' . ShopConstants::ORDER_STATE_DELETED);
+		}
+
+		// Join over the users for the author.
+		$query->select('ua.name AS author_name');
+		$query->join('LEFT', '#__users AS ua ON ua.id = a.created_by');
+
+		// Filter by search in user name.
 		$search = $this->getState('filter.search');
 		if (!empty($search)) {
-			if (stripos($search, 'id:') === 0) {
-				$query->where('a.id = '.(int) substr($search, 3));
-			} else {
-				$search = $db->Quote('%'.$db->getEscaped($search, true).'%');
-				$query->where('(a.name LIKE '.$search.' OR a.alias LIKE '.$search.')');
-			}
+			$search = $db->Quote('%'.$db->getEscaped($search, true).'%');
+			$query->where('(u.name LIKE '.$search.')');
 		}
 
 		// Add the list ordering clause.

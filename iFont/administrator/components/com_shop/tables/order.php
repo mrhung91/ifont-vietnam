@@ -69,34 +69,62 @@ class ShopTableOrder extends JTable {
 		return parent::bind($array, $ignore);
 	}
 
-	public function delete($pk = null) {
-		$db = $this->getDBO();
+	public function changeState($pks = null, $state = 1, $userId = 0) {
+		// Initialise variables.
+		$k = $this->_tbl_key;
 
-		$query = $db->getQuery(true);
-		$query->select('*');
-		$query->from('#__shop_order');
-		$query->where('id='.$pk);
+		// Sanitize input.
+		JArrayHelper::toInteger($pks);
+		$userId = (int) $userId;
+		$state  = (int) $state;
 
-		$db->setQuery($query);
-		$ids = $db->loadObjectList();
-
-		if ($ids) {
-			$item = JTable::getInstance('Order', 'ShopTable');
-			foreach ($ids as $id) {
-				$item->delete($id);
+		// If there are no primary keys set check to see if the instance key is set.
+		if (empty($pks)) {
+			if ($this->$k) {
+				$pks = array($this->$k);
+			}
+			// Nothing to set publishing state on, return false.
+			else {
+				$this->setError(JText::_('JLIB_DATABASE_ERROR_NO_ROWS_SELECTED'));
+				return false;
 			}
 		}
 
-		return parent::delete($pk);
+		// Get an instance of the table
+		$table = JTable::getInstance('Order','ShopTable');
+		$date = JFactory::getDate();
+		$user = JFactory::getUser();
+
+		// For all keys
+		foreach ($pks as $pk) {
+			// Load the banner
+			if(!$table->load($pk)) {
+				$this->setError($table->getError());
+			}
+
+			// Change the state
+			$table->state = $state;
+			$table->modified = $date->toMySQL();
+			$table->modified_by = $user->get('id');
+
+			// Check the row
+			$table->check();
+
+			// Store the row
+			if (!$table->store()) {
+				$this->setError($table->getError());
+			}
+		}
+		return count($this->getErrors())==0;
 	}
 
 	public function store($updateNulls = false) {
 		if (parent::store($updateNulls)) {
 			if ($this->id) {
 				if ($this->_fonts != null) {
-					foreach ($this->_fonts as $fontId) {
+					foreach ($this->_fonts as $fontInfo) {
 						$itemModel = JModel::getInstance("OrderItem", "ShopModel");
-						$data = array("order_id" => $this->id, "font_id" => $fontId);
+						$data = array("order_id" => $this->id, "font_id" => $fontInfo->id);
 						$itemModel->save($data);
 					}
 				}

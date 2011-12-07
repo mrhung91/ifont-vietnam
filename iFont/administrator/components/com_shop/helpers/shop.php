@@ -57,6 +57,12 @@ class ShopHelper
 				'index.php?option=com_shop&view=types',
 				$vName == 'types'
 			);
+
+			JSubMenuHelper::addEntry(
+				"Orders",
+				'index.php?option=com_shop&view=orders',
+				$vName == 'orders'
+			);
 		}
 	}
 
@@ -73,7 +79,7 @@ class ShopHelper
 			self::$actions	= new JObject;
 
 			$actions = array(
-				'core.admin', 'core.manage', 'core.create', 'core.edit', 'core.edit.own', 'core.edit.state', 'core.delete'
+				'core.admin', 'core.manage', 'core.edit', 'core.edit.own', 'core.edit.state', 'core.delete'
 			);
 
 			foreach ($actions as $action) {
@@ -100,32 +106,28 @@ class ShopHelper
 		return $options;
 	}
 
-	/**
-	 * Get a list of the font packages for filtering.
-	 *
-	 * @return	array	An array of JHtmlOption elements.
-	 * @since	1.6
-	 */
-	static function getPackages()
-	{
-		$db = JFactory::getDbo();
-		$db->setQuery(
-			'SELECT a.package_id AS value, a.name AS text' .
-			' FROM #__shop_package AS a' .
-			' ORDER BY a.name ASC'
-		);
-		$options = $db->loadObjectList();
-
-		// Check for a database error.
-		if ($db->getErrorNum()) {
-			JError::raiseNotice(500, $db->getErrorMsg());
-			return null;
-		}
-
-		foreach ($options as &$option) {
-			$option->text = str_repeat('- ',$option->level).$option->text;
-		}
+	static function getOrderStateOptions() {
+		// Build the filter options.
+		$options	= array();
+		$options[]	= JHtml::_('select.option', '0', JText::_('JUNPUBLISHED'));
+		$options[]	= JHtml::_('select.option', '1', JText::_('JPENDING'));
+		$options[]	= JHtml::_('select.option', '2', JText::_('JDELIVERED'));
+		$options[]	= JHtml::_('select.option', '3', JText::_('JREJECTED'));
+		$options[]	= JHtml::_('select.option', '4', JText::_('JDELETED'));
 
 		return $options;
 	}
+
+	static function getJGridOrderStates() {
+		$states	= array(
+			0	=> array('pending',		'JUNPUBLISHED',	'JLIB_HTML_PENDING_ITEM',	'JPUBLISHED',	false,	'unpublish',	'unpublish'),
+			1	=> array('deliver',		'JPENDING',		'JLIB_HTML_DELIVER_ITEM',	'JUNPUBLISHED',	false,	'pending',		'pending'),
+			2	=> array('reject',		'JDELIVERED',	'JLIB_HTML_REJECT_ITEM',	'JDELIVERED',	false,	'publish',		'publish'),
+			3	=> array('delete',		'JREJECTED',	'JLIB_HTML_DELETE_ITEM',	'JREJECTED',	false,	'expired',		'expired'),
+			4	=> array('unpublish',	'JDELETED',		'JLIB_HTML_UNPUBLISH_ITEM',	'JDELETED',		false,	'trash',		'trash'),
+		);
+
+		return $states;
+	}
+
 }

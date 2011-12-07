@@ -16,6 +16,8 @@ if (!JFactory::getUser()->authorise('core.manage', 'com_shop')) {
 
 JTable::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR.'/tables');
 
+require JPATH_COMPONENT_ADMINISTRATOR . DS . "constants.php";
+
 // Include dependancies
 jimport('joomla.application.component.controller');
 

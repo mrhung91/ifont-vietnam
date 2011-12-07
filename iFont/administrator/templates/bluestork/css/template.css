@@ -678,7 +678,7 @@ div.current fieldset {
 	border: none 0;
 }
 
-div.current fieldset.adminform { 	 
+div.current fieldset.adminform {
 	border: 1px #ccc solid;
 }
 
@@ -772,7 +772,7 @@ li.acl-resetbtn:hover {
 	margin-right: 15px;
 	float: left;
 	margin-bottom: 15px;
-	
+
 }
 
 #cpanel div.icon a {
@@ -914,6 +914,7 @@ fieldset input,
 fieldset textarea,
 fieldset select,
 fieldset img,
+fieldset span,
 fieldset button {
 	float: left;
 	width: auto;
