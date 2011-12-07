@@ -317,9 +317,9 @@ class ShopControllerCart extends JControllerForm {
 			$body .= "\nCác phông đã đặt:\n";
 			foreach ($fonts as $fontInfo) {
 				$fontTotal += $fontInfo->price;
-				$body .= $index . ". " . $fontInfo->name . "\n";
+				$body .= ++$index . ". " . $fontInfo->name . "\n";
 			}
-			$body .= "Cộng: " . number_format($fontTotal, 0, '', ".") . " VNĐ";
+			$body .= "Cộng: " . number_format($fontTotal, 0, '', ".") . " VNĐ\n";
 		}
 
 		$packageTotal	= 0;
@@ -330,11 +330,11 @@ class ShopControllerCart extends JControllerForm {
 				$packageTotal += $packageInfo->price;
 				$body .= ++$index . ". " . $packageInfo->name . "\n";
 			}
-			$body .= "Cộng: " . number_format($packageTotal, 0, '', ".") . " VNĐ";
+			$body .= "Cộng: " . number_format($packageTotal, 0, '', ".") . " VNĐ\n";
 		}
 
 		$total = $fontTotal + $packageTotal;
-			$body .= "\n\nTổng cộng: " . number_format($packageTotal, 0, '', ".") . " VNĐ";
+		$body .= "\n\nTổng cộng: " . number_format($total, 0, '', ".") . " VNĐ";
 
 		$result = JUtility::sendMail($mailfrom, $fromname, ShopControllerCart::ADMIN_EMAIL, $subject, $body);
 
