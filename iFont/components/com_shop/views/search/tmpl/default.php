@@ -18,6 +18,8 @@ setlocale(LC_MONETARY, 'en_US');
 			<h3 class="textright"><?php echo $this->escape($this->params->get('page_heading')); ?></h3>
 		</div>
 	<?php endif; ?>
+
+	<?php if (!empty($this->items)): ?>
 	<div id="search_font">
 		<div class="bg_gray">
 			<div class="fl mg_left25px relative">
@@ -40,6 +42,9 @@ setlocale(LC_MONETARY, 'en_US');
 	?>
 	<?php endforeach; ?>
 	</div>
+	<?php else: ?>
+	<div class="no-result">Không có phông nào được tìm thấy</div>
+	<?php endif;?>
 
 	<?php // Add pagination links ?>
 	<?php if (!empty($this->items)) : ?>
