@@ -50,7 +50,7 @@ html[xmlns] .clearfix {
 }
 
 h4, #content .detail li.change_font, .btn, .btn_buy, .btn_buy_big, .moduletable-payment-type h3, h5 {
-    font-family: 'HelveticaiDesignVn-BdCn', Arial, Helvetica, sans-serif;
+    font-family: 'HelveticaiDesignVn-UltLt', Arial, Helvetica, sans-serif;
 }
 
 body {
@@ -171,7 +171,7 @@ a {
     width: 205px;
     line-height: 32px;
     font-weight: bold;
-    font-family: 'HelveticaiDesignVn-BdCn', Arial, Helvetica, sans-serif;
+    font-family: 'HelveticaiDesignVn-UltLt', Arial, Helvetica, sans-serif;
     font-size: 32px;
     color: #358887;
     padding: 0 0 10px;
@@ -180,7 +180,7 @@ a {
 .menu a {
     color: #333333;
     font-weight: bold;
-    font-family: 'HelveticaiDesignVn-BdCn', Arial, Helvetica, sans-serif;
+    font-family: 'HelveticaiDesignVn-UltLt', Arial, Helvetica, sans-serif;
     font-size: 32px;
 }
 
@@ -198,7 +198,7 @@ a {
 .contact .heading {
     color: #333333;
     font-weight: bold;
-    font-family: 'HelveticaiDesignVn-BdCn', Arial, Helvetica, sans-serif;
+    font-family: 'HelveticaiDesignVn-UltLt', Arial, Helvetica, sans-serif;
     font-size: 32px;
     line-height: 32px;
     margin-bottom: 20px;
@@ -285,9 +285,10 @@ a {
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     border-radius: 3px;
-    behavior: url('css/css3.htc');
+    behavior: url('css3.htc');
     overflow: hidden;
     float: left;
+	position: relative;
 }
 
 .btn_search {
@@ -310,8 +311,16 @@ a {
     font-family: 'HelveticaiDesignVn-UltLt', Arial, Helvetica, sans-serif;
     font-size: 15px;
     line-height: 18px;
-    background: url("../images/ico_search.png") no-repeat scroll 2px 2px transparent;
     padding-left: 20px;
+}
+
+.boxsearch a {
+    position: absolute;
+    width: 13px;
+    height: 13px;
+    top: 4px;
+    left: 7px;
+    background: url("../images/ico_search.png") no-repeat scroll left top transparent;
 }
 
 .newletter, .welcome {
@@ -494,6 +503,7 @@ h5 {
     display: block;
     float: left;
     margin: 0 3px;
+	cursor: help;
 }
 
 .headindex span.ico01 {
