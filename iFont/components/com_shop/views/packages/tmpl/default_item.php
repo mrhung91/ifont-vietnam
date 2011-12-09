@@ -17,7 +17,7 @@ $package_id = $this->item->id;
 	<div class="headindex">
 		<ul class="left">
 			<li class="fix_txt"><a href="<?php echo ShopHelperRoute::getPackageRoute($package_id); ?>">
-				<?php echo $this->item->name; ?></a>&nbsp;|&nbsp;đăng bởi <?php echo $this->item->user; ?></li>
+				<?php echo $this->item->name; ?></a></li>
 			<li>
 				<?php if ($this->item->is_vietnamese): ?>
 				<span class="ico01 os"> </span>
@@ -32,7 +32,8 @@ $package_id = $this->item->id;
 		</ul>
 		<?php if (!$this->item->isPackageAdded) : ?>
 		<ul class="right">
-			<li class="fix_txt"><?php echo $this->item->num_fonts; ?> kiểu</li>
+			<li class="fix_txt"><?php echo $this->item->num_fonts; ?> kiểu&nbsp;|
+					&nbsp;<?php echo number_format($this->item->price, 0, '', "."); ?> VNĐ</li>
 			<li class="btn_buy"><a href="javascript:;"
 				onclick="buyPackage(this, <?php echo $package_id; ?>)">MUA</a></li>
 		</ul>
