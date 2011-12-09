@@ -20,13 +20,13 @@ $package_id = $this->item->id;
 				<?php echo $this->item->name; ?></a></li>
 			<li>
 				<?php if ($this->item->is_vietnamese): ?>
-				<span class="ico01 os"> </span>
+				<span class="ico01 os" title="Hỗ trợ tiếng Việt"> </span>
 				<?php endif; ?>
 				<?php if ($this->item->is_mac): ?>
-				<span class="ico02 os"> </span>
+				<span class="ico02 os" title="Hỗ trợ Mac OS"> </span>
 				<?php endif; ?>
 				<?php if ($this->item->is_windows): ?>
-				<span class="ico03 os"> </span>
+				<span class="ico03 os" title="Hỗ trợ Windows"> </span>
 				<?php endif; ?>
 			</li>
 		</ul>
