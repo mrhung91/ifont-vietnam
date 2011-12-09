@@ -45,6 +45,14 @@
 			validate="email"
 		/>
 
+		<field name="phone" type="text"
+			class="inputbox"
+			description="Phone"
+			label="Phone"
+			required="false"
+			size="30"
+		/>
+
 		<field
 			name="registerDate"
 			type="calendar"

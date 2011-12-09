@@ -63,7 +63,7 @@ $loggeduser = JFactory::getUser();
 				<th class="left">
 					<?php echo JHtml::_('grid.sort', 'COM_USERS_HEADING_NAME', 'a.name', $listDirn, $listOrder); ?>
 				</th>
-				<th class="nowrap" width="10%">
+				<th class="nowrap" width="20%">
 					<?php echo JHtml::_('grid.sort', 'JGLOBAL_USERNAME', 'a.username', $listDirn, $listOrder); ?>
 				</th>
 				<th class="nowrap" width="5%">
@@ -75,9 +75,7 @@ $loggeduser = JFactory::getUser();
 				<th class="nowrap" width="10%">
 					<?php echo JText::_('COM_USERS_HEADING_GROUPS'); ?>
 				</th>
-				<th class="nowrap" width="15%">
-					<?php echo JHtml::_('grid.sort', 'JGLOBAL_EMAIL', 'a.email', $listDirn, $listOrder); ?>
-				</th>
+				<th class="nowrap" width="5%">Phone</th>
 				<th class="nowrap" width="10%">
 					<?php echo JHtml::_('grid.sort', 'COM_USERS_HEADING_LAST_VISIT_DATE', 'a.lastvisitDate', $listDirn, $listOrder); ?>
 				</th>
@@ -149,7 +147,7 @@ $loggeduser = JFactory::getUser();
 					<?php endif; ?>
 				</td>
 				<td class="center">
-					<?php echo $this->escape($item->email); ?>
+					<?php echo $this->escape($item->phone); ?>
 				</td>
 				<td class="center">
 					<?php if ($item->lastvisitDate!='0000-00-00 00:00:00'):?>
