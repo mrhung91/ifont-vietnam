@@ -1,4 +1,5 @@
 <?php
+define('FONT_SIZE', 48);
 define('FONT_WIDTH', 680);
 define('FONT_MAX_WIDTH', 640);
 define('FONT_MAX_HEIGHT', 109);
@@ -8,7 +9,7 @@ define("ALIGN_RIGHT", "right");
 
 class ShopHelperFont {
 
-	public static function render($fontId, $font_file, $text) {
+	public static function render($fontId, $font_file, $text, $font_size = FONT_SIZE) {
 		$tmp_dir = JPATH_SITE . DS . "tmp" . DS . "font";
 
 		// create canvas object for image
@@ -18,12 +19,14 @@ class ShopHelperFont {
 		ShopHelperFont::paintBackground($canvas);
 
 		// print the text onto the canvas
-		ShopHelperFont::printText($canvas, $text, $font_file);
+		ShopHelperFont::printText($canvas, $text, $font_file, $font_size);
 
 		// set temporary file name
-		$fileName = "img_" . $fontId . "_" . time() . ".png";
+		$fileName = $fontId . base64_encode($text) . FONT_SIZE . ".png";
 		$filePath = $tmp_dir . DS . $fileName;
-		imagepng($canvas, $filePath);
+		if (!file_exists($filePath)) {
+			imagepng($canvas, $filePath);
+		}
 
 		$fileUrl = JURI::base() . "/tmp/font/" . $fileName;
 
@@ -77,10 +80,10 @@ class ShopHelperFont {
 		return array($r, $g, $b);
 	}
 
-	private static function printText(&$canvas, $text, $font) {
+	private static function printText(&$canvas, $text, $font, $font_size) {
 		$fontColor = ShopHelperFont::allocateImageColorFromHex($canvas, 'red');
 		//imagettftext($image, $size, $angle, $x, $y, $color, $fontfile, $text);
-		ShopHelperFont::imagettftextbox($canvas, 48, 0, 20, 72, $fontColor, $font, $text, FONT_MAX_WIDTH);
+		ShopHelperFont::imagettftextbox($canvas, $font_size, 0, 20, 72, $fontColor, $font, $text, FONT_MAX_WIDTH);
 	}
 
 	private function imagettftextbox(&$image, $size, $angle, $left, $top, $color, $font, $text, $max_width) {
