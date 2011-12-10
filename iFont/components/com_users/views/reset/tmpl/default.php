@@ -21,22 +21,21 @@ JHtml::_('behavior.formvalidation');
 	</h1>
 	<?php endif; ?>
 
-	<form id="user-registration" action="<?php echo JRoute::_('index.php?option=com_users&task=reset.request'); ?>" method="post" class="form-validate">
-
+	<form class="form" id="user-registration" action="<?php echo JRoute::_('index.php?option=com_users&task=reset.request'); ?>" method="post" class="form-validate">
 		<?php foreach ($this->form->getFieldsets() as $fieldset): ?>
-		<p><?php echo JText::_($fieldset->label); ?></p>		<fieldset>
+		<p><?php echo JText::_($fieldset->label); ?></p>
 			<dl>
 			<?php foreach ($this->form->getFieldset($fieldset->name) as $name => $field): ?>
 				<dt><?php echo $field->label; ?></dt>
 				<dd><?php echo $field->input; ?></dd>
 			<?php endforeach; ?>
 			</dl>
-		</fieldset>
 		<?php endforeach; ?>
 
-		<div>
-			<button type="submit" class="validate"><?php echo JText::_('JSUBMIT'); ?></button>
-			<?php echo JHtml::_('form.token'); ?>
-		</div>
+		<dl>
+			<dt></dt>
+			<dd class="button_login"><button type="submit" class="validate btn"><?php echo JText::_('JSUBMIT'); ?></button></dd>
+		</dl>
+		<?php echo JHtml::_('form.token'); ?>
 	</form>
 </div>
