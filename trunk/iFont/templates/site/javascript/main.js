@@ -1,3 +1,5 @@
+var renderIndex = 0;
+
 function showOverlay() {
 	jQuery("#overlay").width(window.outerWidth).height(window.outerHeight)
 			.show();
@@ -217,6 +219,7 @@ function onRenderSampleFontsText(sampleText) {
 		return;
 	}
 
+	var currentIndex = ++renderIndex;
 	$("span.ajax-loading").removeClass("hide");
 	$.post(
 		"index.php?option=com_shop&task=font.ajaxRenderSample",
@@ -225,6 +228,9 @@ function onRenderSampleFontsText(sampleText) {
 			text: text
 		},
 		function(data) {
+			if (currentIndex != renderIndex) {
+				return;
+			}
 			$("span.ajax-loading").addClass("hide");
 			if (data != null) {
 				loadFontThumbs(data);
@@ -244,7 +250,6 @@ function loadFontThumbs(thumbs) {
 	}
 }
 
-var renderIndex = 0;
 function onRenderSamplePackagesText(sampleText) {
 	var text = null;
 	if (sampleText == null) {
