@@ -1015,3 +1015,10 @@ div.reset dd input {
     font-size: 22px;
     line-height: 26px;
 }
+
+.desc-short {
+	height: 124px;
+	overflow: hidden;
+}
+
+a#lnkToggleDesc { text-decoration: underline; }

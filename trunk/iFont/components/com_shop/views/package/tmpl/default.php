@@ -35,7 +35,8 @@ setlocale(LC_MONETARY, 'en_US');
 	<?php if ($this->pagination->limitstart == 0): ?>
 	<div class="txt01 mg_bot30px">
 		<strong>Giới thiệu:</strong>
-		<p><?php echo JHtml::_('content.prepare', $this->package->description); ?></p>
+		<div id="secDescription"><?php echo JHtml::_('content.prepare', $this->package->description); ?></div>
+		<a href="javascript:;" id="lnkToggleDesc" style="display: none;">Chi tiết</a>
 	</div>
 	<?php endif; ?>
 
@@ -119,5 +120,21 @@ $(document).ready(function() {
 		$("#txtLimitStart").val(limitstart);
 		$("#shopForm").submit();
 	});
+
+	if ($("#secDescription").height() >= 124) {
+		$("#secDescription").addClass("desc-short", 5000);
+		$("#lnkToggleDesc").show().click(function() {
+			if ($("#secDescription").hasClass("desc-short")) {
+				$(this).html("Thu gọn");
+				$("#secDescription").removeClass("desc-short", 5000).addClass("desc-full", 5000);
+			} else {
+				$(this).html("Chi tiết");
+				$("#secDescription").removeClass("desc-full", 5000).addClass("desc-short", 5000);
+			}
+		});
+	} else {
+		$("#lnkToggleDesc").remove();
+	}
+
 });
 </script>
