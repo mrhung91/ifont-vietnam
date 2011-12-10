@@ -692,8 +692,9 @@ h5 {
     height: 34px;
 }
 
-.box_login .button_login {
+.box_login .button_login, .reset .button_login {
     float: right;
+	text-align: right;
 }
 
 .btn {
@@ -975,4 +976,42 @@ div.sort {
 
 .sort-dropdown li a:hover {
     color: #FFFFFF;
+}
+
+dl, dt, dd { padding: 0; margin: 0; display: block; }
+
+div.reset dl {
+    width: 496px;
+	margin-bottom: 10px;
+	height: 36px;
+}
+
+div.reset dt {
+	line-height: 30px;
+    width: 195px;
+	float: left;
+	font-size: 22px;
+}
+
+div.reset dd {
+	float: left;
+	width: 300px;
+}
+
+div.reset dd input {
+	background: none repeat scroll 0 0 transparent;
+    border: medium none;
+    color: #9E9E9E;
+    font-family: 'HelveticaiDesignVn-UltLt',Arial,Helvetica,sans-serif;
+    font-size: 22px;
+    height: 36px;
+    line-height: 32px;
+    padding: 0 5px;
+	width: 290px;
+	border: 1px solid #CFCFCF;
+}
+
+.form {
+    font-size: 22px;
+    line-height: 26px;
 }

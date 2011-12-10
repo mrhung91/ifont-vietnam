@@ -70,6 +70,7 @@ $userId			= $user->get('id');
 				</div>
 			</div>
 			<div id="content">
+				<jdoc:include type="message" />
 				<jdoc:include type="component" />
 				<jdoc:include type="modules" name="position-5" style="xhtml" />
 			</div>
