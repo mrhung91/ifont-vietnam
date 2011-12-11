@@ -79,7 +79,7 @@ class ShopHelper
 			self::$actions	= new JObject;
 
 			$actions = array(
-				'core.admin', 'core.manage', 'core.edit', 'core.edit.own', 'core.edit.state', 'core.delete'
+				'core.admin', 'core.manage', 'core.create', 'core.edit', 'core.edit.own', 'core.edit.state', 'core.delete'
 			);
 
 			foreach ($actions as $action) {
@@ -128,6 +128,35 @@ class ShopHelper
 		);
 
 		return $states;
+	}
+
+	/**
+	 * Get a list of the font packages for filtering.
+	 *
+	 * @return	array	An array of JHtmlOption elements.
+	 * @since	1.6
+	 */
+	static function getPackages()
+	{
+		$db = JFactory::getDbo();
+		$db->setQuery(
+			'SELECT a.package_id AS value, a.name AS text' .
+			' FROM #__shop_package AS a' .
+			' ORDER BY a.name ASC'
+		);
+		$options = $db->loadObjectList();
+
+		// Check for a database error.
+		if ($db->getErrorNum()) {
+			JError::raiseNotice(500, $db->getErrorMsg());
+			return null;
+		}
+
+		foreach ($options as &$option) {
+			$option->text = str_repeat('- ',$option->level).$option->text;
+		}
+
+		return $options;
 	}
 
 }
