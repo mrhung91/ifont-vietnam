@@ -29,8 +29,8 @@ $cartUrl = JRoute::_("index.php?option=com_shop&view=cart&Itemid=185");
 			} endif; ?>
 			</div>
 		<?php endif; ?>
-			<div class="logout-button">
-				<input type="submit" name="Submit" class="button" value="<?php echo JText::_('JLOGOUT'); ?>" />
+			<div class="logoutSection">
+				<a href="javascript:;" id="lnkLogout"><?php echo JText::_('JLOGOUT'); ?></a>
 				<input type="hidden" name="option" value="com_users" />
 				<input type="hidden" name="task" value="user.logout" />
 				<input type="hidden" name="return" value="<?php echo $return; ?>" />
@@ -44,6 +44,11 @@ $cartUrl = JRoute::_("index.php?option=com_shop&view=cart&Itemid=185");
 		<span id="lblNumCartPackages"><?php echo $num_packages; ?></span> gói phông
 	</div>
 </div>
+<script type="text/javascript">
+$("#lnkLogout").click(function() {
+	$("#login-form").submit();
+});
+</script>
 <?php else : ?>
 <div class="newletter">
 	<a id="lnkLogin" class="dialog" href="#" rel="loginDlg">Đăng nhập</a>|<a

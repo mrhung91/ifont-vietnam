@@ -349,12 +349,22 @@ a {
     font-family: 'HelveticaiDesignVn-UltLt', Arial, Helvetica, sans-serif;
 }
 
-.welcome .login-greeting, .welcome .logout-button {
+.welcome .login-greeting, .welcome .logoutSection {
     float: left;
 }
 
 .welcome .cart-info a {
     text-decoration: underline;
+}
+
+.logoutSection {
+	margin-left: 3px;
+}
+
+.logoutSection a {
+	color: #358788;
+	text-decoration: underline;
+	font-weight: bold;
 }
 
 .heading_bderbot h3 {
