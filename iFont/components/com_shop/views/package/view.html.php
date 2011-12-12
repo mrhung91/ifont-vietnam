@@ -57,6 +57,8 @@ class ShopViewPackage extends JView
 		//Escape strings for HTML output
 		$this->pageclass_sfx = htmlspecialchars($params->get('pageclass_sfx'));
 
+		$this->_parsePackageDescription($package);
+
 		$this->assignRef('state', $state);
 		$this->assignRef('items', $items);
 		$this->assignRef('package', $package);
@@ -69,6 +71,18 @@ class ShopViewPackage extends JView
 		$this->_prepareDocument();
 
 		parent::display($tpl);
+	}
+
+	protected function _parsePackageDescription($package) {
+		$description = $package->description;
+		$pattern = '#<hr\s+id=("|\')system-readmore("|\')\s*\/*>#i';
+		$tagPos	= preg_match($pattern, $description);
+		if ($tagPos == 0) {
+			$package->introtext	= $description;
+			$package->fulltext         = '';
+		} else {
+			list($package->introtext, $package->fulltext) = preg_split($pattern, $description, 2);
+		}
 	}
 
 	/**

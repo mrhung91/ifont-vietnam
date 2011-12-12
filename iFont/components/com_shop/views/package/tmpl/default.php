@@ -34,9 +34,13 @@ setlocale(LC_MONETARY, 'en_US');
 
 	<?php if ($this->pagination->limitstart == 0): ?>
 	<div class="txt01 mg_bot30px">
-		<strong>Giới thiệu:</strong>
-		<div id="secDescription"><?php echo JHtml::_('content.prepare', $this->package->description); ?></div>
-		<a href="javascript:;" id="lnkToggleDesc" style="display: none;">Chi tiết</a>
+		<div id="secDescription">
+			<?php echo JHtml::_('content.prepare', $this->package->introtext); ?>
+			<?php if (!empty($this->package->fulltext)): ?>
+			<span id="fulltext" class="hide"><?php echo $this->package->fulltext; ?></span>
+			<a href="javascript:;" id="lnkToggleDesc" style="display: none;">Chi tiết</a>
+			<?php endif; ?>
+		</div>
 	</div>
 	<?php endif; ?>
 
@@ -121,20 +125,14 @@ $(document).ready(function() {
 		$("#shopForm").submit();
 	});
 
-	if ($("#secDescription").height() >= 124) {
-		$("#secDescription").addClass("desc-short", 5000);
-		$("#lnkToggleDesc").show().click(function() {
-			if ($("#secDescription").hasClass("desc-short")) {
-				$(this).html("Thu gọn");
-				$("#secDescription").removeClass("desc-short", 5000).addClass("desc-full", 5000);
-			} else {
-				$(this).html("Chi tiết");
-				$("#secDescription").removeClass("desc-full", 5000).addClass("desc-short", 5000);
-			}
-		});
-	} else {
-		$("#lnkToggleDesc").remove();
-	}
-
+	$("#lnkToggleDesc").show().click(function() {
+		if ($("#fulltext").hasClass("hide")) {
+			$(this).html("Thu gọn");
+			$("#fulltext").removeClass("hide", 5000);
+		} else {
+			$(this).html("Chi tiết");
+			$("#fulltext").addClass("hide", 5000);
+		}
+	});
 });
 </script>
