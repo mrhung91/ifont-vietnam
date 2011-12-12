@@ -65,6 +65,7 @@ $fieldsets = $this->form->getFieldsets();
 		<?php echo $this->form->getLabel('description'); ?>
 		<div class="clr"></div>
 		<?php echo $this->form->getInput('description'); ?>
+		<div class="clr"></div>
 	</fieldset>
 
 	<input type="hidden" name="task" value="" />
