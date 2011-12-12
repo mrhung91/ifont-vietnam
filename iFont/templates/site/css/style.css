@@ -840,7 +840,7 @@ h5 {
     font-size: 22px;
 }
 
-.moduletable-payment-type {
+#payment-type {
     font-size: 22px;
     line-height: 26px;
 	padding-top: 20px;

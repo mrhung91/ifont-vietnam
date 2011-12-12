@@ -14,6 +14,9 @@ JHtml::addIncludePath(JPATH_COMPONENT.'/helpers');
 $fonts = $this->items["fonts"];
 $packages = $this->items["packages"];
 $total = 0;
+
+jimport("site.util.module");
+$content = SiteModule::loadModulesByName("position-12", "xhtml");
 ?>
 <div class="cart-info">
 	<?php if ($this->params->get('show_page_heading', 1)) : ?>
@@ -49,6 +52,13 @@ $total = 0;
 			Tổng<span class="price"><?php echo number_format($total, 0, '', "."); ?> VNĐ</span>
 		</div>
 	</div>
+
+	<div id="payment-type">
+		<?php echo $content; ?>
+		<input type="checkbox" id="chkPaymentConfirm" />&nbsp;
+		<label for="chkPaymentConfirm">Tôi đã hiểu cách thanh toán.</label>
+	</div>
+
 	<div class="fix03">
 		<a class="btn_buy_big" href="javascript:;" onclick="checkOutCart()">MUA</a>
 	</div>
@@ -60,6 +70,10 @@ $total = 0;
 
 	<script type="text/javascript">
 	function checkOutCart() {
+		if ($("#chkPaymentConfirm:checked").length == 0) {
+			alert("Vui lòng xác nhận bạn đã hiểu cách thanh toán");
+			return;
+		}
 		$("#cartForm").submit();
 	}
 	</script>
