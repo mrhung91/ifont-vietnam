@@ -3,7 +3,21 @@ class ShopHelperCart {
 
 	public static function getShopCartInfo() {
 		$session = JFactory::getSession();
-		return $session->get('shopCart');
+		$cartInfo = $session->get('shopCart');
+
+		$isNew = false;
+		if (!isset($cartInfo["fonts"])) {
+			$cartInfo["fonts"] = array();
+			$isNew = true;
+		}
+		if (!isset($cartInfo["packages"])) {
+			$cartInfo["packages"] = array();
+			$isNew = true;
+		}
+		if ($isNew) {
+			$session->set("shopCart", $cartInfo);
+		}
+		return $cartInfo;
 	}
 
 	public static function addFontToCart($font, $package) {

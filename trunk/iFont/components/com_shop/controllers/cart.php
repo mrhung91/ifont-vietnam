@@ -296,7 +296,10 @@ class ShopControllerCart extends JControllerForm {
 		} else {
 			$msg = "Gửi đơn hàng thất bại";
 		}
-		$this->setRedirect(JRoute::_('index.php?option=com_shop&view=cart&layout=result&id='.JFactory::getUser()->id), $msg, "checkout.result");
+		$this->setMessage($msg, "checkout.result");
+		$this->setRedirect(JRoute::_('index.php?option=com_shop&view=cart&layout=result&id='.JFactory::getUser()->id),
+				$msg, "checkout.result");
+		return false;
 	}
 
 	private function _clearCart() {
