@@ -58,7 +58,7 @@ class ShopModelOrders extends JModelList
 		$search = $this->getUserStateFromRequest($this->context.'.filter.search', 'filter_search');
 		$this->setState('filter.search', $search);
 
-		$state = $this->getUserStateFromRequest($this->context.'.filter.state', 'filter_state', null, 'int');
+		$state = $this->getUserStateFromRequest($this->context.'.filter.state', 'filter_state', -1, 'int');
 		$this->setState('filter.state', $state);
 
 		// Load the parameters.
@@ -133,7 +133,7 @@ class ShopModelOrders extends JModelList
 		$query->from('#__shop_order AS a');
 
 		// Filter by a single or group of packages.
-		$state = $this->getState('filter.state');
+		$state = $this->getState('filter.state', -1);
 		if ($state != -1) {
 			$query->where('a.state = '.(int) $state);
 		} else {
