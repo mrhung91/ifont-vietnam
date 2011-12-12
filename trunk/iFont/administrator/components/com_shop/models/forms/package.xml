@@ -93,7 +93,7 @@
 		class="inputbox"
 		filter="safehtml"
 		buttons="true"
-		hide="readmore,pagebreak"/>
+		hide="pagebreak"/>
 
 	<field name="thumb" type="media" directory="fonts"
 		hide_none="1" label="Thumbnail Image"
