@@ -119,6 +119,15 @@ class ShopTableOrder extends JTable {
 	}
 
 	public function store($updateNulls = false) {
+		$date	= JFactory::getDate();
+		$user	= JFactory::getUser();
+
+		if ($this->id) {
+			// Existing item
+			$this->modified		= $date->toMySQL();
+			$this->modified_by	= $user->get('id');
+		}
+
 		if (parent::store($updateNulls)) {
 			if ($this->id) {
 				if ($this->_fonts != null) {
