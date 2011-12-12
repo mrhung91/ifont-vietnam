@@ -3215,3 +3215,5 @@ div#element-box.login  {
 div.CodeMirror-wrapping {
 	border: 1px solid #cccccc;
 }
+
+fieldset.adminform span { width: 100%; }
