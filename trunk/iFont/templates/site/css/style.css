@@ -962,30 +962,45 @@ div.sort {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-.sort-dropdown {
+.sort-dropdown, .type-dropdown {
     position: absolute;
     left: 0;
     top: 38px;
-    width: 82px;
     font-size: 15px;
     font-weight: bold;
     background-color: #ECECEC;
     border-radius: 3px 3px 3px 3px;
 }
 
-.sort-dropdown li {
+.sort-dropdown li, .type-dropdown li {
     margin: 5px 0;
     height: 18px;
     line-height: 18px;
-    text-align: center;
 }
 
-.sort-dropdown li a {
+.sort-dropdown li a, .type-dropdown li a {
     display: block;
 }
 
-.sort-dropdown li a:hover {
+.sort-dropdown li a:hover, .type-dropdown li a:hover {
     color: #FFFFFF;
+}
+
+.sort-dropdown {
+    width: 82px;
+}
+
+.type-dropdown {
+    width: 100px;
+}
+
+.sort-dropdown li {
+    text-align: center;
+}
+
+.type-dropdown li {
+    text-align: left;
+	padding-left: 5px;
 }
 
 dl, dt, dd { padding: 0; margin: 0; display: block; }
