@@ -1032,3 +1032,4 @@ div.reset dd input {
 }
 
 a#lnkToggleDesc { text-decoration: underline; }
+dt.checkout-result { display: none; }

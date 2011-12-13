@@ -9,12 +9,6 @@
 
 // no direct access
 defined('_JEXEC') or die;
-$msgQueue = JFactory::getApplication()->getMessageQueue("checkout.result");
-if (empty($msgQueue)) {
-	$msg = "Bạn đã thanh toán rồi";
-} else {
-	$msg = $msgQueue[0]["message"];
-}
 ?>
 <div class="cart-info">
 	<?php if ($this->params->get('show_page_heading', 1)) : ?>
@@ -22,6 +16,4 @@ if (empty($msgQueue)) {
 		<h3 class="textright"><?php echo $this->escape($this->params->get('page_heading')); ?></h3>
 	</div>
 	<?php endif; ?>
-
-	<div class="result-message"><?php echo $msg; ?></div>
 </div>
