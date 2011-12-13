@@ -36,7 +36,7 @@ $loggeduser = JFactory::getUser();
 				<?php echo JText::_('COM_SHOP_FILTER_LABEL'); ?>
 			</label>
 
-			<select name="filter_group_id" class="inputbox" onchange="this.form.submit()">
+			<select name="filter_package_id" class="inputbox" onchange="this.form.submit()">
 				<option value=""><?php echo JText::_('COM_SHOP_FILTER_PACKAGE');?></option>
 				<?php echo JHtml::_('select.options', ShopHelper::getPackages(), 'value', 'text', $this->state->get('filter.package_id'));?>
 			</select>
