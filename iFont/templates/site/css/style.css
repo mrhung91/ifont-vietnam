@@ -1033,3 +1033,5 @@ div.reset dd input {
 
 a#lnkToggleDesc { text-decoration: underline; }
 dt.checkout-result { display: none; }
+.blue { color: #358788; }
+a.blue { text-decoration: underline; }
