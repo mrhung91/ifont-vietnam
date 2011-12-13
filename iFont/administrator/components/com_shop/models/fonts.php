@@ -203,7 +203,7 @@ class ShopModelFonts extends JModelList
 		$query->join('LEFT', '#__shop_package AS sp ON sp.package_id=a.package_id');
 
 		// Filter by a single or group of packages.
-		$packageId = $this->getState('filter.category_id');
+		$packageId = $this->getState('filter.package_id');
 		if (is_numeric($packageId)) {
 			$query->where('a.package_id = '.(int) $packageId);
 		} else if (is_array($packageId)) {

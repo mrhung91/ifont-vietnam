@@ -152,10 +152,6 @@ class ShopHelper
 			return null;
 		}
 
-		foreach ($options as &$option) {
-			$option->text = str_repeat('- ',$option->level).$option->text;
-		}
-
 		return $options;
 	}
 
