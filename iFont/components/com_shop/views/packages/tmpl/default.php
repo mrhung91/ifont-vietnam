@@ -46,7 +46,7 @@ defined('_JEXEC') or die;
 					<div class="txt fl">Kiểu</div>
 					<div class="bg_white fl sort" id="divTypes">
 						<a href="javascript:;" class="sort-text" id="lnkFilterTypes"><?php echo $this->filterType->text; ?></a>
-						<span class="sort-dropdown hide" id="typeDropdown">
+						<span class="type-dropdown hide" id="typeDropdown">
 							<ul>
 								<li><a href="javascript:;" onclick="onChgFilterType(0)">Tất cả</a></li>
 								<?php foreach ($this->types as $type): ?>
