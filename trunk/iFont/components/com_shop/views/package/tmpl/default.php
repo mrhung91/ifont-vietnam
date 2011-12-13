@@ -38,7 +38,7 @@ setlocale(LC_MONETARY, 'en_US');
 			<?php echo JHtml::_('content.prepare', $this->package->introtext); ?>
 			<?php if (!empty($this->package->fulltext)): ?>
 			<span id="fulltext" class="hide"><?php echo $this->package->fulltext; ?></span>
-			<a href="javascript:;" id="lnkToggleDesc" style="display: none;" class="blue">Xem</a>
+			<a href="javascript:;" id="lnkToggleDesc" style="display: none;" class="blue">Xem thêm</a>
 			<?php endif; ?>
 		</div>
 	</div>
@@ -130,7 +130,7 @@ $(document).ready(function() {
 			$(this).html("Thu gọn");
 			$("#fulltext").removeClass("hide", 5000);
 		} else {
-			$(this).html("Xem");
+			$(this).html("Xem thêm");
 			$("#fulltext").addClass("hide", 5000);
 		}
 	});
