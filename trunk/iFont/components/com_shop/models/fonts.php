@@ -290,7 +290,7 @@ class ShopModelFonts extends JModelList
 			$item->params = clone $this->getState('params');
 			$item->params->set('access-view', true);
 
-			if (ShopHelperCart::isFontAdded($item->id)) {
+			if (ShopHelperCart::isFontAdded($item->id, $item->package_id)) {
 				$item->isFontAdded = true;
 			} else {
 				$item->isFontAdded = false;

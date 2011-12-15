@@ -70,8 +70,8 @@ $userId			= $user->get('id');
 				</div>
 			</div>
 			<div id="content">
-				<jdoc:include type="message" />
 				<jdoc:include type="component" />
+				<jdoc:include type="message" />
 				<jdoc:include type="modules" name="position-5" style="xhtml" />
 			</div>
 			<div id="footer">&copy; 2011 vf.vn - All Rights Reserved.</div>
