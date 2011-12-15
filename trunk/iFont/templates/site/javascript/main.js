@@ -57,9 +57,7 @@ function buyFont(lnkObj, font_id) {
 				$("#lblNumCartPackages").text(data.num_packages);
 				$("#lblNumCartFonts").text(data.num_fonts);
 				var $parent = $(lnkObj).parent().parent();
-				if (!$parent.hasClass("font-detail")) {
-					$parent.remove();
-				}
+				$(lnkObj).parent().removeClass("btn_buy").addClass("btn_bought").html(TEXT_BOUGHT);
 			} else if (data.error != null) {
 				alert(data.errror);
 			} else {
