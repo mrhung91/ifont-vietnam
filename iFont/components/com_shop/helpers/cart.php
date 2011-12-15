@@ -92,11 +92,26 @@ class ShopHelperCart {
 		$packageMap[$package->package_id] = $packageInfo;
 		$cartInfo["packages"] = $packageMap;
 
+		ShopHelperCart::removeCartFontsByPackage($package->package_id);
+
 		$session = JFactory::getSession();
 		$session->set('shopCart', $cartInfo);
 	}
 
-	public static function isFontAdded($font_id) {
+	public static function removeCartFontsByPackage($package_id) {
+		$cartInfo = ShopHelperCart::getShopCartInfo();
+		if (!isset($cartInfo["fonts"])) {
+			return null;
+		}
+
+		foreach ($cartInfo["fonts"] as $font_id => $font) {
+			if ($font->package_id == $package_id) {
+				ShopHelperCart::removeFontFromCart($font_id);
+			}
+		}
+	}
+
+	public static function isFontAdded($font_id, $package_id = 0) {
 		$cartInfo = ShopHelperCart::getShopCartInfo();
 		if (!isset($cartInfo["fonts"])) {
 			return false;
@@ -105,6 +120,12 @@ class ShopHelperCart {
 		$fontMap = $cartInfo["fonts"];
 		if (isset($fontMap[$font_id])) {
 			return true;
+		}
+
+		if ($package_id != 0 && isset($cartInfo["packages"])) {
+			if (array_key_exists($package_id, $cartInfo["packages"])) {
+				return true;
+			}
 		}
 
 		return false;
