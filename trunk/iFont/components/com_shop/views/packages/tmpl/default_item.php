@@ -30,14 +30,16 @@ $package_id = $this->item->id;
 				<?php endif; ?>
 			</li>
 		</ul>
-		<?php if (!$this->item->isPackageAdded) : ?>
 		<ul class="right">
 			<li class="fix_txt"><?php echo $this->item->num_fonts; ?> kiểu&nbsp;|
 					&nbsp;<?php echo number_format($this->item->price, 0, '', "."); ?> VNĐ</li>
+			<?php if (!$this->item->isPackageAdded) : ?>
 			<li class="btn_buy"><a href="javascript:;"
 				onclick="buyPackage(this, <?php echo $package_id; ?>)">MUA</a></li>
+			<?php else: ?>
+			<li class="btn_bought">ĐÃ MUA</li>
+			<?php endif; ?>
 		</ul>
-		<?php endif; ?>
 	</div>
 	<div class="show_img_font" id="package-sample-<?php echo $package_id; ?>">
 		<img />

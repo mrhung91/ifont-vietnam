@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 
 require_once JPATH_COMPONENT .'/helpers/package.php';
 $package_id = $this->package->package_id;
-$num_fonts = ShopHelperPackage::getNumFonts($this->package->package_id);
+$num_fonts = ShopHelperPackage::getNumFonts($package_id);
 setlocale(LC_MONETARY, 'en_US');
 ?>
 <div class="package<?php echo $this->pageclass_sfx;?>">
@@ -26,8 +26,12 @@ setlocale(LC_MONETARY, 'en_US');
 			<ul class="right package-detail">
 				<li class="fix_txt"><?php echo $num_fonts; ?> kiểu&nbsp;|
 					&nbsp;<?php echo number_format($this->package->price, 0, '', "."); ?> VNĐ</li>
+				<?php if (!ShopHelperCart::isPackageAdded($package_id)): ?>
 				<li class="btn_buy"><a id="lnkBuyPackage" href="javascript:;"
 						onclick="buyPackage(this, <?php echo $package_id; ?>)">Mua trọn bộ</a></li>
+				<?php else: ?>
+				<li class="btn_bought">ĐÃ MUA</a></li>
+				<?php endif; ?>
 			</ul>
 		</div>
 	</div>

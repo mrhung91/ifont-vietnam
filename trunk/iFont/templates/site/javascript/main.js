@@ -1,4 +1,5 @@
 var renderIndex = 0;
+var TEXT_BOUGHT = "ĐÃ MUA";
 
 function showOverlay() {
 	jQuery("#overlay").width(window.outerWidth).height(window.outerHeight)
@@ -31,12 +32,7 @@ function buyPackage(lnkObj, package_id) {
 				alert(data.message);
 				$("#lblNumCartPackages").text(data.num_packages);
 				$("#lblNumCartFonts").text(data.num_fonts);
-				var $parent = $(lnkObj).parent().parent();
-				if (!$parent.hasClass("package-detail")) {
-					$parent.remove();
-				} else {
-					$(lnkObj).parent().remove();
-				}
+				$(lnkObj).parent().removeClass("btn_buy").addClass("btn_bought").html(TEXT_BOUGHT);
 			} else {
 				alert("Mua gói phông thất bại");
 			}

@@ -542,8 +542,7 @@ h5 {
     float: left;
 }
 
-.headindex ul.right li.btn_buy {
-    background: #5e5e5e;
+.headindex ul.right li.btn_buy, .headindex ul.right li.btn_bought {
     height: 22px;
     line-height: 22px;
     -moz-border-radius: 3px;
@@ -551,6 +550,16 @@ h5 {
     border-radius: 3px;
     behavior: url('css/css3.htc');
     padding: 0 5px;
+	color: #FFFFFF;
+	font-weight: bold;
+}
+
+.headindex ul.right li.btn_buy {
+    background: #5e5e5e;
+}
+
+.headindex ul.right li.btn_bought {
+    background: #358788;
 }
 
 .headindex ul.right li.btn_buy:hover {
