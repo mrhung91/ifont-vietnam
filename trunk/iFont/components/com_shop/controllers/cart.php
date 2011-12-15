@@ -246,9 +246,11 @@ class ShopControllerCart extends JControllerForm {
 	}
 
 	private function _ajaxReturn($message) {
-		jimport("site.util.ajax");
-		$resContent = SiteAjax::buildJsonString(array("message" => $message));
-		echo $resContent;
+		$cartInfo = ShopHelperCart::getShopCartInfo();
+		$num_fonts = count($cartInfo["fonts"]);
+		$num_packages = count($cartInfo["packages"]);
+		$data = array("message" => $message, "num_fonts" => $num_fonts, "num_packages" => $num_packages);
+		echo json_encode($data);
 		JApplication::close();
 	}
 

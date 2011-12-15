@@ -92,7 +92,15 @@ class ShopHelperCart {
 		$packageMap[$package->package_id] = $packageInfo;
 		$cartInfo["packages"] = $packageMap;
 
-		ShopHelperCart::removeCartFontsByPackage($package->package_id);
+		$fontMap = $cartInfo["fonts"];
+		if (!empty($fontMap)) {
+			foreach ($fontMap as $font_id => $font) {
+				if ($font->package_id == $package->package_id) {
+					unset($fontMap[$font_id]);
+				}
+			}
+			$cartInfo["fonts"] = $fontMap;
+		}
 
 		$session = JFactory::getSession();
 		$session->set('shopCart', $cartInfo);
