@@ -18,17 +18,19 @@ $item_id = $this->item->id;
 		<ul class="left">
 			<li class="fix_txt"><?php echo $this->item->name; ?></li>
 		</ul>
-		<?php if (!$this->item->isFontAdded) : ?>
 		<ul class="right">
 			<li class="fix_txt">
 				<input name="" value="" type="checkbox"><span><?php echo number_format($this->item->price, 0, '', "."); ?></span>
 			</li>
+			<?php if (!$this->item->isFontAdded) : ?>
 			<li class="btn_buy">
 				<a id="lnkBuyFont<?php echo $item_id; ?>" href="javascript:;"
 					onclick="buyFont(this, <?php echo $item_id; ?>)">MUA</a>
 			</li>
+			<?php else: ?>
+			<li class="btn_bought">ĐÃ MUA</li>
+			<?php endif; ?>
 		</ul>
-		<?php endif; ?>
 	</div>
 	<div class="show_img_font" id="font-sample-<?php echo $item_id; ?>">
 		<img />
