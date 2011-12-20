@@ -102,7 +102,7 @@ $loggeduser = JFactory::getUser();
 				<td>
 					<?php if ($canEdit) : ?>
 					<a href="<?php echo JRoute::_('index.php?option=com_shop&task=order.edit&id='.$item->id); ?>" title="Edit Order">
-						Edit</a>
+						Detail</a>
 					<?php endif; ?>
 				</td>
 				<td>
