@@ -292,9 +292,9 @@ class ShopControllerCart extends JControllerForm {
 		$msg = null;
 		if ($orderModel->save($data)) {
 			$this->_sendOrderEmail($user, $fonts, $packages);
-			$this->_clearCart();
+			// Comment to reserve cart's items after checking out successed
+			// $this->_clearCart();
 			$msg = "Gửi đơn hàng thành công.";
-			ShopHelperCart::clearCart();
 		} else {
 			$msg = "Gửi đơn hàng thất bại";
 		}
@@ -341,33 +341,46 @@ class ShopControllerCart extends JControllerForm {
 		$total = $fontTotal + $packageTotal;
 		$body .= "\n\nTổng cộng: " . number_format($total, 0, '', ".") . " VNĐ";
 
+		// send an email to admin
 		$result = JUtility::sendMail($mailfrom, $fromname, ShopControllerCart::ADMIN_EMAIL, $subject, $body);
-
 		// Check for an error.
 		if ($result !== true) {
-			$this->setError(JText::_('COM_SHOP_CHECKOUT_SEND_MAIL_FAILED'));
-
-			// Send a system message to administrators receiving system mails
-			$db = JFactory::getDBO();
-			$q = "SELECT id FROM #__users WHERE block = 0 AND sendEmail = 1";
-			$db->setQuery($q);
-			$sendEmail = $db->loadResultArray();
-			if (count($sendEmail) > 0) {
-				$jdate = new JDate();
-				// Build the query to add the messages
-				$q = "INSERT INTO `#__messages` (`user_id_from`, `user_id_to`, `date_time`, `subject`, `message`)
-							VALUES ";
-				$messages = array();
-				foreach ($sendEmail as $userid) {
-					$messages[] = "(".$userid.", ".$userid.", '".$jdate->toMySQL()."', '".JText::_('COM_SHOP_MAIL_SEND_FAILURE_SUBJECT')."', '".JText::sprintf('COM_SHOP_MAIL_SEND_FAILURE_BODY', $return, $data['username'])."')";
-				}
-				$q .= implode(',', $messages);
-				$db->setQuery($q);
-				$db->query();
-			}
+			$this->_sendErrorMessage($user->id, $user->email, "");
 			return false;
 		}
+
+		// send an email to user
+		$result = JUtility::sendMail($mailfrom, $fromname, $user->email, $subject, $body);
+		// Check for an error.
+		if ($result !== true) {
+			$this->_sendErrorMessage($user->id, $user->email, "");
+			return false;
+		}
+
 		return true;
+	}
+
+	private function _sendErrorMessage($userid, $username, $return) {
+		$this->setError(JText::_('COM_SHOP_CHECKOUT_SEND_MAIL_FAILED'));
+
+		// Send a system message to administrators receiving system mails
+		$db = JFactory::getDBO();
+		$q = "SELECT id FROM #__users WHERE block = 0 AND sendEmail = 1";
+		$db->setQuery($q);
+		$sendEmail = $db->loadResultArray();
+		if (count($sendEmail) > 0) {
+			$jdate = new JDate();
+			// Build the query to add the messages
+			$q = "INSERT INTO `#__messages` (`user_id_from`, `user_id_to`, `date_time`, `subject`, `message`)
+									VALUES ";
+			$messages = array();
+			foreach ($sendEmail as $userid) {
+				$messages[] = "(".$userid.", ".$userid.", '".$jdate->toMySQL()."', '".JText::_('COM_SHOP_MAIL_SEND_FAILURE_SUBJECT')."', '".JText::sprintf('COM_SHOP_MAIL_SEND_FAILURE_BODY', $return, $username)."')";
+			}
+			$q .= implode(',', $messages);
+			$db->setQuery($q);
+			$db->query();
+		}
 	}
 
 }
