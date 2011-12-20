@@ -135,8 +135,7 @@ class ShopModelSearch extends JModelList {
 				if ($this->_fonts === false) {
 					$this->setError($model->getError());
 				}
-			}
-			else {
+			} else {
 				$this->_fonts=array();
 			}
 
