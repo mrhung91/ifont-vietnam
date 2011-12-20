@@ -74,6 +74,19 @@ class ShopTableFont extends JTable
 	}
 
 	public function store($updateNulls = false) {
+		$date	= JFactory::getDate();
+		$user	= JFactory::getUser();
+
+		if ($this->font_id) {
+			// Existing category
+			$this->modified		= $date->toMySQL();
+			$this->modified_by	= $user->get('id');
+		} else {
+			// New category
+			$this->created		= $date->toMySQL();
+			$this->created_by	= $user->get('id');
+		}
+
 		if (parent::store($updateNulls)) {
 			return true;
 		}

@@ -204,7 +204,7 @@ class ShopModelFonts extends JModelList
 
 		// Filter by a single or group of packages.
 		$packageId = $this->getState('filter.package_id');
-		if (is_numeric($packageId)) {
+		if (is_numeric($packageId) && intval($packageId) != 0) {
 			$query->where('a.package_id = '.(int) $packageId);
 		} else if (is_array($packageId)) {
 			JArrayHelper::toInteger($packageId);
