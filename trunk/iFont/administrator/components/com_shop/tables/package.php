@@ -16,10 +16,8 @@ class ShopTablePackage extends JTable {
 
 	protected $_types;
 
-	function __construct(&$db)
-	{
+	function __construct(&$db) {
 		parent::__construct('#__shop_package', 'package_id', $db);
-		$this->created = JFactory::getDate()->toMySQL();
 	}
 
 	/**
@@ -101,6 +99,19 @@ class ShopTablePackage extends JTable {
 	}
 
 	public function store($updateNulls = false) {
+		$date	= JFactory::getDate();
+		$user	= JFactory::getUser();
+
+		if ($this->package_id) {
+			// Existing category
+			$this->modified		= $date->toMySQL();
+			$this->modified_by	= $user->get('id');
+		} else {
+			// New category
+			$this->created		= $date->toMySQL();
+			$this->created_by	= $user->get('id');
+		}
+
 		if (parent::store($updateNulls)) {
 			if ($this->package_id && $this->_types != null) {
 				$db	=& JFactory::getDBO();
@@ -108,7 +119,6 @@ class ShopTablePackage extends JTable {
 				$query->delete();
 				$query->from('`#__shop_package_type`');
 				$query->where('package_id = ' . $this->package_id);
-//				$query->where('type_id not in (' . implode(",", $this->_types) . ")");
 				$this->_db->setQuery($query);
 				$this->_db->query();
 
