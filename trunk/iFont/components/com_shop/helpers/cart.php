@@ -181,5 +181,9 @@ class ShopHelperCart {
 		$session->set('shopCart', $cartInfo);
 	}
 
+	public static function getShopAdminEmail() {
+
+	}
+
 }
 ?>

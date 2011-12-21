@@ -16,7 +16,7 @@ jimport('joomla.application.component.controllerform');
  */
 class ShopControllerCart extends JControllerForm {
 
-	const ADMIN_EMAIL = 'duongthienduc@yahoo.com';
+	const ADMIN_EMAIL = 'vietdesign81@gmail.com';
 
 	/**
 	 * @since	1.6
