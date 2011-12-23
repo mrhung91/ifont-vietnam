@@ -118,7 +118,7 @@ $(document).ready(function() {
 		onRenderSampleFontsText();
 	});
 
-	onRenderSampleFontsText("ABCDEFGHIJKLMNOPQRSTUVXYZW");
+	onRenderSampleFontsText("AaBbCcDdEeFfGgHhIiJjKkLl");
 
 	$(".pagination").find("a").unbind("click").bind("click", function() {
 		var limitstart = getQueryVariableValue(this.href, "limitstart");
