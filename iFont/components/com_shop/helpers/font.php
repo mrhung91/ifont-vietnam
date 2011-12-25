@@ -9,26 +9,33 @@ define("ALIGN_RIGHT", "right");
 
 class ShopHelperFont {
 
-	public static function render($fontId, $font_file, $text, $font_size = FONT_SIZE) {
+	public static function render($fontId, $font_file, $text, $font_size = null) {
 		$tmp_dir = JPATH_SITE . DS . "tmp" . DS . "font";
+		if ($font_size == null) {
+			$font_size = FONT_SIZE;
+			$height = FONT_MAX_HEIGHT;
+		} else {
+			$height = $font_size * 1.7;
+		}
+		$width = FONT_WIDTH;
 
 		// create canvas object for image
-		$canvas = imagecreatetruecolor(FONT_WIDTH, FONT_MAX_HEIGHT);
+		$canvas = imagecreatetruecolor($width, $height);
 
 		// paint background onto canvas
-		ShopHelperFont::paintBackground($canvas);
+		ShopHelperFont::paintBackground($canvas, $height, $width);
 
 		// print the text onto the canvas
-		ShopHelperFont::printText($canvas, $text, $font_file, $font_size);
+		ShopHelperFont::printText($canvas, $text, $font_file, $font_size, $height);
 
 		// set temporary file name
-		$fileName = $fontId . base64_encode($text) . FONT_SIZE . ".png";
+		$fileName = $fontId . base64_encode($text) . $font_size . ".png";
 		$filePath = $tmp_dir . DS . $fileName;
 		if (!file_exists($filePath)) {
 			imagepng($canvas, $filePath);
 		}
 
-		$fileUrl = JURI::base() . "/tmp/font/" . $fileName;
+		$fileUrl = "/tmp/font/" . $fileName;
 
 		// clean up after ourselves so we don't cause a memory leak
 		imagedestroy($canvas);
@@ -38,18 +45,18 @@ class ShopHelperFont {
 	}
 
 
-	private static function paintBackground(&$canvas) {
+	private static function paintBackground(&$canvas, $height, $width) {
 		// get background color
 		$bgColor = ShopHelperFont::allocateImageColorFromHex($canvas, "#ffffff");
 
 		// create a filled rectangle to form the canvas background
 		return imagefilledrectangle(
-		$canvas,
-		0,						// x-coordinate for point 1
-		0, 						// y-coordinate for point 1
-		FONT_WIDTH, 	// x-coordinate for point 2
-		FONT_MAX_HEIGHT, // y-coordinate for point 2
-		$bgColor
+			$canvas,
+			0,						// x-coordinate for point 1
+			0, 						// y-coordinate for point 1
+			$width, 				// x-coordinate for point 2
+			$height, 				// y-coordinate for point 2
+			$bgColor
 		);
 	}
 
@@ -66,27 +73,27 @@ class ShopHelperFont {
 		if ($color[0] == '#')
 		$color = substr($color, 1);
 
-		if (strlen($color) == 6)
-		list($r, $g, $b) = array($color[0].$color[1],
-		$color[2].$color[3],
-		$color[4].$color[5]);
-		elseif (strlen($color) == 3)
-		list($r, $g, $b) = array($color[0], $color[1], $color[2]);
-		else
-		return false;
+		if (strlen($color) == 6) {
+			list($r, $g, $b) = array($color[0].$color[1], $color[2].$color[3], $color[4].$color[5]);
+		} elseif (strlen($color) == 3) {
+			list($r, $g, $b) = array($color[0], $color[1], $color[2]);
+		} else {
+			return false;
+		}
 
 		$r = hexdec($r); $g = hexdec($g); $b = hexdec($b);
 
 		return array($r, $g, $b);
 	}
 
-	private static function printText(&$canvas, $text, $font, $font_size) {
+	private static function printText(&$canvas, $text, $font, $font_size, $height) {
 		$fontColor = ShopHelperFont::allocateImageColorFromHex($canvas, 'red');
+		$top = ($height + $font_size) / 2;
 		//imagettftext($image, $size, $angle, $x, $y, $color, $fontfile, $text);
-		ShopHelperFont::imagettftextbox($canvas, $font_size, 0, 20, 72, $fontColor, $font, $text, FONT_MAX_WIDTH);
+		ShopHelperFont::imagettftextbox($canvas, $font_size, 0, 20, $top, $fontColor, $font, $text, FONT_MAX_WIDTH);
 	}
 
-	private function imagettftextbox(&$image, $size, $angle, $left, $top, $color, $font, $text, $max_width) {
+	private function imagettftextbox(&$image, $size, $angle, $left, $top, $color, $font, $text, $max_width, $max_line = 1) {
 		$align = ALIGN_LEFT;
 		$text_lines = explode("\n", $text); // Supports manual line breaks!
 

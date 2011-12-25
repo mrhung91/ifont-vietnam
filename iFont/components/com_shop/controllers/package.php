@@ -221,7 +221,7 @@ class ShopControllerPackage extends JControllerForm
 					continue;
 				}
 
-				$thumbUrl = ShopHelperFont::render($fontId, $font_file, $text);
+				$thumbUrl = JURI::base() . ShopHelperFont::render($fontId, $font_file, $text);
 				if (!empty($thumbUrl)) {
 					$thumbs[$packageId] = $thumbUrl;
 				}
