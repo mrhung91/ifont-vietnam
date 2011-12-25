@@ -38,8 +38,6 @@ class ShopViewFont extends JView
 
 		// Check for errors.
 		if (count($errors = $this->get('Errors'))) {
-			JError::raiseWarning(500, implode("\n", $errors));
-
 			return false;
 		}
 
@@ -98,7 +96,7 @@ class ShopViewFont extends JView
 		if ($thumbnails == null) {
 			$thumbnails = $this->_createFontThumbnails();
 			$model = $this->getModel();
-			//$model->updateAttribs($this->item, $thumbnails);
+			$model->updateAttribs($this->item, $thumbnails);
 		}
 		$this->item->thumbnails = $thumbnails;
 	}
@@ -133,9 +131,9 @@ class ShopViewFont extends JView
 		foreach ($thumbnailsInfo as $info) {
 			$fontSize = $info[0];
 			$thumbUrl = ShopHelperFont::render($this->item->font_id, $font_file, $text, $fontSize);
-			$item = array();
-			$item["url"] = $thumbUrl;
-			$item["size"] = $fontSize;
+			$item = new stdClass();
+			$item->url = $thumbUrl;
+			$item->size = $fontSize;
 			$thumbnails[] = $item;
 		}
 

@@ -44,9 +44,9 @@ $baseUrl	= JURI::base();
 	<div class="font-thumbnails">
 		<?php foreach ($this->item->thumbnails as $thumbnail): ?>
 		<div class="ofh mg_bot30px">
-			<div class="font-size"><?php echo $thumbnail["size"]; ?> px</div>
+			<div class="font-size"><?php echo $thumbnail->size; ?> px</div>
 			<div class="show_img_font">
-				<img src="<?php echo $baseUrl . $thumbnail["url"]; ?>" />
+				<img src="<?php echo $baseUrl . $thumbnail->url; ?>" />
 			</div>
 		</div>
 		<?php endforeach; ?>
