@@ -430,8 +430,7 @@ h5 {
 }
 
 .heading_bderbot .headindex {
-    position: relative;
-    top: 23px;
+    margin-top: 23px;
 }
 
 .heading_bderbot .headindex .fix_txt {
@@ -1060,3 +1059,4 @@ a#lnkToggleDesc { text-decoration: underline; }
 dt.checkout-result { display: none; }
 .blue { color: #358788; }
 a.blue { text-decoration: underline; }
+.font-size { margin-bottom: 10px; }

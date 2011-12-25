@@ -119,4 +119,20 @@ class ShopModelFont extends JModelItem
 		return $this->_item[$pk];
 	}
 
+	public function updateAttribs($font, $thumbnails) {
+		$fontTbl = JTable::getInstance("Font", "ShopTable");
+		$registry = new JRegistry();
+		if (!empty($font->attribs)) {
+			$registry->loadArray($font->attribs);
+		}
+		$registry->set("thumbnails", $thumbnails);
+		$data = array(
+			"font_id" => $font->font_id,
+			"attribs" => (string) $registry
+		);
+		if ($fontTbl->bind($data)) {
+			$fontTbl->store();
+		}
+	}
+
 }
