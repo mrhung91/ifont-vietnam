@@ -291,6 +291,7 @@ class ShopControllerCart extends JControllerForm {
 
 		$msg = null;
 		if ($orderModel->save($data)) {
+			$this->_updateItemHits($fonts, $packages);
 			$this->_sendOrderEmail($user, $fonts, $packages);
 			// Comment to reserve cart's items after checking out successed
 			// $this->_clearCart();
@@ -302,6 +303,26 @@ class ShopControllerCart extends JControllerForm {
 		$this->setRedirect(JRoute::_('index.php?option=com_shop&view=cart&layout=result&id='.JFactory::getUser()->id, false),
 				$msg, "checkout-result");
 		return false;
+	}
+
+	private function _updateItemHits($fonts, $packages) {
+		if (!empty($fonts)) {
+			$fontTbl = JTable::getInstance("Font", "ShopTable");
+			foreach ($fonts as $font) {
+				$fontTbl->load($font->id);
+				$fontTbl->order_times += 1;
+				$fontTbl->store();
+			}
+		}
+
+		if (!empty($packages)) {
+			$packageTbl = JTable::getInstance("Package", "ShopTable");
+			foreach ($packages as $package) {
+				$packageTbl->load($package->id);
+				$packageTbl->order_times += 1;
+				$packageTbl->store();
+			}
+		}
 	}
 
 	private function _clearCart() {
