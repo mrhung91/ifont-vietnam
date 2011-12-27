@@ -130,14 +130,13 @@ class ShopModelPackage extends JModelList {
 		// Optional filter text
 		$this->setState('list.filter', JRequest::getString('filter-search'));
 
-		// filter.order
-		$this->_buildSort();
-
 		$this->setState('list.start', JRequest::getVar('limitstart', 0, '', 'int'));
 
 		$limit = $app->getUserStateFromRequest('com_shop.package.list.' . $itemid . '.limit', 'limit', $params->get('display_num'));
-
 		$this->setState('list.limit', $limit);
+
+		// filter.order
+		$this->_buildSort();
 	}
 
 	/**
@@ -155,7 +154,7 @@ class ShopModelPackage extends JModelList {
 			$model = JModel::getInstance('Fonts', 'ShopModel', array('ignore_request' => true));
 			$model->setState('params', JFactory::getApplication()->getParams());
 			$model->setState('filter.package_id', $package->package_id);
-			$model->setState('list.ordering', $this->_buildSort());
+			$model->setState('list.ordering', $this->setState('list.ordering'));
 			$model->setState('list.start', $this->getState('list.start'));
 			$model->setState('list.limit', $limit);
 			$model->setState('list.direction', $this->getState('list.direction'));
@@ -245,7 +244,7 @@ class ShopModelPackage extends JModelList {
 		if (isset($criteria[$filterOrder])) {
 			return $criteria[$filterOrder];
 		}
-		return $criteria[0];
+		return $criteria[1];
 	}
 
 	/**
@@ -286,7 +285,8 @@ class ShopModelPackage extends JModelList {
 		$orderCol = null;
 		$listOrder = null;
 
-		$filterOrder	= JRequest::getInt('filter_order', 'a.package_id');
+		$filterOrder	= $this->getUserStateFromRequest($this->context.'.filter.filter_order', 'filter_order',
+				ShopModelPackage::SORT_BY_DATE_NEWEST);
 		switch ($filterOrder) {
 			case ShopModelPackage::SORT_BY_DATE_OLDEST:
 				$orderCol = "a.created";

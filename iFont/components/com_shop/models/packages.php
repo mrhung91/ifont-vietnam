@@ -211,7 +211,8 @@ class ShopModelPackages extends JModelList {
 		$orderCol = null;
 		$listOrder = null;
 
-		$filterOrder	= JRequest::getInt('filter_order', 'a.package_id');
+		$filterOrder	= $this->getUserStateFromRequest($this->context.'.filter.filter_order', 'filter_order',
+				'a.package_id');
 		switch ($filterOrder) {
 			case ShopModelPackages::SORT_BY_DATE_OLDEST:
 				$orderCol = "a.created";
