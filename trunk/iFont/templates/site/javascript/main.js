@@ -386,7 +386,6 @@ function showMiniMenu() {
 
 function calBackgroundLeftProperty() {
 	backgroundLeft = $(".panel_left").width() + $("#container").offset().left;
-	console.log(backgroundLeft);
 }
 
 $(document).ready(function() {
@@ -397,8 +396,11 @@ $(document).ready(function() {
 	});
 
 	calBackgroundLeftProperty();
+	showMainMenu(false);
 	$(window).resize(function() {
 		calBackgroundLeftProperty();
-		showMainMenu(false);
+		if ($("#mini-menu-wrapper").hasClass("hide")) {
+			showMainMenu(false);
+		}
 	});
 });
