@@ -145,6 +145,7 @@ a {
     width: 230px;
     float: left;
     padding: 230px 0 0;
+	position: relative;
 }
 
 #container .panel_right {
@@ -1060,3 +1061,11 @@ dt.checkout-result { display: none; }
 .blue { color: #358788; }
 a.blue { text-decoration: underline; }
 .font-size { margin-bottom: 10px; }
+
+body { position: relative; }
+#mini-menu { width: 53px; height: 100%; background: url(../images/bg_panel_left.jpg) repeat; position: absolute; top: 0; left: 0; }
+#arrow-mini { width: 120px; height: 36px; background: url(../images/arrow_js.png) -17px 0px no-repeat; position: absolute; left: 53px; top: 190px; padding-left: 22px;
+	line-height: 36px; z-index: 3; }
+#arrow-full { width: 17px; height: 36px; background: url(../images/arrow_js.png) 0px 0px no-repeat; position: absolute;
+	left: 213px; top: 190px; z-index: 3;  }
+#arrow-full a { display: block; width: 17px; height: 36px; }
