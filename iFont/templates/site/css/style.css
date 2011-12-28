@@ -1067,5 +1067,5 @@ body { position: relative; }
 #arrow-mini { width: 120px; height: 36px; background: url(../images/arrow_js.png) -17px 0px no-repeat; position: absolute; left: 53px; top: 190px; padding-left: 22px;
 	line-height: 36px; z-index: 3; }
 #arrow-full { width: 17px; height: 36px; background: url(../images/arrow_js.png) 0px 0px no-repeat; position: absolute;
-	left: 213px; top: 190px; z-index: 3;  }
+	right: 0px; top: 190px; z-index: 3;  }
 #arrow-full a { display: block; width: 17px; height: 36px; }
