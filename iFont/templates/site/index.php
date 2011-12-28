@@ -39,14 +39,24 @@ $userId			= $user->get('id');
 	<script type="text/javascript" src="<?php echo $tplUrl; ?>/javascript/jquery-1.6.2.min.js"></script>
 	<script type="text/javascript" src="<?php echo $tplUrl; ?>/javascript/jquery.simpledialog.0.1.pack.js"></script>
 	<script type="text/javascript" src="<?php echo $tplUrl; ?>/javascript/jquery.form.js"></script>
+	<script type="text/javascript" src="<?php echo $tplUrl; ?>/javascript/jquery.backgroundpos.pack.js"></script>
 	<script type="text/javascript" src="<?php echo $tplUrl; ?>/javascript/main.js?ver=1.0.0"></script>
 	<script type="text/javascript">
 	var userId = <?php echo $userId; ?>;
 	</script>
 </head>
 <body>
+	<div id="mini-menu-wrapper" class="hide">
+		<div id="mini-menu"></div>
+		<div id="arrow-mini">
+			<a id="lnkShowMainMenu" href="javascript:;">Thư mục</a>
+		</div>
+	</div>
 	<div id="container" class="clearfix">
 		<div class="panel_left">
+			<div id="arrow-full">
+				<a id="lnkHideMainMenu" href="javascript:;"></a>
+			</div>
 			<div class="menu">
 				<jdoc:include type="modules" name="position-7" />
 			</div>
@@ -166,5 +176,11 @@ $userId			= $user->get('id');
 		</div>
 	</div>
 	<?php endif; ?>
+
+	<script type="text/javascript">
+	$(document).ready(function() {
+		setMenuAutoHide();
+	});
+	</script>
 </body>
 </html>

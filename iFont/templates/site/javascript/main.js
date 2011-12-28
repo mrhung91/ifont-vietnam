@@ -1,5 +1,8 @@
 var renderIndex = 0;
 var TEXT_BOUGHT = "ĐÃ MUA";
+var HIDE_MENU_INTERVAL = 5000;
+var BACKGROUND_WIDTH = 480;
+var backgroundLeft = null;
 
 function showOverlay() {
 	jQuery("#overlay").width(window.outerWidth).height(window.outerHeight)
@@ -344,10 +347,58 @@ function getQueryVariableValue(url, varName) {
     return null;
 }
 
+function setMenuAutoHide() {
+	setTimeout("hideMainMenu()", HIDE_MENU_INTERVAL);
+	$("#lnkShowMainMenu").click(function() {
+		hideMiniMenu();
+		showMainMenu(true);
+	});
+	$("#lnkHideMainMenu").click(function() {
+		hideMainMenu();
+	});
+}
+
+function hideMiniMenu() {
+	$("#mini-menu-wrapper").addClass("hide");
+}
+
+function hideMainMenu() {
+	$(".panel_left").addClass("hide");
+	$(document.body).animate({backgroundPosition: '-1440px 0px'}, function() {
+		showMiniMenu();
+	});
+}
+
+function showMainMenu(animation) {
+	var offsetLeft = backgroundLeft - BACKGROUND_WIDTH;
+	if (animation == true) {
+		$(document.body).animate({backgroundPosition: offsetLeft + 'px 0px'}, function() {
+			$(".panel_left").removeClass("hide");
+		});
+	} else {
+		$(document.body).css("backgroundPosition", offsetLeft + 'px 0px');
+	}
+}
+
+function showMiniMenu() {
+	$("#mini-menu-wrapper").removeClass("hide");
+}
+
+function calBackgroundLeftProperty() {
+	backgroundLeft = $(".panel_left").width() + $("#container").offset().left;
+	console.log(backgroundLeft);
+}
+
 $(document).ready(function() {
 	$("a.dialog").each(function() {
 		$(this).simpleDialog({
 			showCloseLabel : false
 		});
+	});
+
+	calBackgroundLeftProperty();
+	$(window).resize(function() {
+		calBackgroundLeftProperty();
+		showMainMenu(false);
 	});
 });
