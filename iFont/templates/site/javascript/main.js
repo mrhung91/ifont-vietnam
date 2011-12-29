@@ -1,7 +1,7 @@
 var renderIndex = 0;
 var TEXT_BOUGHT = "ĐÃ MUA";
 var HIDE_MENU_INTERVAL = 5000;
-var BACKGROUND_WIDTH = 482;
+var BACKGROUND_WIDTH = 481;
 var backgroundLeft = null;
 var hideMenuTimer = null;
 
@@ -367,7 +367,7 @@ function hideMainMenu() {
 
 function showMainMenu(animation) {
 	var offsetLeft = backgroundLeft - BACKGROUND_WIDTH;
-	setMenuAutoHide();
+	//setMenuAutoHide();
 	if (animation == true) {
 		$(document.body).animate({backgroundPosition: offsetLeft + 'px 0px'}, function() {
 			$(".panel_left").removeClass("hide");
@@ -384,9 +384,9 @@ function showMiniMenu() {
 function calBackgroundLeftProperty() {
 	backgroundLeft = $(".panel_left").width() + $("#container").offset().left;
 	if ($.browser.safari) {
-		backgroundLeft -= 1;
+		backgroundLeft -= 2;
 	} else if($.browser.msie) {
-		backgroundLeft += 2;
+		backgroundLeft += 1;
 	}
 }
 
