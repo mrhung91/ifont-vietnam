@@ -1,0 +1,22 @@
+@charset "utf-8";
+/* CSS Document */
+@font-face {font-family:
+    'HelveticaiDesignVn-BdCn';
+    src:
+    url('../fonts/HelveticaiDesignVn-BdCn.eot');
+}
+@font-face {font-family:
+    'HelveticaiDesignVn-UltLt';
+    src:
+    url('../fonts/HelveticaiDesignVn-UltLt.eot');
+}
+@font-face {font-family:
+    'HelveticaiDesignVn-Cn';
+    src:
+    url('../fonts/HelveticaiDesignVn-Cn.eot');
+}
+@font-face {font-family:
+    'HelveticaiDesignVn-Lt';
+    src:
+    url('../fonts/HelveticaiDesignVn-Lt.eot');
+}
