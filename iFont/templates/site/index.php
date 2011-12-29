@@ -32,13 +32,13 @@ $userId			= $user->get('id');
 	<jdoc:include type="head" />
 	<link rel="stylesheet" href="<?php echo $tplUrl; ?>/css/style.css" type="text/css" />
 	<link rel="stylesheet" href="<?php echo $tplUrl; ?>/javascript/jquery.simpledialog.0.1.css" type="text/css" />
-	<?php if($templateparams->get('html5', 0)) { ?>
-	<!--[if lt IE 9]>
+
+	<!--[if IE]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<link rel="stylesheet" href="<?php echo $tplUrl; ?>/css/html5.css" type="text/css" />
 	<![endif]-->
-	<?php } ?>
 	<script type="text/javascript" src="<?php echo $tplUrl; ?>/javascript/jquery-1.6.2.min.js"></script>
 	<script type="text/javascript" src="<?php echo $tplUrl; ?>/javascript/jquery.simpledialog.0.1.pack.js"></script>
-	<script type="text/javascript" src="<?php echo $tplUrl; ?>/javascript/jquery.form.js"></script>
 	<script type="text/javascript" src="<?php echo $tplUrl; ?>/javascript/jquery.backgroundpos.pack.js"></script>
 	<script type="text/javascript" src="<?php echo $tplUrl; ?>/javascript/main.js?ver=1.0.0"></script>
 	<script type="text/javascript">
@@ -176,11 +176,5 @@ $userId			= $user->get('id');
 		</div>
 	</div>
 	<?php endif; ?>
-
-	<script type="text/javascript">
-	$(document).ready(function() {
-		setMenuAutoHide();
-	});
-	</script>
 </body>
 </html>

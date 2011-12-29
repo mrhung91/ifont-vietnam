@@ -1,8 +1,9 @@
 var renderIndex = 0;
 var TEXT_BOUGHT = "ĐÃ MUA";
 var HIDE_MENU_INTERVAL = 5000;
-var BACKGROUND_WIDTH = 480;
+var BACKGROUND_WIDTH = 482;
 var backgroundLeft = null;
+var hideMenuTimer = null;
 
 function showOverlay() {
 	jQuery("#overlay").width(window.outerWidth).height(window.outerHeight)
@@ -59,7 +60,6 @@ function buyFont(lnkObj, font_id) {
 				alert(data.message);
 				$("#lblNumCartPackages").text(data.num_packages);
 				$("#lblNumCartFonts").text(data.num_fonts);
-				var $parent = $(lnkObj).parent().parent();
 				$(lnkObj).parent().removeClass("btn_buy").addClass("btn_bought").html(TEXT_BOUGHT);
 			} else if (data.error != null) {
 				alert(data.errror);
@@ -348,14 +348,7 @@ function getQueryVariableValue(url, varName) {
 }
 
 function setMenuAutoHide() {
-	setTimeout("hideMainMenu()", HIDE_MENU_INTERVAL);
-	$("#lnkShowMainMenu").click(function() {
-		hideMiniMenu();
-		showMainMenu(true);
-	});
-	$("#lnkHideMainMenu").click(function() {
-		hideMainMenu();
-	});
+	hideMenuTimer = setTimeout("hideMainMenu()", HIDE_MENU_INTERVAL);
 }
 
 function hideMiniMenu() {
@@ -363,6 +356,9 @@ function hideMiniMenu() {
 }
 
 function hideMainMenu() {
+	if (hideMenuTimer != null) {
+		window.clearTimeout(hideMenuTimer);
+	}
 	$(".panel_left").addClass("hide");
 	$(document.body).animate({backgroundPosition: '-1440px 0px'}, function() {
 		showMiniMenu();
@@ -371,6 +367,7 @@ function hideMainMenu() {
 
 function showMainMenu(animation) {
 	var offsetLeft = backgroundLeft - BACKGROUND_WIDTH;
+	setMenuAutoHide();
 	if (animation == true) {
 		$(document.body).animate({backgroundPosition: offsetLeft + 'px 0px'}, function() {
 			$(".panel_left").removeClass("hide");
@@ -386,6 +383,11 @@ function showMiniMenu() {
 
 function calBackgroundLeftProperty() {
 	backgroundLeft = $(".panel_left").width() + $("#container").offset().left;
+	if ($.browser.safari) {
+		backgroundLeft -= 1;
+	} else if($.browser.msie) {
+		backgroundLeft += 2;
+	}
 }
 
 $(document).ready(function() {
@@ -402,5 +404,12 @@ $(document).ready(function() {
 		if ($("#mini-menu-wrapper").hasClass("hide")) {
 			showMainMenu(false);
 		}
+	});
+	$("#lnkShowMainMenu").click(function() {
+		hideMiniMenu();
+		showMainMenu(true);
+	});
+	$("#lnkHideMainMenu").click(function() {
+		hideMainMenu();
 	});
 });
