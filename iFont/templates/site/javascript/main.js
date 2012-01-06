@@ -367,7 +367,7 @@ function hideMainMenu() {
 
 function showMainMenu(animation) {
 	var offsetLeft = backgroundLeft - BACKGROUND_WIDTH;
-	//setMenuAutoHide();
+	setMenuAutoHide();
 	if (animation == true) {
 		$(document.body).animate({backgroundPosition: offsetLeft + 'px 0px'}, function() {
 			$(".panel_left").removeClass("hide");
