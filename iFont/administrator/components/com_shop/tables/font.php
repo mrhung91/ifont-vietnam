@@ -52,23 +52,15 @@ class ShopTableFont extends JTable
 		return $this->title;
 	}
 
-	public function bind($array, $ignore = '')
-	{
-		if (isset($array['params']) && is_array($array['params'])) {
-			$registry = new JRegistry();
-			$registry->loadArray($array['params']);
-			$array['params'] = (string)$registry;
-		}
-
-		if (isset($array['metadata']) && is_array($array['metadata'])) {
-			$registry = new JRegistry();
-			$registry->loadArray($array['metadata']);
-			$array['metadata'] = (string)$registry;
-		}
-
-		if (isset($array['rules']) && is_array($array['rules'])) {
-			$rules = new JRules($array['rules']);
-			$this->setRules($rules);
+	public function bind($array, $ignore = '') {
+		if (isset($array['attribs'])) {
+			if (is_array($array['attribs'])) {
+				$registry = new JRegistry();
+				$registry->loadArray($array['attribs']);
+				$array['attribs'] = (string)$registry;
+			} else if ($array['attribs'] instanceof JRegistry) {
+				$array['attribs'] = (string) $array['attribs'];
+			}
 		}
 		return parent::bind($array, $ignore);
 	}
