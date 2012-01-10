@@ -16,7 +16,7 @@ $item_id = $this->item->id;
 <div class="ofh mg_bot30px">
 	<div class="headindex">
 		<ul class="left">
-			<li class="fix_txt"><a href="<?php echo ShopHelperRoute::getFontRoute($item_id, $this->item->package_id); ?>">
+			<li class="fix_txt"><a href="<?php echo ShopHelperRoute::getFontRoute($this->item->slug, $this->item->package_id); ?>">
 				<?php echo $this->item->name; ?></a></li>
 		</ul>
 		<ul class="right">

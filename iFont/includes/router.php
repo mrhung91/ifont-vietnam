@@ -244,7 +244,7 @@ class JRouterSite extends JRouter
 			$path = JPATH_SITE . '/components/' . $component . '/router.php';
 
 			if (file_exists($path) && count($segments)) {
-				if ($component != "com_search") { // Cheap fix on searches
+				if ($component != "com_search" && $component != "com_shop") { // Cheap fix on searches
 					//decode the route segments
 					$segments = $this->_decodeSegments($segments);
 				} else {
