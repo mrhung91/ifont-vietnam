@@ -27,7 +27,7 @@ function buyPackage(lnkObj, package_id) {
 		return;
 	}
 	$.post(
-		"index.php?option=com_shop&task=cart.ajaxBuyPackage",
+		"/index.php?option=com_shop&task=cart.ajaxBuyPackage",
 		{
 			package_id : package_id
 		},
@@ -51,7 +51,7 @@ function buyFont(lnkObj, font_id) {
 	}
 
 	$.post(
-		"index.php?option=com_shop&task=cart.ajaxBuyFont",
+		"/index.php?option=com_shop&task=cart.ajaxBuyFont",
 		{
 			font_id : font_id
 		},
@@ -73,7 +73,7 @@ function buyFont(lnkObj, font_id) {
 
 function removeFontFromCart(lnkObj, font_id) {
 	$.post(
-		"index.php?option=com_shop&task=cart.ajaxRemoveFontFromCart",
+		"/index.php?option=com_shop&task=cart.ajaxRemoveFontFromCart",
 		{
 			font_id : font_id
 		},
@@ -93,7 +93,7 @@ function removeFontFromCart(lnkObj, font_id) {
 
 function removePackageFromCart(lnkObj, package_id) {
 	$.post(
-		"index.php?option=com_shop&task=cart.ajaxRemovePackageFromCart",
+		"/index.php?option=com_shop&task=cart.ajaxRemovePackageFromCart",
 		{
 			package_id : package_id
 		},
@@ -219,7 +219,7 @@ function onRenderSampleFontsText(sampleText) {
 	var currentIndex = ++renderIndex;
 	$("span.ajax-loading").removeClass("hide");
 	$.post(
-		"index.php?option=com_shop&task=font.ajaxRenderSample",
+		"/index.php?option=com_shop&task=font.ajaxRenderSample",
 		{
 			fontIds : fontIds,
 			text: text
@@ -274,7 +274,7 @@ function onRenderSamplePackagesText(sampleText) {
 	var currentIndex = ++renderIndex;
 	$("span.ajax-loading").removeClass("hide");
 	$.post(
-		"index.php?option=com_shop&task=package.ajaxRenderSample",
+		"/index.php?option=com_shop&task=package.ajaxRenderSample",
 		{
 			packageIds : packageIds,
 			text: text

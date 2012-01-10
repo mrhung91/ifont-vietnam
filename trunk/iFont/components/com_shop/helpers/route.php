@@ -11,18 +11,16 @@
 defined('_JEXEC') or die;
 
 jimport('joomla.application.component.helper');
-jimport('joomla.application.categories');
 
 /**
- * Content Component Route Helper
+ * Shop Component Route Helper
  *
  * @static
  * @package		Joomla.Site
- * @subpackage	com_content
+ * @subpackage	com_shop
  * @since 1.5
  */
-abstract class ShopHelperRoute
-{
+abstract class ShopHelperRoute {
 	protected static $lookup;
 
 	/**
@@ -36,17 +34,19 @@ abstract class ShopHelperRoute
 		$link = 'index.php?option=com_shop&view=font&id='. $font_id;
 		if ((int) $package_id > 0) {
 			$package = JTable::getInstance("Package", "ShopTable");
-			if($package->load($package_id)) {
-				$needles['package'] = $package->getPath();
-				$needles['packages'] = $needles['package'];
-				$link .= '&package='.$package_id;
+			if(is_numeric($package_id) && $package->load($package_id)) {
+				$package_slug = $package->getPath();
+			} else {
+				$package_slug = $package_id;
 			}
+			$needles['package'] = $package_slug;
+			$needles['packages'] = $needles['package'];
+			$link .= '&packageid='.$package_slug;
 		}
 
 		if ($item = self::_findItem($needles)) {
 			$link .= '&Itemid='.$item;
-		}
-		elseif ($item = self::_findItem()) {
+		} elseif ($item = self::_findItem()) {
 			$link .= '&Itemid='.$item;
 		}
 
@@ -60,27 +60,23 @@ abstract class ShopHelperRoute
 		if($id < 1) {
 			$link = '';
 		} else {
-			$needles = array(
-				'package' => array($id)
-			);
+			if ($package->load($package_id)) {
+				$packageids = $package->getPath();
+				$needles = array(
+					'package' => $packageids,
+					'packages' => $packageids
+				);
+			}
 
 			if ($item = self::_findItem($needles)) {
 				$link = 'index.php?Itemid='.$item;
 			} else {
 				//Create the link
 				$link = 'index.php?option=com_shop&view=package&id='.$id;
-				if ($package->load($package_id)) {
-					$packageids = $package->getPath();
-					$needles = array(
-						'package' => $packageids,
-						'packages' => $packageids
-					);
-					if ($item = self::_findItem($needles)) {
-						$link .= '&Itemid='.$item;
-					}
-					elseif ($item = self::_findItem()) {
-						$link .= '&Itemid='.$item;
-					}
+				if ($item = self::_findItem($needles)) {
+					$link .= '&Itemid='.$item;
+				} else if ($item = self::_findItem()) {
+					$link .= '&Itemid='.$item;
 				}
 			}
 		}
@@ -107,7 +103,7 @@ abstract class ShopHelperRoute
 		if (self::$lookup === null) {
 			self::$lookup = array();
 
-			$component	= JComponentHelper::getComponent('com_content');
+			$component	= JComponentHelper::getComponent('com_shop');
 			$items		= $menus->getItems('component_id', $component->id);
 			foreach ($items as $item) {
 				if (isset($item->query) && isset($item->query['view'])) {
@@ -123,12 +119,10 @@ abstract class ShopHelperRoute
 		}
 
 		if ($needles) {
-			foreach ($needles as $view => $ids) {
+			foreach ($needles as $view => $id) {
 				if (isset(self::$lookup[$view])) {
-					foreach($ids as $id) {
-						if (isset(self::$lookup[$view][(int)$id])) {
-							return self::$lookup[$view][(int)$id];
-						}
+					if (isset(self::$lookup[$view][(int)$id])) {
+						return self::$lookup[$view][(int)$id];
 					}
 				}
 			}

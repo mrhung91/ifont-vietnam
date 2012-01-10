@@ -55,8 +55,11 @@ class ShopModelCart extends JModel
 			if ($fonts != null && count($fonts) > 0) {
 				$fontItems = array();
 				foreach ($fonts as $font_id => $font) {
-					$font->link = ShopHelperRoute::getFontRoute($font_id);
-					$font->package_link = ShopHelperRoute::getPackageRoute($font->package_id);
+					$package_id = $font->package_id;
+					$slug = !empty($font->alias) ? $font_id . ":" . $font->alias : $font_id;
+					$package_slug = !empty($font->package_alias) ? $package_id . ":" . $font->package_alias : $package_id;
+					$font->link = ShopHelperRoute::getFontRoute($slug, $package_slug);
+					$font->package_link = ShopHelperRoute::getPackageRoute($package_slug);
 					$fontItems[] = $font;
 				}
 				$items["fonts"] = $fontItems;

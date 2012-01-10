@@ -14,7 +14,7 @@ $doc = JFactory::getDocument();
 ?>
 <div class="col">
 	<div class="row1 row-font-info">
-		<a class="row-package" href="<?php echo $this->item->package_link; ?>" title="Xem gói phông">
+		<a class="row-package" href="<?php echo $this->item->link; ?>" title="Xem gói phông">
 			<?php echo $this->item->package_name; ?></a>
 		<?php echo $this->item->name; ?>
 	</div>
